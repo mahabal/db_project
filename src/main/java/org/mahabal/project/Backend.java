@@ -11,9 +11,7 @@ public class Backend {
 
     private final ServletHandler handler = new ServletHandler();
 
-    final DBI dbi;
-
-    Backend() throws Exception {
+    private Backend() throws Exception {
 
         // setup the connection to the database
         HikariDataSource ds = new HikariDataSource();
@@ -22,7 +20,7 @@ public class Backend {
         ds.setPassword("b&");
 
         // set the datasource for jDBI
-        dbi = new DBI(ds);
+        final DBI dbi = new DBI(ds);
 
         // setup all of the handlers
         handler.addServletWithMapping(new ServletHolder(new RegisterServlet(dbi)), "/register");
