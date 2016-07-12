@@ -1,6 +1,5 @@
 package org.mahabal.project;
 
-import com.google.gson.Gson;
 import com.zaxxer.hikari.HikariDataSource;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
@@ -8,13 +7,9 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.mahabal.project.servlet.RegisterServlet;
 import org.skife.jdbi.v2.DBI;
 
-import java.nio.charset.Charset;
-
 public class Backend {
 
     private final ServletHandler handler = new ServletHandler();
-    final Charset UTF8 = Charset.forName("UTF-8");
-    final Gson gson = new Gson();
 
     final DBI dbi;
 
@@ -31,8 +26,6 @@ public class Backend {
 
         // setup all of the handlers
         handler.addServletWithMapping(new ServletHolder(new RegisterServlet(dbi)), "/register");
-
-
 
     }
 
