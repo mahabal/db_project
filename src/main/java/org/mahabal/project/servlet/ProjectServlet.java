@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServlet;
 
 public abstract class ProjectServlet extends HttpServlet {
 
-    protected final DBI dbi;
+    final DBI dbi;
 
-    public ProjectServlet(final DBI dbi) {
+    ProjectServlet(final DBI dbi) {
         this.dbi = dbi;
     }
 
