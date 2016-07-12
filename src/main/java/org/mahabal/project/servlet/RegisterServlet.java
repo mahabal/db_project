@@ -30,7 +30,6 @@ public class RegisterServlet extends ProjectServlet {
 
         // check and make sure the username and password are not null
         if (username == null || email == null || md5pass == null) {
-            System.out.printf("BAD_REQUEST: username: %s, email: %s, password: %s%n", username, email, md5pass);
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
