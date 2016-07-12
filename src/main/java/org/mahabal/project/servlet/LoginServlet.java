@@ -22,6 +22,8 @@ public class LoginServlet extends ProjectServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+
         // get IP address
         String ip = req.getHeader("X-Forwarded-For");
         if (ip == null) ip = req.getRemoteAddr();
@@ -91,7 +93,7 @@ public class LoginServlet extends ProjectServlet {
             o.add("token", new JsonPrimitive(token));
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().println(o);
-
+            System.out.println(o);
         } else {
 
             System.err.println("INVALID LOGIN!");
@@ -100,6 +102,7 @@ public class LoginServlet extends ProjectServlet {
             o.add("status", new JsonPrimitive("error"));
             o.add("desc", new JsonPrimitive("invalid username or password"));
             resp.getWriter().println(o);
+            System.out.println(o);
             return;
 
         }
