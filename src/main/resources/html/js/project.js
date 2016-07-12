@@ -24,7 +24,6 @@
                 error: function(response) {
                     // session is not valid ... purge everything and then load the login screen.
                     logout();
-                    location = 'login.html';
                 }
             });
 
@@ -35,10 +34,19 @@
             Cookies.remove("project_token");
             Cookies.remove("project_uid");
             Cookies.remove("project_username");
+            location = 'login.html';
+        };
+
+        var initLogoutButton = function() {
+            var logoutButton = $('#logout-link');
+            logoutButton.click(function() {
+                logout();
+            });
         };
 
         var init = function() {
             validateSession();
+            initLogoutButton();
         };
 
         global.Project = {

@@ -37,7 +37,7 @@
                         Cookies.set("project_username", json['name'], { expires: 1 });
                         Cookies.set("project_token", json['token'], { expires: 1 });
                         console.log(Cookies.get("token"));
-                        location.reload();
+                        location = 'index2.html';
                     },
                     error: function(data) {
                         console.error("SOMETHING BROKE!");
@@ -81,14 +81,19 @@
                 registerAccount(username, password, email);
         });
     };
-    var logout = function() {
-        Cookies.remove("project_token");
-        Cookies.remove("project_uid");
-        Cookies.remove("project_username");
+    var initLoginButton = function() {
+        var loginButton = $('#log-in-button');
+
+        loginButton.click(function() {
+                removeValidation();
+                var username = $('#username').val();
+                var password = $('#password').val();
+                login(username, password);
+        });
     };
     var init = function() {
-        validateSession();
         initRegisterButton();
+        initLoginButton();
     };
     global.Project = {
         init: init

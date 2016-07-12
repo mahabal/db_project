@@ -70,6 +70,7 @@ public class LoginServlet extends ProjectServlet {
         // check and make sure the username and password are not null
         if (username == null || md5pass == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            System.out.println("Bad Request!");
             return;
         }
 
