@@ -8,3 +8,13 @@ CREATE TABLE `student` (
   `created`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`uid`)
 );
+
+# Stores session data
+CREATE TABLE `session` (
+  `created` TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `uid`     INT         NOT NULL,
+  `ip`      INT         NOT NULL,
+  `token`   VARCHAR(36) NOT NULL,
+  KEY (`uid`),
+  KEY (`ip`)
+);
