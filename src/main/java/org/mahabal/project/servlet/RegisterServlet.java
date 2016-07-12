@@ -23,7 +23,7 @@ public class RegisterServlet extends ProjectServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // load the requested username and password from the request
+        // load the requested username, email, and password from the request
         String username = req.getParameter("u");
         String email = req.getParameter("e");
         String md5pass = req.getParameter("m");
