@@ -87,25 +87,7 @@
         Cookies.remove("project_username");
     };
     var init = function() {
-        if (Cookies.get("project_token") != 'undefined') {
-            if (Cookies.get("project_uid") != 'undefined') {
-                $.ajax({
-                        url: API_BASE_URL + "/login",
-                        type: 'GET',
-                        data: {
-                            'i': Cookies.get("project_uid"),
-                            's': Cookies.get("project_token")
-                        },
-                        success: function() {
-                            location = "index2.html";
-                        },
-                        error: function(response) {
-                            var data = JSON.parse(response.responseText);
-                            validation(data['error']);
-                        }
-                 });
-            }
-        }
+        validateSession();
         initRegisterButton();
     };
     global.Project = {
