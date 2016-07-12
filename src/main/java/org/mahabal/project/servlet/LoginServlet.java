@@ -39,6 +39,15 @@ public class LoginServlet extends ProjectServlet {
             List<Map<String, Object>> user = h.select("select uid, password, salt from student where username = ?",
                     username);
 
+            if (user.size() == 0) {
+                // there is no student with the provided username
+                resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                final JsonObject o = new JsonObject();
+                o.add("status", new JsonPrimitive("error"));
+                o.add("desc", new JsonPrimitive("invalid username or password"));
+                resp.getWriter().println(o);
+            }
+
         }
 
         resp.setStatus(HttpServletResponse.SC_OK);
