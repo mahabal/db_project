@@ -23,10 +23,6 @@ public class RegisterServlet extends ProjectServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // get the IP address of the request
-        String ip = req.getHeader("X-Forwarded-For");
-        if (ip == null) ip = req.getRemoteAddr();
-
         // load the requested username, email, and password from the request
         String username = req.getParameter("u");
         String email = req.getParameter("e");
