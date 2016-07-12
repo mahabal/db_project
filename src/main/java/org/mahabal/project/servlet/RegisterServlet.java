@@ -23,6 +23,8 @@ public class RegisterServlet extends ProjectServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+
         // load the requested username, email, and password from the request
         String username = req.getParameter("u");
         String email = req.getParameter("e");
@@ -62,15 +64,16 @@ public class RegisterServlet extends ProjectServlet {
                 // set the response code and print out the object
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.getWriter().println(object);
+                System.out.println(object);
 
             } else {
 
                 final JsonObject obj = new JsonObject();
-                obj.add("status", new JsonPrimitive("error"));
-                obj.add("desc", new JsonPrimitive("username in use"));
-
+                obj.add("error", new JsonPrimitive("Username is already in use."));
                 resp.setStatus(HttpServletResponse.SC_CONFLICT);
                 resp.getWriter().println(obj);
+                System.out.println(obj);
+                return;
 
             }
 
