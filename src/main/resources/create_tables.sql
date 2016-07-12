@@ -5,5 +5,6 @@ CREATE TABLE `student` (
   `email`    VARCHAR(100) NOT NULL,
   `password` VARCHAR(36)  NOT NULL,
   `salt`     VARCHAR(12)  NOT NULL,
+  `created`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`uid`)
 );
