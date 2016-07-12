@@ -67,7 +67,7 @@ public class RegisterServlet extends ProjectServlet {
 
                 final JsonObject obj = new JsonObject();
                 obj.add("status", new JsonPrimitive("error"));
-                obj.add("description", new JsonPrimitive("user exists"));
+                obj.add("desc", new JsonPrimitive("username in use"));
 
                 resp.setStatus(HttpServletResponse.SC_CONFLICT);
                 resp.getWriter().println(obj);
