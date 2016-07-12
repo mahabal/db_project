@@ -46,7 +46,7 @@ public class RegisterServlet extends ProjectServlet {
                 final String salt = Hashing.sha512().hashString(String.valueOf(new Random().nextDouble()),
                         Charset.forName("UTF-8")).toString().substring(0, 12);
                 // generate a newly salted hash from the md5 password, them trim it to 36 characters
-                String pwHash = Hashing.sha512().hashString(salt + md5pass, Charset.forName("UTF-8"))
+                final String pwHash = Hashing.sha512().hashString(salt + md5pass, Charset.forName("UTF-8"))
                         .toString().substring(0, 36);
                 // insert data into the student table
                 h.insert("insert into student (username, password, salt, email) values(?,?,?,?)",
