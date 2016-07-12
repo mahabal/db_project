@@ -56,15 +56,10 @@ public class RegisterServlet extends ProjectServlet {
                 // insert data into the student table
                 h.insert("insert into student (username, password, salt, email) values(?,?,?,?)",
                         username, pwHash, salt, email);
-
-                // create json object with return data
-                final JsonObject object = new JsonObject();
-                object.add("status", new JsonPrimitive("success"));
+                System.out.println("Student created: " + username);
 
                 // set the response code and print out the object
                 resp.setStatus(HttpServletResponse.SC_OK);
-                resp.getWriter().println(object);
-                System.out.println(object);
 
             } else {
 

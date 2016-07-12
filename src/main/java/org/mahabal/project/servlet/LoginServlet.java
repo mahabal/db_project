@@ -94,6 +94,7 @@ public class LoginServlet extends ProjectServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().println(o);
             System.out.println(o);
+
         } else {
 
             System.err.println("INVALID LOGIN!");
@@ -103,11 +104,8 @@ public class LoginServlet extends ProjectServlet {
             o.add("desc", new JsonPrimitive("invalid username or password"));
             resp.getWriter().println(o);
             System.out.println(o);
-            return;
 
         }
-
-        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
     }
 
