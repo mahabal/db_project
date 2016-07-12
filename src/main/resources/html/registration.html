@@ -34,6 +34,12 @@
             <!--
             <div class="registration-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In odio mauris, maximus ac sapien sit amet. </div>
             -->
+            <div id="error-banner" class="alert alert-danger hidden" role="alert">
+                <button id="error-btn-close" type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <div id="error-msg">
+                    <strong>Oops!</strong> Something broke ...
+                </div>
+            </div>
             <form id="register" role="form" onsubmit="return false;" class="form-horizontal">
 
                 <h4>Personal info</h4>
@@ -76,12 +82,6 @@
                     </div>
                     <div class="col-md-6">
                         <button id="sign-up-button" class="btn btn-danger btn-block">Sign Up</button>
-                    </div>
-                </div>
-                <div id="error-banner" class="alert alert-danger hidden" role="alert">
-                    <button id="error-btn-close" type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <div id="error-msg">
-                        <strong>Oops!</strong> Something broke ...
                     </div>
                 </div>
             </form>
