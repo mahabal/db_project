@@ -28,6 +28,41 @@ public class LoginServlet extends ProjectServlet {
         String ip = req.getHeader("X-Forwarded-For");
         if (ip == null) ip = req.getRemoteAddr();
 
+        // first check and see if this is an ID and token, if it is, just validate it
+        String i = req.getParameter("i");
+        String s = req.getParameter("s");
+        if (i != null && s != null) {
+            try (Handle h = dbi.open()) {
+
+                final List<Map<String, Object>> session = h.select("select student.username from session, student " +
+                        "where session.uid = ? and session.token = ? and session.ip = INET6_ATON(?) and " +
+                        "session.uid = student.uid", i, s, ip);
+
+                if (session.size() == 0) {
+                    // no session found, so do nothing
+                    resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    final JsonObject obj = new JsonObject();
+                    obj.add("error", new JsonPrimitive("Invalid session."));
+                    resp.getWriter().println(obj);
+                    return;
+                } else {
+
+                    final String name = (String) session.get(0).get("username");
+
+                    resp.setStatus(HttpServletResponse.SC_OK);
+                    final JsonObject obj = new JsonObject();
+                    obj.add("uid", new JsonPrimitive(i));
+                    obj.add("name", new JsonPrimitive(name));
+                    obj.add("token", new JsonPrimitive(s));
+                    resp.getWriter().println(obj);
+                    System.out.println(obj);
+                    return;
+
+                }
+
+            }
+        }
+
         // load the requested username and password from the request
         String username = req.getParameter("u");
         String md5pass = req.getParameter("m");

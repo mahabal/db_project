@@ -16,19 +16,13 @@
             var el2 = $('#error-msg')
             el2.text("");
         };
-     var login = function(username, password) {
+        var login = function(username, password) {
             if (typeof global.sha512 === 'undefined') {
                 console.error("Missing the sha2 include");
                 return false;
             }
 
             var passwordSha512 = sha512(password);
-
-            var successHandler = function(data) {
-                console.error(JSON.stringify(data));
-//                setCookie('sesh_id', data['token']);
-                location.reload();
-            };
 
             $.ajax({
                 url: API_BASE_URL + '/login',
@@ -37,7 +31,14 @@
                         'u': username,
                         'm': passwordSha512
                     },
-                    success: successHandler,
+                    success: function(data) {
+                        var json = JSON.parse(data);
+                        Cookies.set("project_uid", json['uid'], { expires: 1} );
+                        Cookies.set("project_username", json['name'], { expires: 1 });
+                        Cookies.set("project_token", json['token'], { expires: 1 });
+                        console.log(Cookies.get("token"));
+                        location.reload();
+                    },
                     error: function(data) {
                         console.error("SOMETHING BROKE!");
                     }
@@ -80,7 +81,31 @@
                 registerAccount(username, password, email);
         });
     };
+    var logout = function() {
+        Cookies.remove("project_token");
+        Cookies.remove("project_uid");
+        Cookies.remove("project_username");
+    };
     var init = function() {
+        if (Cookies.get("project_token") != 'undefined') {
+            if (Cookies.get("project_uid") != 'undefined') {
+                $.ajax({
+                        url: API_BASE_URL + "/login",
+                        type: 'GET',
+                        data: {
+                            'i': Cookies.get("project_uid"),
+                            's': Cookies.get("project_token")
+                        },
+                        success: function() {
+                            location = "index2.html";
+                        },
+                        error: function(response) {
+                            var data = JSON.parse(response.responseText);
+                            validation(data['error']);
+                        }
+                 });
+            }
+        }
         initRegisterButton();
     };
     global.Project = {
