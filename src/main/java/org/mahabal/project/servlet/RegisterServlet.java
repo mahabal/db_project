@@ -1,6 +1,8 @@
 package org.mahabal.project.servlet;
 
 import com.google.common.hash.Hashing;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
@@ -11,8 +13,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-public final class RegisterServlet extends ProjectServlet {
+public class RegisterServlet extends ProjectServlet {
 
     public RegisterServlet(DBI dbi) {
         super(dbi);
@@ -27,6 +30,7 @@ public final class RegisterServlet extends ProjectServlet {
 
         // check and make sure the username and password are not null
         if (username == null || email == null || md5pass == null) {
+            System.out.printf("BAD_REQUEST: username: %s, email: %s, password: %s%n", username, email, md5pass);
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -35,23 +39,34 @@ public final class RegisterServlet extends ProjectServlet {
             // query the `student` table to search for the username
             List<Map<String, Object>> user = h.select("select uid from student where username = ?",
                     username.toLowerCase());
+            // see how many users are in the result set
             if (user.size() == 0) {
-                // since there are no users in the return set, there is no user with the same username.
-                resp.setStatus(HttpServletResponse.SC_OK);
-                // generate a salt to use with hashing the password
-                final String salt = Hashing.sha512().hashString(String.valueOf(System.currentTimeMillis()),
-                        Charset.forName("UTF-8")).toString();
-                // generate a newly salted hash from the md5 password
-                String pwHash = Hashing.sha512().hashString(salt + md5pass, Charset.forName("UTF-8")).toString();
+                // there are no users in the result set, that means we can create the user.
+                // generate a salt to use with hashing the password, then trim it to 12 characters
+                final String salt = Hashing.sha512().hashString(String.valueOf(new Random().nextDouble()),
+                        Charset.forName("UTF-8")).toString().substring(0, 12);
+                // generate a newly salted hash from the md5 password, them trim it to 36 characters
+                String pwHash = Hashing.sha512().hashString(salt + md5pass, Charset.forName("UTF-8"))
+                        .toString().substring(0, 36);
+                // insert data into the student table
                 h.insert("insert into student (username, password, salt, email) values(?,?,?,?)",
                         username, pwHash, salt, email);
+                // create json object with return data
+                final JsonObject object = new JsonObject();
+                object.add("status", new JsonPrimitive("success"));
+                // set the response code and print out the object
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.getWriter().println(object);
                 //TODO: Generate a new session into the session table.
             } else {
+                final JsonObject obj = new JsonObject();
+                obj.add("status", new JsonPrimitive("error"));
+                obj.add("description", new JsonPrimitive("user exists"));
                 resp.setStatus(HttpServletResponse.SC_CONFLICT);
-                resp.getWriter().println("user exists.");
+                resp.getWriter().println(obj);
             }
         }
-        super.doGet(req, resp);
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 
 }
