@@ -66,88 +66,38 @@
 
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Stats</h3>
-                        </div>
-                        <div class="panel-body">
+
                     <div class="row">
-                    <div class="col-md-3">
-                        <div id="total_universities_block" class="widget widget-default widget-item-icon">
-                            <div class="widget-item-left">
-                                <span class="fa fa-building"></span>
-                            </div>
-                            <div class="widget-data">
-                                <div id='total_universities' class="widget-int num-count">0</div>
-                                <div class="widget-title">Universities</div>
-                                <div class="widget-subtitle">in the database</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div id = total_rsos_block class="widget widget-default widget-item-icon">
-                            <div class="widget-item-left">
-                                <span class="fa fa-users"></span>
-                            </div>
-                            <div class="widget-data">
-                                <div id='total_rsos' class="widget-int num-count">0</div>
-                                <div class="widget-title">Total RSOs</div>
-                                <div class="widget-subtitle">in the database</div>
-                            </div>
-                        </div>
-                        <div id="unapproved_rsos_block" class="widget widget-default widget-item-icon hidden">
-                            <div class="widget-item-left">
-                                <span class="fa fa-users"></span>
-                            </div>
-                            <div class="widget-data">
-                                <div id='unapproved_rsos' class="widget-int num-count">0</div>
-                                <div class="widget-title">Unapproved RSOs</div>
-                                <div class="widget-subtitle">in the database</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="widget widget-default widget-item-icon">
-                            <div class="widget-item-left">
-                                <span class="fa fa-calendar-check-o"></span>
-                            </div>
-                            <div class="widget-data">
-                                <div id='total_events' class="widget-int num-count">0</div>
-                                <div class="widget-title">Total Events</div>
-                                <div class="widget-subtitle">in the database</div>
-                            </div>
-                        </div>
-                        <div id="unapproved_events_block" class="widget widget-default widget-item-icon hidden">
-                            <div class="widget-item-left">
-                                <span class="fa fa-calendar-check-o"></span>
-                            </div>
-                            <div class="widget-data">
-                                <div id='unapproved_events' class="widget-int num-count">0</div>
-                                <div class="widget-title">Unapproved Events</div>
-                                <div class="widget-subtitle">in the database</div>
-                            </div>
-                        </div>
-                    </div>
-
-                        <div class="col-md-3">
-
-                            <div id="total_students_block" class="widget widget-default widget-item-icon">
-                                <div class="widget-item-left">
-                                    <span class="fa fa-user"></span>
+                        <div class="col-md-12">
+                            <div id="unapproved_rsos_panel" class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Unapproved Organizations</h3>
                                 </div>
-                                <div class="widget-data">
-                                    <div id='total_students' class="widget-int num-count">0</div>
-                                    <div class="widget-title">Total students</div>
-                                    <div class="widget-subtitle">in the database</div>
+
+                                <div class="panel-body panel-body-table">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-actions">
+                                            <thead>
+                                            <tr>
+                                                <th width="50">ID</th>
+                                                <th>name</th>
+                                                <th width="200">Created</th>
+                                                <th width="100">Admin</th>
+                                                <th width="100">Admin E-mail</th>
+                                                <th width="120">actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="unapproved_rsos_tbody">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
                             </div>
-                            </div>
-                        </div>
-                        </div>
 
-
+                        </div>
                     </div>
                 
                 </div>
