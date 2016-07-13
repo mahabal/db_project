@@ -99,6 +99,55 @@
             });
         }
 
+//        function approve_row(row){
+//
+//            var box = $("#mb-approve-row");
+//            box.addClass("open");
+//
+//            box.find(".mb-control-yes").on("click",function(){
+//                box.removeClass("open");
+//                $("#"+row).hide("slow",function(){
+//                    $(this).remove();
+//                     $.ajax({
+//                        url: API_BASE_URL + "/rsos",
+//                        type: 'GET',
+//                        data: {
+//                            'i': uid,
+//                            's': token,
+//                            'a': 'approve'
+//                        },
+//                        success: function(data) {
+//                            var json = JSON.parse(data);
+//                            console.log(json);
+//                            if (json["unapproved_rsos"] !== 'undefined'){
+//                                var arr = json["unapproved_rsos"];
+//
+//                                    var block = $('#unapproved_rsos_panel');
+//                                    if (arr.length <= 0) block.addClass("hidden");
+//                                    else block.removeClass("hidden");
+//                                for (var i = 0; i < arr.length; i++) {
+//                                    var o = arr[i];
+//                                    var row = $('<tr></tr>').attr("id", "trow_" + o["rid"]);
+//                                    for (var key in o) {
+//                                        var element = $('<td></td>').text(o[key]);
+//                                        row.append(element);
+//                                    }
+//                                    // create the button
+//                                    row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm"><span class="fa fa-check"></span></button></td>');
+//                                    var tbody = $('#unapproved_rsos_tbody').append(row);
+//                                }
+//                            }
+//                        },
+//                        error: function(response) {
+//                            // session is not valid ... purge everything and then load the login screen.
+//                            logout();
+//                        }
+//                    });
+//                });
+//            });
+//
+//        }
+
         var logout = function() {
             Cookies.remove("project_token");
             Cookies.remove("project_uid");
