@@ -1,5 +1,6 @@
 # The student table
 #   sid       - student's ID number
+#   uid       - the university the student belongs to
 #   username  - the username the student created
 #   email     - the email used during registration
 #   password  - truncated sha512-salted+hashed password
@@ -7,6 +8,7 @@
 #   created   - the time the user account was created
 CREATE TABLE `student` (
   `sid`      INT          NOT NULL AUTO_INCREMENT,
+  `uid`      INT          NOT NULL,
   `username` VARCHAR(100) NOT NULL,
   `email`    VARCHAR(100) NOT NULL,
   `password` VARCHAR(36)  NOT NULL,
@@ -48,10 +50,12 @@ CREATE TABLE `rso_data` (
 #    created - when the user joined the RSO
 #    sid - the user id of the user (student)
 #    rid - the rso id of the rso that the student joined
+#    uid - the university that the rso belongs to
 CREATE TABLE `rso_membership` (
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `sid`     INT       NOT NULL,
   `rid`     INT       NOT NULL,
+  `uid`     INT       NOT NULL,
   KEY (`rid`),
   KEY (`sid`)
 );
@@ -65,6 +69,7 @@ CREATE TABLE `rso_membership` (
 #   desc      - the description of the university
 CREATE TABLE `university` (
   `uid`     INT       NOT NULL AUTO_INCREMENT,
+  `name`    VARCHAR(100) NOT NULL,
   `sid`     INT       NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `lat`     LONG      NOT NULL DEFAULT 0,
