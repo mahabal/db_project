@@ -35,8 +35,8 @@ public class LoginServlet extends ProjectServlet {
             try (Handle h = dbi.open()) {
 
                 final List<Map<String, Object>> session = h.select("select student.username from session, student " +
-                        "where session.uid = ? and session.token = ? and session.ip = INET6_ATON(?) and " +
-                        "session.uid = student.uid", i, s, ip);
+                        "where session.sid = ? and session.token = ? and session.ip = INET6_ATON(?) and " +
+                        "session.sid = student.sid", i, s, ip);
 
                 if (session.size() == 0) {
                     // no session found, so do nothing
@@ -78,7 +78,7 @@ public class LoginServlet extends ProjectServlet {
         String hash, salt;
         try (Handle h = dbi.open()) {
 
-            List<Map<String, Object>> user = h.select("select uid, password, salt from student where username = ?",
+            List<Map<String, Object>> user = h.select("select sid, password, salt from student where username = ?",
                     username.toLowerCase());
 
             if (user.size() == 0) {
@@ -90,7 +90,7 @@ public class LoginServlet extends ProjectServlet {
                 resp.getWriter().println(o);
                 return;
             } else {
-                id = (Integer) user.get(0).get("uid");
+                id = (Integer) user.get(0).get("sid");
                 hash = (String) user.get(0).get("password");
                 salt = (String) user.get(0).get("salt");
             }
@@ -110,14 +110,14 @@ public class LoginServlet extends ProjectServlet {
             try (Handle h = dbi.open()) {
 
                 // check and see if a token already exists for this userId + IP
-                List<Map<String, Object>> tokens = h.select("select token from session where uid = ? and " +
+                List<Map<String, Object>> tokens = h.select("select token from session where sid = ? and " +
                         "ip = INET6_ATON(?)", id, ip);
 
                 if (tokens.size() == 0) {
                     // no token exists, so create one (36 chars) and save it into the database
                     token = Hashing.sha512().hashString(id + "-" + ip + "-" + Math.random(),
                             Charset.forName("UTF-8")).toString().substring(0, 36);
-                    h.insert("insert into session (uid, ip, token) values (?,INET6_ATON(?),?)",
+                    h.insert("insert into session (sid, ip, token) values (?,INET6_ATON(?),?)",
                             id, ip, token);
                 } else {
                     token = (String) tokens.get(0).get("token");
