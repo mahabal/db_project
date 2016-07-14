@@ -37,7 +37,7 @@ public class RSOServlet extends ProjectServlet {
             try (Handle h = dbi.open()) {
 
                 final List<Map<String, Object>> session = h.select("select * from session " +
-                        "where uid = ? and token = ? and ip = INET6_ATON(?)", i, s, ip);
+                        "where sid = ? and token = ? and ip = INET6_ATON(?)", i, s, ip);
 
                 if (session.size() == 0) {
 
@@ -57,7 +57,7 @@ public class RSOServlet extends ProjectServlet {
                     // if root, dump all
                     if (Integer.parseInt(i) == 1) {
                         System.out.println("root query");
-                        String query = "select r.rid, r.name, r.created, s.username, s.email, r.approved, u.name as uname, count(rm.rid) as members from rso_data as r, student as s, university as u, rso_membership as rm where r.sid = s.uid and r.uid = u.uid and rm.rid = r.rid group by r.rid";
+                        String query = "select r.rid, r.name, r.created, s.username, s.email, r.approved, u.name as uname, count(rm.rid) as members from rso_data as r, student as s, university as u, rso_membership as rm where r.sid = s.sid and r.uid = u.uid and rm.rid = r.rid group by r.rid";
                         final List<Map<String, Object>> rsos = h.select(query);
                         if (rsos.size() > 0) {
                             for (Map<String, Object> r : rsos) {
