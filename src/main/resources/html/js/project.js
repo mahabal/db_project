@@ -73,12 +73,11 @@
                 success: function(data) {
                     var json = JSON.parse(data);
                     console.log(json);
-                    if (json["unapproved_rsos"] !== 'undefined'){
-                        var arr = json["unapproved_rsos"];
-
-                            var block = $('#unapproved_rsos_panel');
-                            if (arr.length <= 0) block.addClass("hidden");
-                            else block.removeClass("hidden");
+                    for (var type in json) {
+                        var arr = json[type];
+                        var block = $('#' + type + '_panel');
+                        if (arr.length <= 0) block.addClass("hidden");
+                        else block.removeClass("hidden");
                         for (var i = 0; i < arr.length; i++) {
                             var o = arr[i];
                             var row = $('<tr></tr>').attr("id", "trow_" + o["rid"]);
@@ -88,7 +87,7 @@
                             }
                             // create the button
                             row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm"><span class="fa fa-check"></span></button></td>');
-                            var tbody = $('#unapproved_rsos_tbody').append(row);
+                            var tbody = $('#' + type + '_tbody').append(row);
                         }
                     }
                 },

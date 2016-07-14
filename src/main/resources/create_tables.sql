@@ -42,6 +42,7 @@ CREATE TABLE `rso_data` (
   `desc`     TEXT,
   `created`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `sid`      INT          NOT NULL,
+  `uid`      INT          NOT NULL,
   `approved` TINYINT      NOT NULL DEFAULT 0,
   PRIMARY KEY (`rid`)
 );
@@ -55,7 +56,6 @@ CREATE TABLE `rso_membership` (
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `sid`     INT       NOT NULL,
   `rid`     INT       NOT NULL,
-  `uid`     INT       NOT NULL,
   KEY (`rid`),
   KEY (`sid`)
 );

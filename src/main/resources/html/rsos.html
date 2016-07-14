@@ -69,9 +69,69 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div id="unapproved_rsos_panel" class="panel panel-default">
+                            <div id="unapproved_rsos_panel" class="panel panel-default hidden">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Unapproved Organizations</h3>
+                                </div>
+
+                                <div class="panel-body panel-body-table">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-actions">
+                                            <thead>
+                                            <tr>
+                                                <th width="50">ID</th>
+                                                <th>name</th>
+                                                <th width="80">Members</th>
+                                                <th>University</th>
+                                                <th width="200">Created</th>
+                                                <th width="100">Admin</th>
+                                                <th width="100">Admin E-mail</th>
+                                                <th width="80">actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="unapproved_rsos_tbody">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div id="approved_rsos_panel" class="panel panel-default hidden">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Approved Organizations</h3>
+                                </div>
+
+                                <div class="panel-body panel-body-table">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-actions">
+                                            <thead>
+                                            <tr>
+                                                <th width="50">ID</th>
+                                                <th>name</th>
+                                                <th>Members</th>
+                                                <th>University</th>
+                                                <th width="200">Created</th>
+                                                <th width="100">Admin</th>
+                                                <th width="100">Admin E-mail</th>
+                                                <th width="80">actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="approved_rsos_tbody">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div id="your_rsos_panel" class="panel panel-default hidden">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Your Organizations</h3>
                                 </div>
 
                                 <div class="panel-body panel-body-table">
@@ -85,10 +145,10 @@
                                                 <th width="200">Created</th>
                                                 <th width="100">Admin</th>
                                                 <th width="100">Admin E-mail</th>
-                                                <th width="120">actions</th>
+                                                <th width="80">actions</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="unapproved_rsos_tbody">
+                                            <tbody id="your_rsos_tbody">
 
                                             </tbody>
                                         </table>
