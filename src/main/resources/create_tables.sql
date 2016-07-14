@@ -1,3 +1,4 @@
+# noinspection SqlNoDataSourceInspectionForFile
 # The student table
 #   sid       - student's ID number
 #   uid       - the university the student belongs to
@@ -72,8 +73,8 @@ CREATE TABLE `university` (
   `name`    VARCHAR(100) NOT NULL,
   `sid`     INT       NOT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `lat`     LONG      NOT NULL DEFAULT 0,
-  `long`    LONG      NOT NULL DEFAULT 0,
+  `lat`     DOUBLE      NOT NULL DEFAULT 0,
+  `long`    DOUBLE      NOT NULL DEFAULT 0,
   `desc`    TEXT,
   PRIMARY KEY (`uid`)
 );
