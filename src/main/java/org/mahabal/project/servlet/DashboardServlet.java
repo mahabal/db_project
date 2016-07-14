@@ -35,7 +35,7 @@ public class DashboardServlet extends ProjectServlet {
             try (Handle h = dbi.open()) {
 
                 final List<Map<String, Object>> session = h.select("select * from session " +
-                        "where uid = ? and token = ? and ip = INET6_ATON(?)", i, s, ip);
+                        "where sid = ? and token = ? and ip = INET6_ATON(?)", i, s, ip);
 
                 if (session.size() == 0) {
 
