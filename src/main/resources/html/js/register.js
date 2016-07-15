@@ -1,9 +1,5 @@
 (function (global) {
     'use strict';
-    var emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
-    var validateRegistration = function () {
-        var email = $('email').find('#register').val();
-    };
     var validation = function (str) {
         var el = $('#error-banner');
         el.removeClass("hidden");
