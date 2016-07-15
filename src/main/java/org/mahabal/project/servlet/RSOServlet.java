@@ -56,6 +56,7 @@ public class RSOServlet extends ProjectServlet {
                     final JsonArray aArr = new JsonArray();
                     final JsonArray yArr = new JsonArray();
                     final JsonArray mArr = new JsonArray();
+                    final JsonArray jArr = new JsonArray();
 
                     String a = req.getParameter("a");
                     if (a != null) {
@@ -71,17 +72,31 @@ public class RSOServlet extends ProjectServlet {
                         } else if (a.equalsIgnoreCase("create")) {
                             String name = req.getParameter("n");
                             String desc = req.getParameter("d");
-                            System.out.println("Create request received: ");
-                            System.out.println("\t" + name);
-                            System.out.println("\t\t" + desc + "\n");
+                            if (name != null && desc != null) {
+                                // get the UID of this user
+                                final List<Map<String, Object>> students = h.select("select uid from student where sid = ?", i);
+                                if (students.size() > 0) {
+                                    final Map<String, Object> student = students.get(0);
+                                    final int universityId = (Integer) student.get("uid");
+                                    System.out.println("UID: " + universityId);
+                                    try {
+                                        // store the new RSO into the database
+                                        h.insert("insert into rso_data (`name`, `desc`, `sid`, `uid`) VALUES (?,?,?,?);",
+                                                name, desc, i, universityId);
+                                    } catch (final Exception ignored) {
+                                        ignored.printStackTrace();
+                                    }
+                                    log("Created RSO: \"" + name + "\"");
+                                }
+                            }
                         }
                     }
 
                     // if root, dump all
                     if (Integer.parseInt(i) == 1) {
-                        System.out.println("root query");
                         String query = "select r.rid, r.name, r.created, s.username, s.email, r.approved, u.name as uname, " +
-                                "count(rm.rid) as members from rso_data as r, student as s, university as u, rso_membership as rm where r.sid = s.sid and r.uid = u.uid and rm.rid = r.rid group by r.rid";
+                                "count(rm.rid) as members from rso_data as r, student as s, university as u, rso_membership as rm" +
+                                " where r.sid = s.sid and r.uid = u.uid and rm.rid = r.rid group by r.rid";
                         final List<Map<String, Object>> rsos = h.select(query);
                         if (rsos.size() > 0) {
                             for (Map<String, Object> r : rsos) {
@@ -92,7 +107,7 @@ public class RSOServlet extends ProjectServlet {
                                 String email = (String) r.get("email");
                                 long members = (Long) r.get("members");
                                 Timestamp t = (Timestamp) r.get("created");
-                                boolean approved = ((Integer) r.get("approved")).equals(1);
+                                boolean approved = r.get("approved").equals(1);
                                 final JsonObject o = new JsonObject();
                                 o.add("rid", new JsonPrimitive(rid));
                                 o.add("name", new JsonPrimitive(name));
@@ -111,9 +126,11 @@ public class RSOServlet extends ProjectServlet {
 
 
                     // List the RSOs owned by this user...
-                    try {
-                        String query = "select r.rid, r.name, u.name as university, (select count(rm.sid) as memberships from rso_membership as rm where rm.rid = r.rid) as members, r.created, r.approved from rso_data as r,student as s, university as u where r.sid = ? and r.sid = s.sid and u.uid = r.uid;";
-                        final List<Map<String, Object>> rsos = h.select(query, i);
+                        String query = "select r.rid, r.name, u.name as university, " +
+                                "(select count(rm.sid) as memberships from rso_membership as rm where rm.rid = r.rid) as members, " +
+                                "r.created, r.approved from rso_data as r,student as s, university as u" +
+                                " where r.sid = ? and r.sid = s.sid and u.uid = r.uid;";
+                        List<Map<String, Object>> rsos = h.select(query, i);
                         if (rsos.size() > 0) {
                             for (Map<String, Object> r : rsos) {
                                 int rid = (Integer) r.get("rid");
@@ -132,16 +149,12 @@ public class RSOServlet extends ProjectServlet {
                                 yArr.add(o);
                             }
                         }
-                    } catch (final Exception ignored) {
-                        ignored.printStackTrace();
-                    }
 
                     // List the RSOs joined by this user...
-                    String query2 = "select rm.rid, r.name, u.name as university, (select count(rm2.rid) from rso_membership as rm2 where rm2.rid = rm.rid) as members, r.created, s.username, s.email, r.approved from rso_membership as rm, rso_data as r, university as u, student as s where rm.sid = ? and rm.rid = r.rid and r.uid = u.uid and s.sid = r.sid group by rm.rid; ";
-                    System.out.println(query2);
-                    final List<Map<String, Object>> rsos2 = h.select(query2, i);
-                    if (rsos2.size() > 0) {
-                        for (Map<String, Object> r : rsos2) {
+                    query = "select rm.rid, r.name, u.name as university, (select count(rm2.rid) from rso_membership as rm2 where rm2.rid = rm.rid) as members, r.created, s.username, s.email, r.approved from rso_membership as rm, rso_data as r, university as u, student as s where rm.sid = ? and rm.rid = r.rid and r.uid = u.uid and s.sid = r.sid group by rm.rid; ";
+                    rsos = h.select(query, i);
+                    if (rsos.size() > 0) {
+                        for (Map<String, Object> r : rsos) {
                             int rid = (Integer) r.get("rid");
                             String name = (String) r.get("name");
                             String uni = (String) r.get("university");
@@ -163,14 +176,28 @@ public class RSOServlet extends ProjectServlet {
                         }
                     }
 
+                    query = "SELECT r.rid, r.name FROM `rso_data` r, student s where s.sid = ? and s.uid = r.uid and r.rid IN (SELECT r.rid FROM rso_membership r where r.sid != ?);";
+                    rsos = h.select(query, i, i);
+                    if (rsos.size() > 0) {
+                        for (Map<String, Object> r : rsos) {
+                            int rid = (Integer) r.get("rid");
+                            String name = (String) r.get("name");
+                            final JsonObject o = new JsonObject();
+                            o.add("rid", new JsonPrimitive(rid));
+                            o.add("name", new JsonPrimitive(name));
+                            jArr.add(o);
+                        }
+                    }
+
                     final JsonObject o = new JsonObject();
                     o.add("unapproved_rsos", uArr);
                     o.add("approved_rsos", aArr);
                     o.add("owned_rsos", yArr);
                     o.add("membership_rsos", mArr);
+                    o.add("can_join", jArr);
                     resp.setStatus(HttpServletResponse.SC_OK);
                     resp.getWriter().println(o);
-                    System.out.println(o);
+
                 }
             }
         }
