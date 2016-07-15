@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `project`;
+USE project;
+
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `sid`      INT          NOT NULL AUTO_INCREMENT,
@@ -52,7 +55,7 @@ CREATE TABLE `rso_membership` (
   KEY (`rid`),
   KEY (`sid`)
 );
-INSERT INTO `rso_membership` (`sid`, `rid`) VALUES (1, 1);
+INSERT INTO `rso_membership` (`sid`, `rid`) VALUES (1, 1),  (2, 1),  (3, 1),  (4, 1),  (5, 1);
 
 DROP TABLE IF EXISTS `university`;
 CREATE TABLE `university` (
