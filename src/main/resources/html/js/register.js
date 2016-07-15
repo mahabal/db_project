@@ -33,7 +33,7 @@
                 Cookies.set("project_username", json['name'], {expires: 1});
                 Cookies.set("project_token", json['token'], {expires: 1});
                 console.log(Cookies.get("token"));
-                location = 'index2.html';
+                window.location = 'index2.html';
             },
             error: function (data) {
                 console.error("SOMETHING BROKE!");
