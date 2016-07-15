@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,7 @@ public class RSOServlet extends ProjectServlet {
 
                 } else {
 
+                    System.out.println("Recv: " + req.getParameterMap().keySet());
 
                     final JsonArray uArr = new JsonArray();
                     final JsonArray aArr = new JsonArray();
@@ -66,6 +68,12 @@ public class RSOServlet extends ProjectServlet {
                             }
                             System.out.println("Updated!");
                             resp.setStatus(HttpServletResponse.SC_OK);
+                        } else if (a.equalsIgnoreCase("create")) {
+                            String name = req.getParameter("n");
+                            String desc = req.getParameter("d");
+                            System.out.println("Create request received: ");
+                            System.out.println("\t" + name);
+                            System.out.println("\t\t" + desc + "\n");
                         }
                     }
 

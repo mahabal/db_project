@@ -30,6 +30,27 @@
         return false;
     };
 
+    var create_rso_submit_button = function () {
+        var create_rso_form = $('#create_rso_form');
+        var submit_rso_button = $('#create_rso_button');
+        submit_rso_button.click(function () {
+            $.ajax({
+                url: API_BASE_URL + '/rsos',
+                type: 'GET',
+                data: {
+                    'i': uid,
+                    's': token,
+                    'n': create_rso_form.find("#create_rso_name").val(),
+                    'd': create_rso_form.find("#create_rso_desc").val(),
+                    'a': 'create'
+                },
+                success: function (data) {
+                    console.log("nigga we made it");
+                }
+            })
+        });
+    };
+
     var initDashboard = function () {
         // use ajax to connect to the login api and make sure the session is valid
         $.ajax({
@@ -180,6 +201,7 @@
             initDashboard();
         } else if (page === 'rsos.html') {
             initRSOTables();
+            create_rso_submit_button();
         }
     };
 
