@@ -65,6 +65,7 @@ DROP TABLE IF EXISTS `university`;
 CREATE TABLE `university` (
   `uid`     INT          NOT NULL AUTO_INCREMENT,
   `name`    VARCHAR(100) NOT NULL,
+  `domain`  VARCHAR(100) NOT NULL,
   `sid`     INT          NOT NULL,
   `created` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `lat`     DOUBLE       NOT NULL DEFAULT 0,
@@ -72,6 +73,6 @@ CREATE TABLE `university` (
   `desc`    TEXT,
   PRIMARY KEY (`uid`)
 );
-INSERT INTO `university` (`name`, `sid`, `lat`, `long`, `desc`) VALUES
-  ('University of Central Florida', 1, 28.60201, -81.20058, 'Home of the Knights'),
-  ('University of South Florida', 10, 28.05916, -81.41199, 'Meh');
+INSERT INTO `university` (`name`, `domain`, `sid`, `lat`, `long`, `desc`) VALUES
+  ('University of Central Florida', 'ucf.edu', 1, 28.60201, -81.20058, 'Home of the Knights'),
+  ('University of South Florida', 'usf.edu', 10, 28.05916, -81.41199, 'Meh');
