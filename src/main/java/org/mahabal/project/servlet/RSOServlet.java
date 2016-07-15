@@ -56,33 +56,33 @@ public class RSOServlet extends ProjectServlet {
 
                     // if root, dump all
                     if (Integer.parseInt(i) == 1) {
-                        System.out.println("root query");
-                        String query = "select r.rid, r.name, r.created, s.username, s.email, r.approved, u.name as uname, count(rm.rid) as members from rso_data as r, student as s, university as u, rso_membership as rm where r.sid = s.sid and r.uid = u.uid and rm.rid = r.rid group by r.rid";
-                        final List<Map<String, Object>> rsos = h.select(query);
-                        if (rsos.size() > 0) {
-                            for (Map<String, Object> r : rsos) {
-                                int rid = (Integer) r.get("rid");
-                                String name = (String) r.get("name");
-                                String uname = (String) r.get("uname");
-                                String username = (String) r.get("username");
-                                String email = (String) r.get("email");
-                                long members = (Long)r.get("members");
-                                Timestamp t = (Timestamp) r.get("created");
-                                boolean approved = ((Integer) r.get("approved")).equals(1);
-                                final JsonObject o = new JsonObject();
-                                o.add("rid", new JsonPrimitive(rid));
-                                o.add("name", new JsonPrimitive(name));
-                                o.add("members", new JsonPrimitive(members));
-                                o.add("uname", new JsonPrimitive(uname));
-                                o.add("created", new JsonPrimitive(t.toString()));
-                                o.add("username", new JsonPrimitive(username));
-                                o.add("email", new JsonPrimitive(email));
-                                if (!approved)
-                                    uArr.add(o);
-                                else
-                                    aArr.add(o);
+                            System.out.println("root query");
+                            String query = "select r.rid, r.name, r.created, s.username, s.email, r.approved, u.name as uname, count(rm.rid) as members from rso_data as r, student as s, university as u, rso_membership as rm where r.sid = s.sid and r.uid = u.uid and rm.rid = r.rid group by r.rid";
+                            final List<Map<String, Object>> rsos = h.select(query);
+                            if (rsos.size() > 0) {
+                                for (Map<String, Object> r : rsos) {
+                                    int rid = (Integer) r.get("rid");
+                                    String name = (String) r.get("name");
+                                    String uname = (String) r.get("uname");
+                                    String username = (String) r.get("username");
+                                    String email = (String) r.get("email");
+                                    long members = (Long) r.get("members");
+                                    Timestamp t = (Timestamp) r.get("created");
+                                    boolean approved = ((Integer) r.get("approved")).equals(1);
+                                    final JsonObject o = new JsonObject();
+                                    o.add("rid", new JsonPrimitive(rid));
+                                    o.add("name", new JsonPrimitive(name));
+                                    o.add("members", new JsonPrimitive(members));
+                                    o.add("uname", new JsonPrimitive(uname));
+                                    o.add("created", new JsonPrimitive(t.toString()));
+                                    o.add("username", new JsonPrimitive(username));
+                                    o.add("email", new JsonPrimitive(email));
+                                    if (!approved)
+                                        uArr.add(o);
+                                    else
+                                        aArr.add(o);
+                                }
                             }
-                        }
                     } else {
                         // not root, lookup user in the RSO db and see if they are an admin, then just dump out
                         // rsos where they are admins
