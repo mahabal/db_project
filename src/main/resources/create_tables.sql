@@ -58,7 +58,7 @@ CREATE TABLE `rso_membership` (
   KEY (`rid`),
   KEY (`sid`)
 );
-INSERT INTO `rso_membership` (`sid`, `rid`) VALUES (1, 1), (2, 2), (6, 3),  (2, 1),  (3, 1),  (4, 1),  (5, 1);
+INSERT INTO `rso_membership` (`sid`, `rid`) VALUES (1, 1), (2, 2), (6, 3), (2, 1), (3, 1), (4, 1), (5, 1);
 
 DROP TABLE IF EXISTS `university`;
 CREATE TABLE `university` (
