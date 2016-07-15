@@ -45,7 +45,10 @@ CREATE TABLE `rso_data` (
   `approved` TINYINT      NOT NULL DEFAULT 0,
   PRIMARY KEY (`rid`)
 );
-INSERT INTO `rso_data` (`name`, `desc`, `sid`, `uid`) VALUES ('Team Instinct', 'The BEST Pokémon Go Team', 1, 1);
+INSERT INTO `rso_data` (`name`, `desc`, `sid`, `uid`) VALUES
+  ('Team Instinct', 'The BEST Pokémon Go Team', 1, 1),
+  ('Team Valor', 'The meh Pokémon Go Team', 2, 1),
+  ('Team Mystic', 'The bleh Pokémon Go Team', 6, 1);
 
 DROP TABLE IF EXISTS `rso_membership`;
 CREATE TABLE `rso_membership` (
@@ -55,7 +58,7 @@ CREATE TABLE `rso_membership` (
   KEY (`rid`),
   KEY (`sid`)
 );
-INSERT INTO `rso_membership` (`sid`, `rid`) VALUES (1, 1),  (2, 1),  (3, 1),  (4, 1),  (5, 1);
+INSERT INTO `rso_membership` (`sid`, `rid`) VALUES (1, 1), (2, 2), (6, 3),  (2, 1),  (3, 1),  (4, 1),  (5, 1);
 
 DROP TABLE IF EXISTS `university`;
 CREATE TABLE `university` (
