@@ -1,12 +1,4 @@
-# noinspection SqlNoDataSourceInspectionForFile
-# The student table
-#   sid       - student's ID number
-#   uid       - the university the student belongs to
-#   username  - the username the student created
-#   email     - the email used during registration
-#   password  - truncated sha512-salted+hashed password
-#   salt      - randomly generated salt during registration
-#   created   - the time the user account was created
+DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `sid`      INT          NOT NULL AUTO_INCREMENT,
   `uid`      INT          NOT NULL,
@@ -17,12 +9,19 @@ CREATE TABLE `student` (
   `created`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (`sid`)
 );
+INSERT INTO `student` (`uid`, `username`, `email`, `password`, `salt`) VALUES
+  (1, 'matt', 'matt@knights.ucf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (1, 'david', 'david@knights.ucf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (1, 'sean', 'sean@knights.ucf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (1, 'jennifer', 'jennifer@knights.ucf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (1, 'sarah', 'sarah@knights.ucf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (2, 'brandon', 'brandon@mail.usf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (2, 'john', 'john@mail.usf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (1, 'jane', 'jane@knights.ucf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (1, 'chelsea', 'chelsea@knights.ucf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9'),
+  (2, 'meg', 'meg@mail.usf.edu', '83344a5302438f739320fa461cdd1c87961f', 'e81c188ba0a9');
 
-# Stores session data
-#   created   - the time this session was generated (logged in)
-#   sid       - the student id this session belongs to
-#   ip        - the ip address the student was on at the time
-#   token     - the generated token for this session
+DROP TABLE IF EXISTS `session`;
 CREATE TABLE `session` (
   `created` TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `sid`     INT         NOT NULL,
@@ -32,11 +31,7 @@ CREATE TABLE `session` (
   KEY (`ip`)
 );
 
-# Stores RSO data
-#   rid       - the RSO id (created automatically)
-#   created   - when the RSO was created
-#   sid       - the student in charge of this RSO
-#   approved  - whether or not this RSO has been approved by an admin
+DROP TABLE IF EXISTS `rso_data`;
 CREATE TABLE `rso_data` (
   `rid`      INT          NOT NULL AUTO_INCREMENT,
   `name`     VARCHAR(100) NOT NULL,
@@ -47,12 +42,9 @@ CREATE TABLE `rso_data` (
   `approved` TINYINT      NOT NULL DEFAULT 0,
   PRIMARY KEY (`rid`)
 );
+INSERT INTO `rso_data` (`name`, `desc`, `sid`, `uid`) VALUES ('Team Instinct', 'The BEST Pokémon Go Team', 1, 1);
 
-# Stores RSO membership
-#    created - when the user joined the RSO
-#    sid - the user id of the user (student)
-#    rid - the rso id of the rso that the student joined
-#    uid - the university that the rso belongs to
+DROP TABLE IF EXISTS `rso_membership`;
 CREATE TABLE `rso_membership` (
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `sid`     INT       NOT NULL,
@@ -60,21 +52,19 @@ CREATE TABLE `rso_membership` (
   KEY (`rid`),
   KEY (`sid`)
 );
+INSERT INTO `rso_membership` (`sid`, `rid`) VALUES (1, 1);
 
-# Information on a university
-#   uid       - the university id, generated
-#   sid       - the super_admin that created this university
-#   created   - the time when the university was created
-#   lat       - the latitude of the university
-#   long      - the longitude of the university
-#   desc      - the description of the university
+DROP TABLE IF EXISTS `university`;
 CREATE TABLE `university` (
-  `uid`     INT       NOT NULL AUTO_INCREMENT,
+  `uid`     INT          NOT NULL AUTO_INCREMENT,
   `name`    VARCHAR(100) NOT NULL,
-  `sid`     INT       NOT NULL,
-  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `lat`     DOUBLE      NOT NULL DEFAULT 0,
-  `long`    DOUBLE      NOT NULL DEFAULT 0,
+  `sid`     INT          NOT NULL,
+  `created` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `lat`     DOUBLE       NOT NULL DEFAULT 0,
+  `long`    DOUBLE       NOT NULL DEFAULT 0,
   `desc`    TEXT,
   PRIMARY KEY (`uid`)
 );
+INSERT INTO `university` (`name`, `sid`, `lat`, `long`, `desc`) VALUES
+  ('University of Central Florida', 1, 28.60201, -81.20058, 'Home of the Knights'),
+  ('University of South Florida', 10, 28.05916, -81.41199, 'Meh');
