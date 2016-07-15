@@ -1,5 +1,34 @@
 (function (global) {
     'use strict';
+    var token;
+    var uid;
+    var validate = function () {
+
+        // read the cookies into variables for easy access
+        token = Cookies.get("project_token");
+        uid = Cookies.get("project_uid");
+
+        // use ajax to connect to the login api and make sure the session is valid
+        $.ajax({
+            url: API_BASE_URL + "/login",
+            type: 'GET',
+            data: {
+                'i': uid,
+                's': token
+            },
+            success: function () {
+                // session checks out ... do nothing, let the page load like normal
+                window.location = "index2.html";
+            },
+            error: function (response) {
+                Cookies.remove("project_token");
+                Cookies.remove("project_uid");
+                Cookies.remove("project_username");
+            }
+        });
+
+        return false;
+    };
     var validation = function (str) {
         var el = $('#error-banner');
         el.removeClass("hidden");
@@ -88,6 +117,7 @@
         });
     };
     var init = function () {
+        validate();
         initRegisterButton();
         initLoginButton();
     };
