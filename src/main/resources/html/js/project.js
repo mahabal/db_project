@@ -28,7 +28,7 @@
             });
 
             return false;
-        }
+        };
 
         var initDashboard = function() {
             // use ajax to connect to the login api and make sure the session is valid
@@ -44,13 +44,15 @@
                     console.log(json);
 
                     for (var key in json) {
-                        // get the block
-                        var block = $('#' + key + "_block");
-                        if (json[key] < 0) block.addClass("hidden");
-                        else block.removeClass("hidden");
-                        // get the text
-                        var text = $('#' + key);
-                        text.text(json[key]);
+                        if (json.hasOwnProperty(key)) {
+                            // get the block
+                            var block = $('#' + key + "_block");
+                            if (json[key] < 0) block.addClass("hidden");
+                            else block.removeClass("hidden");
+                            // get the text
+                            var text = $('#' + key);
+                            text.text(json[key]);
+                        }
                     }
 
                 },
@@ -59,7 +61,7 @@
                     logout();
                 }
             });
-        }
+        };
 
         var initRSOTables = function() {
             // use ajax to connect to the login api and make sure the session is valid
@@ -74,20 +76,24 @@
                     var json = JSON.parse(data);
                     console.log(json);
                     for (var type in json) {
-                        var arr = json[type];
-                        var block = $('#' + type + '_panel');
-                        if (arr.length <= 0) block.addClass("hidden");
-                        else block.removeClass("hidden");
-                        for (var i = 0; i < arr.length; i++) {
-                            var o = arr[i];
-                            var row = $('<tr></tr>').attr("id", "trow_" + o["rid"]);
-                            for (var key in o) {
-                                var element = $('<td></td>').text(o[key]);
-                                row.append(element);
+                        if (json.hasOwnProperty(type)) {
+                            var arr = json[type];
+                            var block = $('#' + type + '_panel');
+                            if (arr.length <= 0) block.addClass("hidden");
+                            else block.removeClass("hidden");
+                            for (var i = 0; i < arr.length; i++) {
+                                var o = arr[i];
+                                var row = $('<tr></tr>').attr("id", "trow_" + o["rid"]);
+                                for (var key in o) {
+                                    if (o.hasOwnProperty(key)) {
+                                        var element = $('<td></td>').text(o[key]);
+                                        row.append(element);
+                                    }
+                                }
+                                // create the button
+                                row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm"><span class="fa fa-check"></span></button></td>');
+                                var tbody = $('#' + type + '_tbody').append(row);
                             }
-                            // create the button
-                            row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm"><span class="fa fa-check"></span></button></td>');
-                            var tbody = $('#' + type + '_tbody').append(row);
                         }
                     }
                 },
@@ -151,7 +157,7 @@
             Cookies.remove("project_token");
             Cookies.remove("project_uid");
             Cookies.remove("project_username");
-            location = 'login.html';
+            window.location = 'login.html';
         };
 
         var initLogoutButton = function() {
