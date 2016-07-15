@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
+import org.skife.jdbi.v2.sqlobject.SqlBatch;
+import org.skife.jdbi.v2.sqlobject.SqlObjectBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class UserListServlet extends ProjectServlet {
             try (Handle h = dbi.open()) {
 
                 final List<Map<String, Object>> session = h.select("select * from session " +
-                        "where uid = ? and token = ? and ip = INET6_ATON(?)", i, s, ip);
+                        "where sid = ? and token = ? and ip = INET6_ATON(?)", i, s, ip);
 
                 if (session.size() == 0) {
 
@@ -57,7 +59,11 @@ public class UserListServlet extends ProjectServlet {
                         // rso is null, so we want to query ALL of the users ... this should be super-admin only
                         // so check if id == 1.
                         if (Integer.parseInt(i) == 1) {
-                            final List<Map<String, Object>> users = h.select("select uid, username, email, created from student;");
+                            final List<Map<String, Object>> users = h.select("select " +
+                                    "s.sid, s.username, s.email, u.name as university, s.created, " +
+                                    "(select count(rm.sid) from rso_membership as rm where rm.sid = s.sid) as memberships " +
+                                    "from student as s, university as u, rso_membership as rm " +
+                                    "where s.uid = u.uid group by s.sid;");
                             for (final Map<String, Object> map : users) {
                                 final JsonObject user = new JsonObject();
                                 for (final Map.Entry<String, Object> e : map.entrySet()) {
