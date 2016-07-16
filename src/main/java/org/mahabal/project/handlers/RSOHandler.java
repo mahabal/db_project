@@ -49,8 +49,7 @@ public class RSOHandler extends AbstractProjectHandler {
                 String name = req.getParameter("n");
                 String desc = req.getParameter("d");
                 if (name != null && desc != null) {
-                    int created = organizations.create(name, desc, student);
-                    System.out.println("Created RSO: " + name + ". (" + created + " updated)");
+                    organizations.create(name, desc, student);
                 }
             }
         }
