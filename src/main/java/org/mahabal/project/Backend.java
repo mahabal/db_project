@@ -1,6 +1,7 @@
 package org.mahabal.project;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.log4j.BasicConfigurator;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -12,6 +13,9 @@ public class Backend {
     private final ServletHandler handler = new ServletHandler();
 
     private Backend() throws Exception {
+
+        // uncomment this to see Jetty + HikariCP + DBI output
+//        BasicConfigurator.configure();
 
         // setup the connection to the database
         HikariDataSource ds = new HikariDataSource();
