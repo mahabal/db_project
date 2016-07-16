@@ -51,6 +51,12 @@ public class RSOHandler extends AbstractProjectHandler {
                 if (name != null && desc != null) {
                     organizations.create(name, desc, student);
                 }
+            } else if (a.equals("join") && student != null && student.getUid() > 0) {
+                String num = req.getParameter("n");
+                if (num != null) {
+                    System.out.println(student.getUsername() + " wants to join " + Integer.parseInt(num));
+                    organizations.join(Integer.parseInt(num), student);
+                }
             }
         }
 
@@ -145,17 +151,16 @@ public class RSOHandler extends AbstractProjectHandler {
             }
         }
 
-        query = "SELECT r.rid, r.name FROM `rso_data` r, student s where s.sid = ? and s.uid = r.uid and r.rid IN (SELECT r.rid FROM rso_membership r where r.sid != ?);";
-        rsos = h.select(query, session.getSid(), session.getSid());
-        if (rsos.size() > 0) {
-            for (Map<String, Object> r : rsos) {
-                int rid = (Integer) r.get("rid");
-                String name = (String) r.get("name");
+        try {
+            List<Organization> canJoins = organizations.canJoin(student);
+            for (Organization org : canJoins) {
                 final JsonObject o = new JsonObject();
-                o.add("rid", new JsonPrimitive(rid));
-                o.add("name", new JsonPrimitive(name));
+                o.add("rid", new JsonPrimitive(org.getRid()));
+                o.add("name", new JsonPrimitive(org.getName()));
                 jArr.add(o);
             }
+        } catch (final Exception ignored) {
+            ignored.printStackTrace();
         }
 
         final JsonObject o = new JsonObject();

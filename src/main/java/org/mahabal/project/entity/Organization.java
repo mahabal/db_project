@@ -96,6 +96,12 @@ public class Organization {
         @SqlUpdate("update rso_data r, university u set r.approved = 1 where r.rid = :rid and r.uid = u.uid and u.sid = :s.sid")
         int approve(@Bind("rid") int rid, @BindBean("s") Student s);
 
+        @SqlUpdate("insert into rso_membership (`rid`, `sid`) values (:rid, :s.sid)")
+        int join(@Bind("rid") int rid, @BindBean("s") Student s);
+
+        @SqlQuery("select * from rso_data where uid = :s.uid and rid not in (select distinct(rid) from rso_membership rm where rm.sid = :s.sid)")
+        List<Organization> canJoin(@BindBean("s") Student s);
+
         @SqlUpdate("insert into rso_data (`name`, `desc`, `sid`, `uid`) values (:name, :desc, :s.sid, :s.uid)")
         int create(@Bind("name") String name, @Bind("desc") String desc, @BindBean("s") Student s);
 

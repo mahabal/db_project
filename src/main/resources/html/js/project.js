@@ -51,6 +51,8 @@
         });
     };
 
+
+
     var initDashboard = function () {
         // use ajax to connect to the login api and make sure the session is valid
         $.ajax({
@@ -89,49 +91,57 @@
         for (var type in json) {
             if (json.hasOwnProperty(type)) {
                 var arr = json[type];
-                var block = $('#' + type + '_panel');
-                if (arr.length <= 0) block.addClass("hidden");
-                else block.removeClass("hidden");
-                for (var i = 0; i < arr.length; i++) {
-                    var o = arr[i];
-                    var row = $('<tr></tr>').attr("id", type + "_row_" + o["rid"]);
-                    for (var key in o) {
-                        if (o.hasOwnProperty(key)) {
-                            var element = $('<td></td>').attr("id", "td_" + i + "_" + key).text(o[key]);
-                            if (type === 'owned_rsos') {
-                                if (key === 'approved') {
-                                    if (o[key] === 0) {
-                                        element.text('').append('<span class=\"label label-warning\">Unapproved</span>');
-                                    } else if (o[key] === 1) {
-                                        element.text('').append('<span class=\"label label-success\">Approved</span>');
+                    var block = $('#' + type + '_panel');
+                    if (arr.length <= 0) block.addClass("hidden");
+                    else block.removeClass("hidden");
+                    for (var i = 0; i < arr.length; i++) {
+                        var o = arr[i];
+                        var row = $('<tr></tr>').attr("id", type + "_row_" + o["rid"]);
+                        for (var key in o) {
+                            if (o.hasOwnProperty(key)) {
+                                var element = $('<td></td>').attr("id", "td_" + i + "_" + key).text(o[key]);
+                                if (type === 'owned_rsos') {
+                                    if (key === 'approved') {
+                                        if (o[key] === 0) {
+                                            element.text('').append('<span class=\"label label-warning\">Unapproved</span>');
+                                        } else if (o[key] === 1) {
+                                            element.text('').append('<span class=\"label label-success\">Approved</span>');
+                                        }
+                                    }
+                                } else if (type === 'membership_rsos') {
+                                    if (key === 'approved') {
+                                        element.text('');
+                                        if (o[key] === 0) {
+                                            row.addClass("warning")
+                                        }
                                     }
                                 }
-                            } else if (type === 'membership_rsos') {
-                                if (key === 'approved') {
-                                    element.text('');
-                                    if (o[key] === 0) {
-                                        row.addClass("warning")
-                                    }
-                                }
+                                row.append(element);
                             }
-                            row.append(element);
                         }
-                    }
-                    if (type === 'unapproved_rsos') {
-                        // create the button
+                        if (type === 'unapproved_rsos') {
+                            // create the button
 
-                        row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm ' + (o['members'] < 5 ? 'disabled"' : '" onclick="Project.approve_row(\'' + type + '_row_' + o["rid"] + '\');"') + '><span class="fa fa-check"></span></button></td>');
-                        if (o['members'] >= 5) row.addClass("success");
+                            row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm ' + (o['members'] < 5 ? 'disabled"' : '" onclick="Project.approve_row(\'' + type + '_row_' + o["rid"] + '\');"') + '><span class="fa fa-check"></span></button></td>');
+                            if (o['members'] >= 5) row.addClass("success");
+                        }
+                        if (type === 'can_join') {
+                            // create the button
+
+                            row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm " onclick="Project.join_row(\'' + type + '_row_' + o["rid"] + '\');"><span class="fa fa-thumbs-up"></span></button></td>');
+                            // if (o['members'] >= 5) row.addClass("success");
+                        }
+                        var tbody = $('#' + type + '_tbody').append(row);
                     }
-                    var tbody = $('#' + type + '_tbody').append(row);
-                }
+
+
+
+
+                var table = $('#' + type + '_table');
+                table.addClass('datatable');
+                table.DataTable();
             }
-
-            var table = $('#' + type + '_table');
-            table.addClass('datatable');
-            table.DataTable();
         }
-
     };
 
     var approve_row = function (row) {
@@ -157,8 +167,31 @@
                 });
             });
         });
+    };
 
+    var join_row = function (row) {
+        var box = $("#mb-approve-row");
+        box.addClass("open");
+        box.find(".mb-control-yes").on("click", function () {
+            box.removeClass("open");
+            $('#' + row).hide("medium", function () {
+                $(this).remove();
+                $.ajax({
+                    url: API_BASE_URL + "/rsos",
+                    type: 'GET',
+                    data: {
+                        'i': uid,
+                        's': token,
+                        'a': 'join',
+                        'n': row.split("_").pop()
+                    },
+                    success: location.reload(),
+                    error: function (data) {
 
+                    }
+                });
+            });
+        });
     };
 
     var initRSOTables = function () {
@@ -207,7 +240,8 @@
 
     global.Project = {
         init: init,
-        approve_row: approve_row
+        approve_row: approve_row,
+        join_row: join_row
     }
 
 })(this);
