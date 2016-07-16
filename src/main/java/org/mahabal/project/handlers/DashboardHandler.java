@@ -5,6 +5,7 @@ import com.google.gson.JsonPrimitive;
 import org.mahabal.project.entity.Organization;
 import org.mahabal.project.entity.Session;
 import org.mahabal.project.entity.Student;
+import org.mahabal.project.entity.University;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
@@ -36,6 +37,9 @@ public class DashboardHandler extends AbstractProjectHandler {
         Organization.Queries organizations = h.attach(Organization.Queries.class);
         o.addProperty("total_rsos", organizations.count());
         o.addProperty("unapproved_rsos", organizations.unapprovedCount());
+
+        University.Queries universities = h.attach(University.Queries.class);
+        o.addProperty("total_universities", universities.count());
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
