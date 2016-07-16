@@ -68,11 +68,11 @@ CREATE TABLE `university` (
   `domain`  VARCHAR(100) NOT NULL,
   `sid`     INT          NOT NULL,
   `created` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `lat`     DOUBLE       NOT NULL DEFAULT 0,
-  `long`    DOUBLE       NOT NULL DEFAULT 0,
+  `latitude`     DOUBLE       NOT NULL DEFAULT 0,
+  `longitude`    DOUBLE       NOT NULL DEFAULT 0,
   `desc`    TEXT,
   PRIMARY KEY (`uid`)
 );
-INSERT INTO `university` (`name`, `domain`, `sid`, `lat`, `long`, `desc`) VALUES
+INSERT INTO `university` (`name`, `domain`, `sid`, `latitude`, `longitude`, `desc`) VALUES
   ('University of Central Florida', 'ucf.edu', 1, 28.60201, -81.20058, 'Home of the Knights'),
   ('University of South Florida', 'usf.edu', 10, 28.05916, -81.41199, 'Meh');
