@@ -11,6 +11,7 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class University {
 
@@ -91,6 +92,13 @@ public class University {
         @SqlUpdate("insert into university (name, domain, sid, latitude, longitude, desc) values (:name, :domain, :s.sid, :latitude, :longitude, :desc)")
         int create(@Bind("name") String n, @Bind("domain") String domain, @Bind("latitude") double latitude,
                    @Bind("longitude") double longitude, @Bind("desc") String desc, @BindBean("s") Student s);
+
+        @SqlQuery("select count(distinct(rid)) from rso_data where uid = :uid")
+        int organizationCount(@Bind("uid") int uid);
+
+        @SqlQuery("select * from rso_data where uid = :uid")
+        @RegisterMapper(Organization.Mapper.class)
+        List<Organization> organizations(@Bind("uid") int uid);
 
     }
 

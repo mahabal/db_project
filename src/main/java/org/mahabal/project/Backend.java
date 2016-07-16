@@ -32,6 +32,7 @@ public class Backend {
         handler.addServletWithMapping(new ServletHolder(new UserHandler(dbi)), "/users");
         handler.addServletWithMapping(new ServletHolder(new DashboardHandler(dbi)), "/dashboard");
         handler.addServletWithMapping(new ServletHolder(new RSOHandler(dbi)), "/rsos");
+        handler.addServletWithMapping(new ServletHolder(new UniversityHandler(dbi)), "/university");
 
     }
 
