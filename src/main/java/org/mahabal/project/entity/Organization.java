@@ -112,6 +112,12 @@ public class Organization {
         @RegisterMapper(Student.Mapper.class)
         Student admin(@Bind("rid") int rid);
 
+        @SqlQuery("select * from rso_data where sid = :sid")
+        List<Organization> getByAdminId(@Bind("sid") int sid);
+
+        @SqlQuery("select * from rso_data where sid = :s.sid")
+        List<Organization> getByAdmin(@BindBean("s") Student s);
+
     }
 
 

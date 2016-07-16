@@ -31,7 +31,7 @@
             <li>
                 <a href="index2.html"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
             </li>
-            <li>
+            <li id="show_organizations">
                 <a href="rsos.html"><span class="fa fa-users"></span> <span class="xn-text">Organizations</span></a>
             </li>
             <li>
@@ -66,11 +66,32 @@
         <!-- PAGE CONTENT WRAPPER -->
         <div class="page-content-wrap">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Stats</h3>
-                </div>
                 <div class="panel-body">
+                    <!--<div class="col-md-3">
+
+                        <div class="widget widget-warning widget-carousel">
+                            <div class="owl-carousel" id="owl-example">
+                                <div>
+                                    <div class="widget-title">Total Organizations</div>
+                                    <div id='total_rsos' class="widget-int"></div>
+                                </div>
+                                <div>
+                                    <div class="widget-title">Returned</div>
+                                    <div class="widget-subtitle">Visitors</div>
+                                    <div class="widget-int">1,695</div>
+                                </div>
+                                <div>
+                                    <div class="widget-title">New</div>
+                                    <div class="widget-subtitle">Visitors</div>
+                                    <div class="widget-int">1,977</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>-->
                     <div class="row">
+
+
                         <div class="col-md-3">
                             <div id="total_universities_block" class="widget widget-default widget-item-icon">
                                 <div class="widget-item-left">
@@ -185,7 +206,7 @@
 <!-- START PLUGINS -->
 
 <script type="text/javascript">
-        API_BASE_URL = "http://localhost:8080";
+    API_BASE_URL = "http://localhost:8080";
 
 </script>
 
@@ -198,11 +219,15 @@
 <!-- END PLUGINS -->
 
 <!-- THIS PAGE PLUGINS -->
-
+<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
 <!-- END PAGE PLUGINS -->
 
 <!-- START TEMPLATE -->
+
+<script type="text/javascript" src="js/settings.js"></script>
 <script type="text/javascript" src="js/plugins.js"></script>
 <script type="text/javascript" src="js/actions.js"></script>
 <!-- END TEMPLATE -->

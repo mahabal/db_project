@@ -103,12 +103,22 @@ public class University {
         @RegisterMapper(Organization.Mapper.class)
         List<Organization> organizations(@Bind("uid") int uid);
 
+        @SqlQuery("select * from university u where u.sid = :s.sid")
+        List<University> getByAdmin(@BindBean("s") Student s);
+
+        @SqlQuery("select * from university where uid = :uid")
+        University getById(@Bind("uid") int uid);
+
+        @SqlQuery("select name from university where uid = :uid")
+        String getNameById(@Bind("uid") int uid);
+
     }
 
     public static class Mapper implements ResultSetMapper<University> {
         @Override
         public University map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-            return null;
+            return new University(r.getInt("uid"), r.getString("name"), r.getString("domain"), r.getInt("sid"), r.getTimestamp("created"),
+                    r.getDouble("latitude"), r.getDouble("longitude"), r.getString("desc"));
         }
     }
 

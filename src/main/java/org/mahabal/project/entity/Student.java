@@ -14,23 +14,23 @@ import java.sql.Timestamp;
 
 public class Student {
 
-    public static final String DB_NAME = "student";
-
     private int sid;
     private int uid;
     private String username;
     private String password;
+    private String email;
     private String salt;
     private Timestamp created;
 
     public Student(final int sid, final int uid, final String username, final String passwordHash, final String salt,
-                    final Timestamp created) {
+                    final Timestamp created, final String email) {
         this.sid = sid;
         this.uid = uid;
         this.username = username;
         this.password = passwordHash;
         this.salt = salt;
         this.created = created;
+        this.email = email;
     }
 
     public int getSid() {
@@ -61,9 +61,14 @@ public class Student {
         this.username = username;
     }
 
-    /**
-     * Created by maffew on 7/16/16.
-     */
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @RegisterMapper(Mapper.class)
     public static interface Queries {
 
@@ -88,7 +93,8 @@ public class Student {
                     r.getString("username"),
                     r.getString("password"),
                     r.getString("salt"),
-                    r.getTimestamp("created")
+                    r.getTimestamp("created"),
+                    r.getString("email")
             );
         }
 

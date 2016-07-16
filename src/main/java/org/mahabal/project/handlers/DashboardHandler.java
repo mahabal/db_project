@@ -27,19 +27,21 @@ public class DashboardHandler extends AbstractProjectHandler {
 
         final JsonObject o = new JsonObject();
 
-        Student.Queries students = h.attach(Student.Queries.class);
-        o.add("total_students", new JsonPrimitive(students.count()));
+        if (student.getUid() == 1) {
+            Student.Queries students = h.attach(Student.Queries.class);
+            o.add("total_students", new JsonPrimitive(students.count()));
 
-        Session.Queries sessions = h.attach(Session.Queries.class);
-        o.add("total_sessions", new JsonPrimitive(sessions.count()));
-        o.addProperty("active_sessions", sessions.activeCount());
+            Session.Queries sessions = h.attach(Session.Queries.class);
+            o.add("total_sessions", new JsonPrimitive(sessions.count()));
+            o.addProperty("active_sessions", sessions.activeCount());
 
-        Organization.Queries organizations = h.attach(Organization.Queries.class);
-        o.addProperty("total_rsos", organizations.count());
-        o.addProperty("unapproved_rsos", organizations.unapprovedCount());
+            Organization.Queries organizations = h.attach(Organization.Queries.class);
+            o.addProperty("total_rsos", organizations.count());
+            o.addProperty("unapproved_rsos", organizations.unapprovedCount());
 
-        University.Queries universities = h.attach(University.Queries.class);
-        o.addProperty("total_universities", universities.count());
+            University.Queries universities = h.attach(University.Queries.class);
+            o.addProperty("total_universities", universities.count());
+        }
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);

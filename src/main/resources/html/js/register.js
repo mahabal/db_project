@@ -16,14 +16,15 @@
                 'i': uid,
                 's': token
             },
-            success: function () {
+            success: function (data) {
                 // session checks out ... do nothing, let the page load like normal
+                console.log("ok" + data);
                 window.location = "index2.html";
             },
             error: function (response) {
                 Cookies.remove("project_token");
                 Cookies.remove("project_uid");
-                Cookies.remove("project_username");
+                // Cookies.remove("project_username");
             }
         });
 
@@ -57,11 +58,13 @@
                 'm': passwordSha512
             },
             success: function (data) {
+                console.log("SUCCESS!");
                 var json = JSON.parse(data);
+                console.log("data:"  + data);
+                console.log("json" + json);
                 Cookies.set("project_uid", json['uid'], {expires: 1});
-                Cookies.set("project_username", json['name'], {expires: 1});
                 Cookies.set("project_token", json['token'], {expires: 1});
-                console.log(Cookies.get("token"));
+                Cookies.set("project_username", json['name'], {expires: 1});
                 window.location = 'index2.html';
             },
             error: function (data) {
