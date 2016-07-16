@@ -34,36 +34,23 @@ public class RSOHandler extends AbstractProjectHandler {
         final JsonArray mArr = new JsonArray();
         final JsonArray jArr = new JsonArray();
 
+        // attach the handle to the organization queries
+        Organization.Queries organizations = h.attach(Organization.Queries.class);
+
         String a = req.getParameter("a");
         if (a != null) {
             if (a.equalsIgnoreCase("approve")) {
                 String num = req.getParameter("n");
-                System.out.println("approve " + num);
                 if (num != null) {
-                    System.out.println("maybe");
-                    h.update("update rso_data as r, university as u set r.approved = 1 where r.rid = ? and r.uid = u.uid and u.sid = ?", num, session.getSid());
+                    organizations.approve(Integer.parseInt(num), student);
                 }
-                System.out.println("Updated!");
                 resp.setStatus(HttpServletResponse.SC_OK);
-            } else if (a.equalsIgnoreCase("create")) {
+            } else if (a.equalsIgnoreCase("create") && student != null && student.getUid() > 0) {
                 String name = req.getParameter("n");
                 String desc = req.getParameter("d");
                 if (name != null && desc != null) {
-                    // get the UID of this user
-                    final List<Map<String, Object>> students = h.select("select uid from student where sid = ?", session.getSid());
-                    if (students.size() > 0) {
-                        final Map<String, Object> student = students.get(0);
-                        final int universityId = (Integer) student.get("uid");
-                        System.out.println("UID: " + universityId);
-                        try {
-                            // store the new RSO into the database
-                            h.insert("insert into rso_data (`name`, `desc`, `sid`, `uid`) VALUES (?,?,?,?);",
-                                    name, desc, session.getSid(), universityId);
-                        } catch (final Exception ignored) {
-                            ignored.printStackTrace();
-                        }
-                        log("Created RSO: \"" + name + "\"");
-                    }
+                    int created = organizations.create(name, desc, student);
+                    System.out.println("Created RSO: " + name + ". (" + created + " updated)");
                 }
             }
         }
@@ -107,9 +94,9 @@ public class RSOHandler extends AbstractProjectHandler {
                 "r.created, r.approved from rso_data as r,student as s, university as u" +
                 " where r.sid = ? and r.sid = s.sid and u.uid = r.uid;";
         Queries queries = h.attach(Queries.class);
-        List<Organization>  organizations = queries.getOrganizationsByAdminId(session.getSid());
-        System.out.println("This user is an admin of: " + organizations.size() + " organizations.");
-        System.out.println("\t" + organizations.stream().map(Organization::getName).collect(Collectors.joining(", ")));
+        List<Organization> administers = queries.getOrganizationsByAdminId(student.getSid());
+        System.out.println("This user is an admin of: " + administers.size() + " organizations.");
+        System.out.println("\t" + administers.stream().map(Organization::getName).collect(Collectors.joining(", ")));
         List<Map<String, Object>> rsos = h.select(query, session.getSid());
         if (rsos.size() > 0) {
             for (Map<String, Object> r : rsos) {

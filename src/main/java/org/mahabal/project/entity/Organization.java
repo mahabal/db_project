@@ -1,7 +1,10 @@
 package org.mahabal.project.entity;
 
 import org.skife.jdbi.v2.StatementContext;
+import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
@@ -86,6 +89,11 @@ public class Organization {
         @SqlQuery("select count(*) from rso_data where approved = 0")
         long unapprovedCount();
 
+        @SqlUpdate("update rso_data r, university u set r.approved = 1 where r.rid = :rid and r.uid = u.uid and u.sid = :s.sid")
+        int approve(@Bind("rid") int rid, @BindBean("s") Student s);
+
+        @SqlUpdate("insert into rso_data (`name`, `desc`, `sid`, `uid`) values (:name, :desc, :s.sid, :s.uid)")
+        int create(@Bind("name") String name, @Bind("desc") String desc, @BindBean("s") Student s);
 
     }
 
