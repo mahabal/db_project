@@ -11,6 +11,7 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Organization {
 
@@ -83,6 +84,9 @@ public class Organization {
     @RegisterMapper(Mapper.class)
     public static interface Queries {
 
+        @SqlQuery("select * from rso_data")
+        List<Organization> all();
+
         @SqlQuery("select count(*) from rso_data")
         long count();
 
@@ -94,6 +98,13 @@ public class Organization {
 
         @SqlUpdate("insert into rso_data (`name`, `desc`, `sid`, `uid`) values (:name, :desc, :s.sid, :s.uid)")
         int create(@Bind("name") String name, @Bind("desc") String desc, @BindBean("s") Student s);
+
+        @SqlQuery("select count(distinct(sid)) from rso_membership where rid = :rid")
+        long memberCount(@Bind("rid") int rid);
+
+        @SqlQuery("select * from student s, rso_data r where s.sid = r.sid and r.rid = :rid")
+        @RegisterMapper(Student.Mapper.class)
+        Student admin(@Bind("rid") int rid);
 
     }
 

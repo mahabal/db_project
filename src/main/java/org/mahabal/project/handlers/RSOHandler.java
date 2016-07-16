@@ -56,6 +56,9 @@ public class RSOHandler extends AbstractProjectHandler {
 
         // if root, dump all
         if (session.getSid() == 1) {
+
+
+
             String query = "select r.rid, r.name, r.created, s.username, s.email, r.approved, u.name as uname, " +
                     "count(rm.rid) as members from rso_data as r, student as s, university as u, rso_membership as rm" +
                     " where r.sid = s.sid and r.uid = u.uid and rm.rid = r.rid group by r.rid";
