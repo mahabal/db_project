@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.mahabal.project.servlet.*;
+import org.mahabal.project.handlers.*;
 import org.skife.jdbi.v2.DBI;
 
 public class Backend {
@@ -23,11 +23,11 @@ public class Backend {
         final DBI dbi = new DBI(ds);
 
         // setup all of the handlers
-        handler.addServletWithMapping(new ServletHolder(new RegisterServlet(dbi)), "/register");
-        handler.addServletWithMapping(new ServletHolder(new LoginServlet(dbi)), "/login");
-        handler.addServletWithMapping(new ServletHolder(new UserListServlet(dbi)), "/users");
-        handler.addServletWithMapping(new ServletHolder(new DashboardServlet(dbi)), "/dashboard");
-        handler.addServletWithMapping(new ServletHolder(new RSOServlet(dbi)), "/rsos");
+        handler.addServletWithMapping(new ServletHolder(new RegistrationHandler(dbi)), "/register");
+        handler.addServletWithMapping(new ServletHolder(new LoginHandler(dbi)), "/login");
+        handler.addServletWithMapping(new ServletHolder(new UserHandler(dbi)), "/users");
+        handler.addServletWithMapping(new ServletHolder(new DashboardHandler(dbi)), "/dashboard");
+        handler.addServletWithMapping(new ServletHolder(new RSOHandler(dbi)), "/rsos");
 
     }
 

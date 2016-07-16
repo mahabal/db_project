@@ -1,4 +1,4 @@
-package org.mahabal.project.servlet;
+package org.mahabal.project.handlers;
 
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class RegisterServlet extends ProjectServlet {
+public class RegistrationHandler extends AbstractProjectHandler {
 
-    public RegisterServlet(DBI dbi) {
+    public RegistrationHandler(DBI dbi) {
         super(dbi);
     }
 

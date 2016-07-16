@@ -1,4 +1,4 @@
-package org.mahabal.project.servlet;
+package org.mahabal.project.handlers;
 
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
@@ -14,9 +14,9 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
-public class LoginServlet extends ProjectServlet {
+public class LoginHandler extends AbstractProjectHandler {
 
-    public LoginServlet(DBI dbi) {
+    public LoginHandler(DBI dbi) {
         super(dbi);
     }
 
@@ -115,8 +115,7 @@ public class LoginServlet extends ProjectServlet {
 
                 if (tokens.size() == 0) {
                     // no token exists, so create one (36 chars) and save it into the database
-                    token = Hashing.sha512().hashString(id + "-" + ip + "-" + Math.random(),
-                            Charset.forName("UTF-8")).toString().substring(0, 36);
+                    token = generateHashedString(id + "-" + ip + "-" + Math.random(), 36);
                     h.insert("insert into session (sid, ip, token) values (?,INET6_ATON(?),?)",
                             id, ip, token);
                 } else {
@@ -143,6 +142,10 @@ public class LoginServlet extends ProjectServlet {
 
         }
 
+    }
+
+    public static String generateHashedString(final String s, final int size) {
+        return Hashing.sha512().hashString(s, Charset.forName("UTF-8")).toString().substring(0, size);
     }
 
 }
