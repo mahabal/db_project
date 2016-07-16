@@ -86,6 +86,9 @@ public class University {
     @RegisterMapper(Mapper.class)
     public interface Queries {
 
+        @SqlQuery("select uid from university where domain = :domain")
+        int getUidByDomain(@Bind("domain") String domain);
+
         @SqlQuery("select count(*) from university")
         long count();
 

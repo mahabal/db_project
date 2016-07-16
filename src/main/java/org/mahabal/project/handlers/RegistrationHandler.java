@@ -3,6 +3,7 @@ package org.mahabal.project.handlers;
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.mahabal.project.entity.University;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
@@ -36,45 +37,66 @@ public class RegistrationHandler extends AbstractProjectHandler {
             return;
         }
 
-        try (Handle h = dbi.open()) {
+        if (email.split("@").length == 2 && email.endsWith(".edu")) {
 
-            // query the `student` table to search for the username
-            List<Map<String, Object>> user = h.select("select uid from student where username = ?",
-                    username.toLowerCase());
+            try (Handle h = dbi.open()) {
 
-            // see how many users are in the result set
-            if (user.size() == 0) {
+                // query the `student` table to search for the username
+                List<Map<String, Object>> user = h.select("select uid from student where username = ?",
+                        username.toLowerCase());
 
-                // there are no users in the result set, that means we can create the user.
-                // generate a salt to use with hashing the password, then trim it to 12 characters
-                final String salt = Hashing.sha512().hashString(String.valueOf(new Random().nextDouble()),
-                        Charset.forName("UTF-8")).toString().substring(0, 12);
-                // generate a newly salted hash from the md5 password, them trim it to 36 characters
-                final String pwHash = Hashing.sha512().hashString(salt + md5pass, Charset.forName("UTF-8"))
-                        .toString().substring(0, 36);
+                // see how many users are in the result set
+                if (user.size() == 0) {
 
-                // insert data into the student table
-                h.insert("insert into student (username, password, salt, email) values(?,?,?,?)",
-                        username, pwHash, salt, email);
-                System.out.println("Student created: " + username);
+                    String[] email_parts = email.split("@")[1].split("\\.");
+                    if (email_parts.length < 2) {
+                        resp.setStatus(HttpServletResponse.SC_CONFLICT);
+                        final JsonObject obj = new JsonObject();
+                        obj.addProperty("error", "E-mail address has an invalid domain");
+                        resp.getWriter().println(obj);
+                        return;
+                    }
+                    String domain = email_parts[email_parts.length - 2] + "." + email_parts[email_parts.length - 1];
 
-                // set the response code and print out the object
-                resp.setStatus(HttpServletResponse.SC_OK);
+                    University.Queries universities = h.attach(University.Queries.class);
+                    int uid = universities.getUidByDomain(domain);
 
-            } else {
+                    System.out.println("DOMAIN: " + domain + " IS FOR: " + uid);
 
-                final JsonObject obj = new JsonObject();
-                obj.add("error", new JsonPrimitive("Username is already in use."));
-                resp.setStatus(HttpServletResponse.SC_CONFLICT);
-                resp.getWriter().println(obj);
-                System.out.println(obj);
-                return;
+                    // there are no users in the result set, that means we can create the user.
+                    // generate a salt to use with hashing the password, then trim it to 12 characters
+                    final String salt = Hashing.sha512().hashString(String.valueOf(new Random().nextDouble()),
+                            Charset.forName("UTF-8")).toString().substring(0, 12);
+                    // generate a newly salted hash from the md5 password, them trim it to 36 characters
+                    final String pwHash = Hashing.sha512().hashString(salt + md5pass, Charset.forName("UTF-8"))
+                            .toString().substring(0, 36);
+
+                    // insert data into the student table
+                    h.insert("insert into student (uid, username, password, salt, email) values(?,?,?,?,?)",
+                            uid, username, pwHash, salt, email);
+                    System.out.println("Student created: " + username);
+
+                    // set the response code and print out the object
+                    resp.setStatus(HttpServletResponse.SC_OK);
+
+                } else {
+
+                    final JsonObject obj = new JsonObject();
+                    obj.add("error", new JsonPrimitive("Username is already in use."));
+                    resp.setStatus(HttpServletResponse.SC_CONFLICT);
+                    resp.getWriter().println(obj);
+                    System.out.println(obj);
+                    return;
+
+                }
 
             }
-
+        } else {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            final JsonObject obj = new JsonObject();
+            obj.addProperty("error", "Invalid E-mail format, must be a .edu address.");
+            resp.getWriter().println(obj);
         }
-
-        resp.setStatus(HttpServletResponse.SC_OK);
 
     }
 
