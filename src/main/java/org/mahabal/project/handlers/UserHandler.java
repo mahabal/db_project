@@ -3,6 +3,8 @@ package org.mahabal.project.handlers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.mahabal.project.entity.Session;
+import org.mahabal.project.entity.Student;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
@@ -34,10 +36,10 @@ public class UserHandler extends AbstractProjectHandler {
 
             try (Handle h = dbi.open()) {
 
-                final List<Map<String, Object>> session = h.select("select * from session " +
-                        "where sid = ? and token = ? and ip = INET6_ATON(?)", i, s, ip);
+                Session.Queries q = h.attach(Session.Queries.class);
+                Session _session = q.get(Integer.parseInt(i), ip, s);
 
-                if (session.size() == 0) {
+                if (_session == null) {
 
                     // no session found, so do nothing
                     resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -74,18 +76,13 @@ public class UserHandler extends AbstractProjectHandler {
                                 }
                             }
 
-                            final List<Map<String, Object>> users = h.select("select " +
-                                    "s.sid, s.username, s.email, u.name as university, s.created, " +
-                                    "(select count(rm.sid) from rso_membership as rm where rm.sid = s.sid) as memberships " +
-                                    "from student as s, university as u, rso_membership as rm " +
-                                    "where s.uid = u.uid group by s.sid;");
-                            for (final Map<String, Object> map : users) {
-                                final JsonObject user = new JsonObject();
-                                for (final Map.Entry<String, Object> e : map.entrySet()) {
-                                    user.add(e.getKey(), new JsonPrimitive(e.getValue().toString()));
-                                }
-                                userArr.add(user);
-                            }
+
+                            Student.Queries query = h.attach(Student.Queries.class);
+                            Student student = query.findById(1);
+                            System.out.println("Name is: " + student.getUsername());
+                            student.setUsername("Matthew Balwant");
+                            int updated = query.update(student);
+                            System.out.println("Updated: " + updated + " rows.");
                         }
                     }
 

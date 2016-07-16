@@ -21,7 +21,7 @@ public class DashboardHandler extends AbstractProjectHandler {
     }
 
     @Override
-    protected void doValidatedGet(HttpServletRequest req, HttpServletResponse resp, Handle h, String i, String s)
+    protected void doValidatedGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         final JsonObject o = new JsonObject();

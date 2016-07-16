@@ -2,6 +2,8 @@ package org.mahabal.project.handlers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.mahabal.project.entity.Session;
+import org.mahabal.project.entity.Student;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
@@ -16,6 +18,10 @@ import java.util.Map;
 public abstract class AbstractProjectHandler extends HttpServlet {
 
     final DBI dbi;
+
+    protected Student student;
+    protected Session session;
+    protected Handle h;
 
     AbstractProjectHandler(final DBI dbi) {
         this.dbi = dbi;
@@ -34,30 +40,35 @@ public abstract class AbstractProjectHandler extends HttpServlet {
         String i = req.getParameter("i");
         String s = req.getParameter("s");
         if (i != null && s != null) {
+
+            int id = Integer.parseInt(i);
+
             try (Handle h = dbi.open()) {
 
-                final List<Map<String, Object>> session = h.select("select student.username from session, student " +
-                        "where session.sid = ? and session.token = ? and session.ip = INET6_ATON(?) and " +
-                        "session.sid = student.sid", i, s, ip);
+                this.h = h;
 
-                if (session.size() == 0) {
+                this.student = h.attach(Student.Queries.class).findById(id);
+                this.session = h.attach(Session.Queries.class).get(id, ip, s);
 
-                    // no session found, so do nothing
+                if (session == null || student == null) {
+
+                    // no session or student was found
+                    final JsonObject error = new JsonObject();
+                    error.add("error", new JsonPrimitive("Invalid Session"));
                     resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    final JsonObject obj = new JsonObject();
-                    obj.add("error", new JsonPrimitive("Invalid session."));
-                    resp.getWriter().println(obj);
+                    resp.getWriter().println(error);
 
                 } else {
 
-                    doValidatedGet(req, resp, h, i, s);
+                    // session and student are valid
+                    doValidatedGet(req, resp);
 
                 }
             }
         }
     }
 
-    protected void doValidatedGet(HttpServletRequest req, HttpServletResponse resp,
-                                           Handle h, String i, String s) throws ServletException, IOException { };
+    protected void doValidatedGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException { }
 
 }
