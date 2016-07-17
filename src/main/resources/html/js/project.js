@@ -209,8 +209,48 @@
                 logout();
             }
         });
-    }
+    };
 
+
+    var initUniversity = function () {
+        // use ajax to connect to the login api and make sure the session is valid
+        $.ajax({
+            url: API_BASE_URL + "/university",
+            type: 'GET',
+            data: {
+                'i': uid,
+                's': token
+            },
+            success: function(data) {
+                console.log(data);
+                var json = JSON.parse(data);
+                for (var o in json) {
+                    if (json.hasOwnProperty(o)) {
+                        if (o !== 'image') {
+                            var element = $('#' + o);
+                            element.text(json[o]);
+                        }
+                    }
+                }
+
+                $('#image_img').attr('src', json['image']);
+
+                if ($("#google_ptm_map").length > 0) {
+                    var gPTMCords = new google.maps.LatLng(json['latitude'], json['longitude']);
+                    var gPTMOptions = {zoom: 13, center: gPTMCords, mapTypeId: google.maps.MapTypeId.ROADMAP}
+                    var gPTM = new google.maps.Map(document.getElementById("google_ptm_map"), gPTMOptions);
+
+                    var cords = new google.maps.LatLng(json['latitude'], json['longitude']);
+                    var marker = new google.maps.Marker({position: cords, map: gPTM, title: "Marker 1"});
+                }
+
+            },
+            error: function (response) {
+                // session is not valid ... purge everything and then load the login screen.
+                logout();
+            }
+        });
+    };
 
     var logout = function () {
         Cookies.remove("project_token");
@@ -235,6 +275,8 @@
         } else if (page === 'rsos.html') {
             initRSOTables();
             create_rso_submit_button();
+        } else if (page === 'university.html') {
+            initUniversity();
         }
     };
 

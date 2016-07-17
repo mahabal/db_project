@@ -31,8 +31,11 @@
             <li>
                 <a href="index2.html"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
             </li>
-            <li>
+            <li id="show_organizations_nav">
                 <a href="rsos.html"><span class="fa fa-users"></span> <span class="xn-text">Organizations</span></a>
+            </li>
+            <li id="show_university_nav">
+                <a href="university.html"><span class="fa fa-building"></span> <span class="xn-text">University</span></a>
             </li>
             <li>
                 <a id="logout-link" href="#"><span class="fa fa-lock"></span> <span class="xn-text">Logout</span></a>
@@ -127,7 +130,7 @@
                         </div>
                     </div>
 
-                    <div id="owned_rsos_panel" class="panel panel-default">
+                    <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Your Managed Organizations</h3>
                             <button class="btn btn-success btn-condensed pull-right" data-toggle="modal"
@@ -157,7 +160,7 @@
                         </div>
                     </div>
 
-                    <div id="mebership_rsos_panel" class="panel panel-default">
+                    <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Membership</h3>
                             <button class="btn btn-success btn-condensed pull-right" data-toggle="modal"
@@ -347,7 +350,6 @@
 
 <script type="text/javascript">
     API_BASE_URL = "http://localhost:8080";
-
 </script>
 
 <script src="js/plugins/cookies/js.cookie.js"></script>

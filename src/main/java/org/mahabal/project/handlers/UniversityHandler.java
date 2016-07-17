@@ -27,8 +27,15 @@ public class UniversityHandler extends AbstractProjectHandler {
 
         if (student.getUid() > 0) {
             University.Queries universities = h.attach(University.Queries.class);
+            University university = universities.getById(student.getUid());
+            o.addProperty("description", university.getDesc());
             o.addProperty("rso_count", universities.organizationCount(student.getUid()));
-            o.addProperty("studentCount", universities.studentCount(student.getUid()));
+            o.addProperty("student_count", universities.studentCount(student.getUid()));
+            o.addProperty("latitude", university.getLatitude());
+            o.addProperty("longitude", university.getLongitude());
+            o.addProperty("university_name", university.getName());
+            o.addProperty("motto", university.getMotto());
+            o.addProperty("image", university.getImage());
         } else {
             // student is not yet in a university
         }

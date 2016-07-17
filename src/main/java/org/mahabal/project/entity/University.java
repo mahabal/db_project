@@ -23,8 +23,10 @@ public class University {
     private final double latitude;
     private final double longitude;
     private String desc;
+    private String motto;
+    private String image;
 
-    public University(int uid, String name, String domain, int sid, Timestamp created, double latitude, double longitude, String desc) {
+    public University(int uid, String name, String domain, int sid, Timestamp created, double latitude, double longitude, String desc, String motto, String image) {
         this.uid = uid;
         this.name = name;
         this.domain = domain;
@@ -33,6 +35,24 @@ public class University {
         this.latitude = latitude;
         this.longitude = longitude;
         this.desc = desc;
+        this.motto = motto;
+        this.image = image;
+    }
+
+    public String getMotto() {
+        return motto;
+    }
+
+    public void setMotto(String motto) {
+        this.motto = motto;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getUid() {
@@ -124,7 +144,7 @@ public class University {
         @Override
         public University map(int index, ResultSet r, StatementContext ctx) throws SQLException {
             return new University(r.getInt("uid"), r.getString("name"), r.getString("domain"), r.getInt("sid"), r.getTimestamp("created"),
-                    r.getDouble("latitude"), r.getDouble("longitude"), r.getString("desc"));
+                    r.getDouble("latitude"), r.getDouble("longitude"), r.getString("desc"), r.getString("motto"), r.getString("image"));
         }
     }
 
