@@ -34,7 +34,11 @@
                 <a href="rsos.html"><span class="fa fa-users"></span> <span class="xn-text">Organizations</span></a>
             </li>
             <li id="show_university_nav">
-                <a href="university.html"><span class="fa fa-building"></span> <span class="xn-text">University</span></a>
+                <a href="university.html"><span class="fa fa-building"></span> <span
+                        class="xn-text">University</span></a>
+            </li>
+            <li id="show_events_nav">
+                <a href="events.html"><span class="fa fa-calendar"></span> <span class="xn-text">Events</span></a>
             </li>
             <li>
                 <a id="logout-link" href="#"><span class="fa fa-lock"></span> <span class="xn-text">Logout</span></a>
@@ -73,11 +77,13 @@
                     <div class="panel panel-default">
                         <div class="panel-body profile">
                             <div class="profile-image">
-                                <img id="image_img" src="https://upload.wikimedia.org/wikipedia/en/a/a0/UCF_Knightro_logo.png"/>
+                                <img id="image_img"
+                                     src="https://upload.wikimedia.org/wikipedia/en/a/a0/UCF_Knightro_logo.png"/>
                             </div>
                             <div class="profile-data">
                                 <div id='university_name' class="profile-data-name">University of Central Florida</div>
-                                <div id='motto' class="profile-data-title" style="color: #FFF;">Reach for the Stars</div>
+                                <div id='motto' class="profile-data-title" style="color: #FFF;">Reach for the Stars
+                                </div>
                             </div>
                             <div class="profile-controls">
                                 <a href="#" class="profile-control-left twitter"><span class="fa fa-twitter"></span></a>
@@ -92,9 +98,9 @@
 
                             <!-- START GOOGLE MAP WITH MARKER -->
                             <a class="list-group-item"><span class="fa fa-location-arrow"></span> Location</a>
-                                <div class="panel-body panel-body-map">
-                                    <div id="google_ptm_map" style="width: 100%; height: 300px;"></div>
-                                </div>
+                            <div class="panel-body panel-body-map">
+                                <div id="google_ptm_map" style="width: 100%; height: 300px;"></div>
+                            </div>
                             <!-- END GOOGLE MAP WITH MARKER -->
                         </div>
 
@@ -121,33 +127,23 @@
                         </div>
 
                     </div>
-
-                    <div id="stats_panel" class="panel panel-default">
-
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Stats</h3>
-                        </div>
-
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label"> Students</label>
-                                <div class="col-md-10">
-                                    <label id="student_count" class="control-label">0</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2 control-label"> Organizations</label>
-                                <div class="col-md-10">
-                                    <label id="rso_count" class="control-label">0</label>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-                    <!-- END TIMELINE -->
 
-                </div>
+                    <div class="col-md-3">
+                        <div id="stats_panel" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Stats</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group border-bottom">
+                                    <li class="list-group-item">Students<span id="student_count" class="pull-right"></span></li>
+                                    <li class="list-group-item">Organizations<span id="rso_count" class="pull-right"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- END TIMELINE -->
 
             </div>
 
