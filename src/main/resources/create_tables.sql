@@ -91,17 +91,21 @@ INSERT INTO `university` (`name`, `domain`, `sid`, `latitude`, `longitude`, `mot
 
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
-  `eid`           INT          NOT NULL AUTO_INCREMENT,
-  `name`          VARCHAR(100) NOT NULL,
-  `link`          TEXT,
-  `description`   TEXT         NOT NULL,
-  `created`       TIMESTAMP    NOT NULL DEFAULT current_timestamp(),
-  `date`          TIMESTAMP    NOT NULL,
-  `location`      VARCHAR(100) NOT NULL,
-  `latitude`      DOUBLE       NOT NULL DEFAULT 0,
-  `longitude`     DOUBLE       NOT NULL DEFAULT 0,
-  `contact`       VARCHAR(100),
-  `contact_email` VARCHAR(100)
+  `eid`          INT          NOT NULL AUTO_INCREMENT,
+  `scope`        TINYINT      NOT NULL DEFAULT 1,
+  `aid`          INT          NOT NULL DEFAULT 0,
+  `name`         VARCHAR(100) NOT NULL,
+  `desc`         TEXT         NOT NULL,
+  `created`      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `date`         TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `location`     VARCHAR(100) NOT NULL,
+  `latitude`     DOUBLE       NOT NULL DEFAULT 0,
+  `longitude`    DOUBLE       NOT NULL DEFAULT 0,
+  `contactname`  VARCHAR(100),
+  `contactphone` VARCHAR(16),
+  `contactemail` VARCHAR(100),
+  `tags`         TEXT,
+  PRIMARY KEY (`eid`)
 );
-INSERT INTO `events` (`name`, `link`, `description`, `date`, `location`, `latitude`, `longitude`, `contact`, `contact_email`)  values
-  ('STARRALK - Intensive Russian Program', 'http://events.ucf.edu/event/207163/startalk-intensive-russian-program/', );
+
+
