@@ -222,7 +222,6 @@
                 's': token
             },
             success: function(data) {
-                console.log(data);
                 var json = JSON.parse(data);
                 for (var o in json) {
                     if (json.hasOwnProperty(o)) {

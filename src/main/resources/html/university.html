@@ -71,64 +71,212 @@
         <!-- PAGE CONTENT WRAPPER -->
         <div class="page-content-wrap">
 
-            <div class="row">
-                <div class="col-md-3">
+            <div id="create_university" class="panel panel-default">
 
+                <!-- START WIZARD WITH VALIDATION -->
+                <form class="form-horizontal">
                     <div class="panel panel-default">
-                        <div class="panel-body profile">
-                            <div class="profile-image">
-                                <img id="image_img"
-                                     src="https://upload.wikimedia.org/wikipedia/en/a/a0/UCF_Knightro_logo.png"/>
-                            </div>
-                            <div class="profile-data">
-                                <div id='university_name' class="profile-data-name">University of Central Florida</div>
-                                <div id='motto' class="profile-data-title" style="color: #FFF;">Reach for the Stars
-                                </div>
-                            </div>
-                            <div class="profile-controls">
-                                <a href="#" class="profile-control-left twitter"><span class="fa fa-twitter"></span></a>
-                                <a href="#" class="profile-control-right facebook"><span class="fa fa-facebook"></span></a>
-                            </div>
-                        </div>
-                        <div class="panel-body list-group border-bottom">
-                            <a href="#" class="list-group-item active"><span class="fa fa-bar-chart-o"></span>Information</a>
-                            <a href="#" class="list-group-item"><span class="fa fa-tasks"></span> Events <span
-                                    id='all_events' class="badge badge-default">0</span></a>
-                            <a href="#" class="list-group-item"><span class="fa fa-calendar"></span> Calendar</a>
-
-                            <!-- START GOOGLE MAP WITH MARKER -->
-                            <a class="list-group-item"><span class="fa fa-location-arrow"></span> Location</a>
-                            <div class="panel-body panel-body-map">
-                                <div id="google_ptm_map" style="width: 100%; height: 300px;"></div>
-                            </div>
-                            <!-- END GOOGLE MAP WITH MARKER -->
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-md-9">
-
-                    <!-- START TIMELINE -->
-                    <div id="information_panel" class="panel panel-default">
-
                         <div class="panel-heading">
-                            <h3 class="panel-title">Information</h3>
+                            <h3 class="panel-title"><strong>Create</strong> a University</h3>
+                            <ul class="panel-controls">
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            <p>It appears you are not registered into a university based on the fact that you are not
+                            using a recognized e-mail domain. Please fill in the following form and submit a university
+                            for review. After submitting the form you will be presented with a status page every time you
+                            visit this page until your university has been approved by the webmaster.</p>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Name</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                    <span class="input-group-addon"><span
+                                                            class="fa fa-pencil"></span></span>
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                            <span class="help-block">The name of the University</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Motto</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <div class="input-group">
+                                                    <span class="input-group-addon"><span
+                                                            class="fa fa-quote-right"></span></span>
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                            <span class="help-block">The Univsersity Motto</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Image</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <div class="input-group">
+                                                    <span class="input-group-addon"><span
+                                                            class="fa fa-image"></span></span>
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                            <span class="help-block">URL to an image to use for the logo</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Description</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <textarea class="form-control" rows="5"></textarea>
+                                            <span class="help-block">Description of the University (HTML Enabled)</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Domain</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <div class="input-group">
+                                                    <span class="input-group-addon"><span
+                                                            class="fa fa-globe"></span></span>
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                            <span class="help-block">All student emails must end with this</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Datepicker</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                <input type="text" class="form-control datepicker"
+                                                       value="2015-11-01">
+                                            </div>
+                                            <span class="help-block">Click on input field to get datepicker</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Tags</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="tagsinput" value="First,Second,Third"/>
+                                            <span class="help-block">Default textarea field</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Select</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control select">
+                                                <option>Option 1</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+                                            <span class="help-block">Select box example</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Checkbox</label>
+                                        <div class="col-md-9">
+                                            <label class="check"><input type="checkbox" class="icheckbox"
+                                                                        checked="checked"/> Checkbox title</label>
+                                            <span class="help-block">Checkbox sample, easy to use</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-default">Clear Form</button>
+                            <button class="btn btn-primary pull-right">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- END WIZARD WITH VALIDATION -->
+
+            </div>
+
+            <div id="status_university" class="panel panel-default hide">
+                <div class="row">
+                    <div id="status_panel" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">University Status</h3>
+                        </div>
+                        <div class="panel-body">
+                            Status
                         </div>
 
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label class="col-md-2 control-label"> Description</label>
-                                <div class="col-md-10">
-                                    <label id="description" class="control-label">...</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="display_university" class="panel panel-default hidden">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body profile">
+                                <div class="profile-image">
+                                    <img id="image_img"
+                                         src="https://upload.wikimedia.org/wikipedia/en/a/a0/UCF_Knightro_logo.png"/>
+                                </div>
+                                <div class="profile-data">
+                                    <div id='university_name' class="profile-data-name">University of Central Florida
+                                    </div>
+                                    <div id='motto' class="profile-data-title" style="color: #FFF;">Reach for the Stars
+                                    </div>
+                                </div>
+                                <div class="profile-controls">
+                                    <a href="#" class="profile-control-left twitter"><span class="fa fa-twitter"></span></a>
+                                    <a href="#" class="profile-control-right facebook"><span
+                                            class="fa fa-facebook"></span></a>
                                 </div>
                             </div>
+                            <div class="panel-body list-group border-bottom">
+                                <a href="#" class="list-group-item active"><span class="fa fa-bar-chart-o"></span>Information</a>
+                                <a href="#" class="list-group-item"><span class="fa fa-tasks"></span> Events <span
+                                        id='all_events' class="badge badge-default">0</span></a>
+                                <a href="#" class="list-group-item"><span class="fa fa-calendar"></span> Calendar</a>
+                                <!-- START GOOGLE MAP WITH MARKER -->
+                                <a class="list-group-item"><span class="fa fa-location-arrow"></span> Location</a>
+                                <div class="panel-body panel-body-map">
+                                    <div id="google_ptm_map" style="width: 100%; height: 300px;"></div>
+                                </div>
+                                <!-- END GOOGLE MAP WITH MARKER -->
+                            </div>
                         </div>
-
                     </div>
-                    </div>
+                    <div class="col-md-9">
+                        <div id="information_panel" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Information</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label"> Description</label>
+                                    <div class="col-md-10">
+                                        <label id="description" class="control-label">...</label>
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div id="stats_panel" class="panel panel-default">
                             <div class="panel-heading">
@@ -136,15 +284,15 @@
                             </div>
                             <div class="panel-body">
                                 <ul class="list-group border-bottom">
-                                    <li class="list-group-item">Students<span id="student_count" class="pull-right"></span></li>
-                                    <li class="list-group-item">Organizations<span id="rso_count" class="pull-right"></span></li>
+                                    <li class="list-group-item">Students<span id="student_count"
+                                                                              class="pull-right"></span></li>
+                                    <li class="list-group-item">Organizations<span id="rso_count"
+                                                                                   class="pull-right"></span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <!-- END TIMELINE -->
-
+                </div>
             </div>
 
         </div>
@@ -203,9 +351,14 @@
 
 <script type="text/javascript" src="js/plugins/cookies/js.cookie.js"></script>
 <script type="text/javascript" src="js/project.js"></script>
-<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
-<script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
+<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>
+<script type="text/javascript" src="js/plugins/jquery-validation/jquery.validate.js"></script>
 <script type="text/javascript" src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
 <!-- END THIS PAGE PLUGINS-->
 
@@ -214,7 +367,6 @@
 </script>
 
 <!-- START TEMPLATE -->
-<script type="text/javascript" src="js/settings.js"></script>
 
 <script type="text/javascript" src="js/plugins.js"></script>
 <script type="text/javascript" src="js/actions.js"></script>
