@@ -97,7 +97,11 @@ public class University {
                    @Bind("longitude") double longitude, @Bind("desc") String desc, @BindBean("s") Student s);
 
         @SqlQuery("select count(distinct(rid)) from rso_data where uid = :uid")
-        int organizationCount(@Bind("uid") int uid);
+        long organizationCount(@Bind("uid") int uid);
+
+
+        @SqlQuery("select count(distinct(sid)) from student where uid = :uid")
+        long studentCount(@Bind("uid") int uid);
 
         @SqlQuery("select * from rso_data where uid = :uid")
         @RegisterMapper(Organization.Mapper.class)
@@ -111,6 +115,8 @@ public class University {
 
         @SqlQuery("select name from university where uid = :uid")
         String getNameById(@Bind("uid") int uid);
+
+
 
     }
 

@@ -25,8 +25,13 @@ public class UniversityHandler extends AbstractProjectHandler {
 
         final JsonObject o = new JsonObject();
 
-        University.Queries universities = h.attach(University.Queries.class);
-        o.add("rso_count", new JsonPrimitive(universities.organizationCount(student.getUid())));
+        if (student.getUid() > 0) {
+            University.Queries universities = h.attach(University.Queries.class);
+            o.addProperty("rso_count", universities.organizationCount(student.getUid()));
+            o.addProperty("studentCount", universities.studentCount(student.getUid()));
+        } else {
+            // student is not yet in a university
+        }
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
