@@ -3,6 +3,8 @@ package org.mahabal.project.handlers;
 import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.mahabal.project.entity.Session;
+import org.mahabal.project.entity.Student;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
@@ -38,11 +40,13 @@ public class LoginHandler extends AbstractProjectHandler {
         if (i != null && s != null) {
             try (Handle h = dbi.open()) {
 
-                final List<Map<String, Object>> session = h.select("select student.username from session, student " +
-                        "where session.sid = ? and session.token = ? and session.ip = INET6_ATON(?) and " +
-                        "session.sid = student.sid", i, s, ip);
+                int sid = Integer.parseInt(i);
 
-                if (session.size() == 0) {
+
+                student = h.attach(Student.Queries.class).findById(sid);
+                session = h.attach(Session.Queries.class).get(sid, ip, s);
+
+                if (session == null || student == null) {
                     // no session found, so do nothing
                     resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     final JsonObject obj = new JsonObject();
@@ -52,15 +56,14 @@ public class LoginHandler extends AbstractProjectHandler {
                     return;
                 } else {
 
-                    final String name = (String) session.get(0).get("username");
-
                     resp.setStatus(HttpServletResponse.SC_OK);
                     final JsonObject obj = new JsonObject();
-                    obj.add("sid", new JsonPrimitive(i));
-                    obj.add("name", new JsonPrimitive(name));
-                    obj.add("token", new JsonPrimitive(s));
+                    obj.addProperty("sid", student.getSid());
+                    obj.addProperty("uid", student.getUid());
+                    obj.addProperty("name", student.getUsername());
+                    obj.addProperty("token", session.getToken());
                     resp.getWriter().println(obj);
-                    debug("(" + name + ") session validated");
+                    debug("(" + student.getUsername() + ") session validated " + obj.entrySet());
                     return;
 
                 }
