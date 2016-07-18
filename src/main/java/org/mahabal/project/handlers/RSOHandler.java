@@ -63,12 +63,34 @@ public class RSOHandler extends AbstractProjectHandler {
         if (session.getSid() == 1) {
 
             // user is root, so dump all unapproved and approved organizations
-                for (final Organization o : organizations.all()) {
+            for (final Organization o : organizations.all()) {
+                // get this organization's admin
+                Student admin = organizations.admin(o.getRid());
+                final JsonObject org = new JsonObject();
+                // get this organizations university
+                University u = universities.getById(o.getUid());
+                org.addProperty("rid", o.getRid());
+                org.addProperty("name", o.getName());
+                org.addProperty("members", organizations.memberCount(o.getRid()));
+                org.addProperty("uname", u.getName());
+                org.addProperty("created", o.getCreated().toString());
+                org.addProperty("username", admin.getUsername());
+                org.addProperty("email", admin.getEmail());
+                if (o.getApproved() == 0) uArr.add(org);
+                else aArr.add(org);
+
+            }
+
+        } else {
+
+            // not root, so get only the rsos for the universities that this user administers
+            List<University> unis = universities.getByAdmin(student);
+            for (University u : unis) {
+                List<Organization> rsos = universities.organizations(u.getUid());
+                for (final Organization o : rsos) {
                     // get this organization's admin
                     Student admin = organizations.admin(o.getRid());
                     final JsonObject org = new JsonObject();
-                    // get this organizations university
-                    University u = universities.getById(o.getUid());
                     org.addProperty("rid", o.getRid());
                     org.addProperty("name", o.getName());
                     org.addProperty("members", organizations.memberCount(o.getRid()));
@@ -78,30 +100,8 @@ public class RSOHandler extends AbstractProjectHandler {
                     org.addProperty("email", admin.getEmail());
                     if (o.getApproved() == 0) uArr.add(org);
                     else aArr.add(org);
-
                 }
-
-        } else {
-
-                // not root, so get only the rsos for the universities that this user administers
-                List<University> unis = universities.getByAdmin(student);
-                for (University u : unis) {
-                    List<Organization> rsos = universities.organizations(u.getUid());
-                    for (final Organization o : rsos) {
-                        // get this organization's admin
-                        Student admin = organizations.admin(o.getRid());
-                        final JsonObject org = new JsonObject();
-                        org.addProperty("rid", o.getRid());
-                        org.addProperty("name", o.getName());
-                        org.addProperty("members", organizations.memberCount(o.getRid()));
-                        org.addProperty("uname", u.getName());
-                        org.addProperty("created", o.getCreated().toString());
-                        org.addProperty("username", admin.getUsername());
-                        org.addProperty("email", admin.getEmail());
-                        if (o.getApproved() == 0) uArr.add(org);
-                        else aArr.add(org);
-                    }
-                }
+            }
         }
         //endregion
 

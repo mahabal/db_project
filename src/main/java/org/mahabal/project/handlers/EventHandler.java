@@ -1,11 +1,6 @@
 package org.mahabal.project.handlers;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import org.mahabal.project.entity.Organization;
-import org.mahabal.project.entity.Session;
-import org.mahabal.project.entity.Student;
-import org.mahabal.project.entity.University;
 import org.skife.jdbi.v2.DBI;
 
 import javax.servlet.ServletException;

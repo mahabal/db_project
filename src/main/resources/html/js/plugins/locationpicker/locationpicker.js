@@ -1,4 +1,4 @@
-(function ( $ ) {
+(function ($) {
 
     /**
      * Holds google map object and related utility entities.
@@ -48,7 +48,7 @@
          * @param gmapContext - context
          * @param options
          */
-        drawCircle: function(gmapContext, center, radius, options) {
+        drawCircle: function (gmapContext, center, radius, options) {
             if (gmapContext.circle != null) {
                 gmapContext.circle.setMap(null);
             }
@@ -75,14 +75,14 @@
          * @param location
          * @param callback
          */
-        setPosition: function(gMapContext, location, callback) {
+        setPosition: function (gMapContext, location, callback) {
             gMapContext.location = location;
             gMapContext.marker.setPosition(location);
             gMapContext.map.panTo(location);
             this.drawCircle(gMapContext, location, gMapContext.radius, {});
             if (gMapContext.settings.enableReverseGeocode) {
-                gMapContext.geodecoder.geocode({latLng: gMapContext.location}, function(results, status){
-                    if (status == google.maps.GeocoderStatus.OK && results.length > 0){
+                gMapContext.geodecoder.geocode({latLng: gMapContext.location}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                         gMapContext.locationName = results[0].formatted_address;
                         gMapContext.addressComponents =
                             GmUtility.address_component_from_google_geocode(results[0].address_components);
@@ -98,12 +98,12 @@
             }
 
         },
-        locationFromLatLng: function(lnlg) {
+        locationFromLatLng: function (lnlg) {
             return {latitude: lnlg.lat(), longitude: lnlg.lng()}
         },
-        address_component_from_google_geocode: function(address_components) {
+        address_component_from_google_geocode: function (address_components) {
             var result = {};
-            for (var i = address_components.length-1; i>=0; i--) {
+            for (var i = address_components.length - 1; i >= 0; i--) {
                 var component = address_components[i];
                 // Postal code
                 if (component.types.indexOf('postal_code') >= 0) {
@@ -148,7 +148,7 @@
         return $(domObj).data("locationpicker");
     }
 
-    function updateInputValues(inputBinding, gmapContext){
+    function updateInputValues(inputBinding, gmapContext) {
         if (!inputBinding) return;
         var currentLocation = GmUtility.locationFromLatLng(gmapContext.location);
         if (inputBinding.latitudeInput) {
@@ -167,11 +167,13 @@
 
     function setupInputListenersInput(inputBinding, gmapContext) {
         if (inputBinding) {
-            if (inputBinding.radiusInput){
-                inputBinding.radiusInput.on("change", function(e) {
-                    if (!e.originalEvent) { return }
+            if (inputBinding.radiusInput) {
+                inputBinding.radiusInput.on("change", function (e) {
+                    if (!e.originalEvent) {
+                        return
+                    }
                     gmapContext.radius = $(this).val();
-                    GmUtility.setPosition(gmapContext, gmapContext.location, function(context){
+                    GmUtility.setPosition(gmapContext, gmapContext.location, function (context) {
                         context.settings.onchanged.apply(gmapContext.domContainer,
                             [GmUtility.locationFromLatLng(context.location), context.radius, false]);
                     });
@@ -180,33 +182,37 @@
             if (inputBinding.locationNameInput && gmapContext.settings.enableAutocomplete) {
                 var blur = false;
                 gmapContext.autocomplete = new google.maps.places.Autocomplete(inputBinding.locationNameInput.get(0));
-                google.maps.event.addListener(gmapContext.autocomplete, 'place_changed', function() {
+                google.maps.event.addListener(gmapContext.autocomplete, 'place_changed', function () {
                     blur = false;
                     var place = gmapContext.autocomplete.getPlace();
                     if (!place.geometry) {
                         gmapContext.settings.onlocationnotfound(place.name);
                         return;
                     }
-                    GmUtility.setPosition(gmapContext, place.geometry.location, function(context) {
+                    GmUtility.setPosition(gmapContext, place.geometry.location, function (context) {
                         updateInputValues(inputBinding, context);
                         context.settings.onchanged.apply(gmapContext.domContainer,
                             [GmUtility.locationFromLatLng(context.location), context.radius, false]);
                     });
                 });
-                if(gmapContext.settings.enableAutocompleteBlur) {
-                    inputBinding.locationNameInput.on("change", function(e) {
-                        if (!e.originalEvent) { return }
+                if (gmapContext.settings.enableAutocompleteBlur) {
+                    inputBinding.locationNameInput.on("change", function (e) {
+                        if (!e.originalEvent) {
+                            return
+                        }
                         blur = true;
                     });
-                    inputBinding.locationNameInput.on("blur", function(e) {
-                        if (!e.originalEvent) { return }
-                        setTimeout(function() {
+                    inputBinding.locationNameInput.on("blur", function (e) {
+                        if (!e.originalEvent) {
+                            return
+                        }
+                        setTimeout(function () {
                             var address = $(inputBinding.locationNameInput).val();
                             if (address.length > 5 && blur) {
                                 blur = false;
-                                gmapContext.geodecoder.geocode({'address': address}, function(results, status) {
-                                    if(status == google.maps.GeocoderStatus.OK  && results && results.length) {
-                                        GmUtility.setPosition(gmapContext, results[0].geometry.location, function(context) {
+                                gmapContext.geodecoder.geocode({'address': address}, function (results, status) {
+                                    if (status == google.maps.GeocoderStatus.OK && results && results.length) {
+                                        GmUtility.setPosition(gmapContext, results[0].geometry.location, function (context) {
                                             updateInputValues(inputBinding, context);
                                             context.settings.onchanged.apply(gmapContext.domContainer,
                                                 [GmUtility.locationFromLatLng(context.location), context.radius, false]);
@@ -219,18 +225,22 @@
                 }
             }
             if (inputBinding.latitudeInput) {
-                inputBinding.latitudeInput.on("change", function(e) {
-                    if (!e.originalEvent) { return }
-                    GmUtility.setPosition(gmapContext, new google.maps.LatLng($(this).val(), gmapContext.location.lng()), function(context){
+                inputBinding.latitudeInput.on("change", function (e) {
+                    if (!e.originalEvent) {
+                        return
+                    }
+                    GmUtility.setPosition(gmapContext, new google.maps.LatLng($(this).val(), gmapContext.location.lng()), function (context) {
                         context.settings.onchanged.apply(gmapContext.domContainer,
                             [GmUtility.locationFromLatLng(context.location), context.radius, false]);
                     });
                 });
             }
             if (inputBinding.longitudeInput) {
-                inputBinding.longitudeInput.on("change", function(e) {
-                    if (!e.originalEvent) { return }
-                    GmUtility.setPosition(gmapContext, new google.maps.LatLng(gmapContext.location.lat(), $(this).val()), function(context){
+                inputBinding.longitudeInput.on("change", function (e) {
+                    if (!e.originalEvent) {
+                        return
+                    }
+                    GmUtility.setPosition(gmapContext, new google.maps.LatLng(gmapContext.location.lat(), $(this).val()), function (context) {
                         context.settings.onchanged.apply(gmapContext.domContainer,
                             [GmUtility.locationFromLatLng(context.location), context.radius, false]);
                     });
@@ -241,13 +251,13 @@
 
     function autosize(gmapContext) {
         google.maps.event.trigger(gmapContext.map, 'resize');
-        setTimeout(function() {
+        setTimeout(function () {
             gmapContext.map.setCenter(gmapContext.marker.position);
         }, 300);
     }
 
     function updateMap(gmapContext, $target, options) {
-        var settings = $.extend({}, $.fn.locationpicker.defaults, options ),
+        var settings = $.extend({}, $.fn.locationpicker.defaults, options),
             latNew = settings.location.latitude,
             lngNew = settings.location.longitude,
             radiusNew = settings.radius,
@@ -262,11 +272,12 @@
         gmapContext.settings.location.longitude = lngNew;
         gmapContext.radius = radiusNew;
 
-        GmUtility.setPosition(gmapContext, new google.maps.LatLng(gmapContext.settings.location.latitude, gmapContext.settings.location.longitude), function(context){
+        GmUtility.setPosition(gmapContext, new google.maps.LatLng(gmapContext.settings.location.latitude, gmapContext.settings.location.longitude), function (context) {
             setupInputListenersInput(gmapContext.settings.inputBinding, gmapContext);
             context.settings.oninitialized($target);
         });
     }
+
     /**
      * Initializeialization:
      *  $("#myMap").locationpicker(options);
@@ -274,7 +285,7 @@
      * @param params
      * @returns {*}
      */
-    $.fn.locationpicker = function( options, params ) {
+    $.fn.locationpicker = function (options, params) {
         if (typeof options == 'string') { // Command provided
             var _targetDomElement = this.get(0);
             // Plug-in is not applied - nothing to do.
@@ -291,7 +302,7 @@
                         if (params.radius) {
                             gmapContext.radius = params.radius;
                         }
-                        GmUtility.setPosition(gmapContext, new google.maps.LatLng(params.latitude, params.longitude), function(gmapContext) {
+                        GmUtility.setPosition(gmapContext, new google.maps.LatLng(params.latitude, params.longitude), function (gmapContext) {
                             updateInputValues(gmapContext.settings.inputBinding, gmapContext);
                         });
                     }
@@ -309,7 +320,7 @@
                     } else {
                         var event = params.event;
                         var callback = params.callback;
-                        if (!event || ! callback) {
+                        if (!event || !callback) {
                             console.error("LocationPicker: Invalid arguments for method \"subscribe\"")
                             return null;
                         }
@@ -342,16 +353,16 @@
             }
             return null;
         }
-        return this.each(function() {
+        return this.each(function () {
             var $target = $(this);
             // If plug-in hasn't been applied before - initialize, otherwise - skip
-            if (isPluginApplied(this)){
+            if (isPluginApplied(this)) {
                 updateMap(getContextForElement(this), $(this), options);
                 return;
             }
             // Plug-in initialization is required
             // Defaults
-            var settings = $.extend({}, $.fn.locationpicker.defaults, options );
+            var settings = $.extend({}, $.fn.locationpicker.defaults, options);
             // Initialize
             var gmapContext = new GMapContext(this, {
                 zoom: settings.zoom,
@@ -369,14 +380,14 @@
             });
             $target.data("locationpicker", gmapContext);
             // Subscribe GMap events
-            google.maps.event.addListener(gmapContext.marker, "dragend", function(event) {
-                GmUtility.setPosition(gmapContext, gmapContext.marker.position, function(context){
+            google.maps.event.addListener(gmapContext.marker, "dragend", function (event) {
+                GmUtility.setPosition(gmapContext, gmapContext.marker.position, function (context) {
                     var currentLocation = GmUtility.locationFromLatLng(gmapContext.location);
                     context.settings.onchanged.apply(gmapContext.domContainer, [currentLocation, context.radius, true]);
                     updateInputValues(gmapContext.settings.inputBinding, gmapContext);
                 });
             });
-            GmUtility.setPosition(gmapContext, new google.maps.LatLng(settings.location.latitude, settings.location.longitude), function(context){
+            GmUtility.setPosition(gmapContext, new google.maps.LatLng(settings.location.latitude, settings.location.longitude), function (context) {
                 updateInputValues(settings.inputBinding, gmapContext);
                 // Set  input bindings if needed
                 setupInputListenersInput(settings.inputBinding, gmapContext);
@@ -400,10 +411,13 @@
         enableAutocompleteBlur: false,
         enableReverseGeocode: true,
         draggable: true,
-        onchanged: function(currentLocation, radius, isMarkerDropped) {},
-        onlocationnotfound: function(locationName) {},
-        oninitialized: function (component) {},
+        onchanged: function (currentLocation, radius, isMarkerDropped) {
+        },
+        onlocationnotfound: function (locationName) {
+        },
+        oninitialized: function (component) {
+        },
         // must be undefined to use the default gMaps marker
         markerIcon: undefined
     }
-}( jQuery ));
+}(jQuery));

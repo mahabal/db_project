@@ -16,12 +16,12 @@ import java.util.List;
 public class University {
 
     private final int uid;
-    private String name;
-    private String domain;
-    private int sid;
     private final Timestamp created;
     private final double latitude;
     private final double longitude;
+    private String name;
+    private String domain;
+    private int sid;
     private String desc;
     private String motto;
     private String image;
@@ -63,12 +63,24 @@ public class University {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDomain() {
         return domain;
     }
 
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
     public int getSid() {
         return sid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
     public Timestamp getCreated() {
@@ -85,18 +97,6 @@ public class University {
 
     public String getDesc() {
         return desc;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public void setSid(int sid) {
-        this.sid = sid;
     }
 
     public void setDesc(String desc) {
@@ -135,7 +135,6 @@ public class University {
 
         @SqlQuery("select name from university where uid = :uid")
         String getNameById(@Bind("uid") int uid);
-
 
 
     }

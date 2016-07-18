@@ -60,7 +60,7 @@
             success: function (data) {
                 console.log("SUCCESS!");
                 var json = JSON.parse(data);
-                console.log("data:"  + data);
+                console.log("data:" + data);
                 console.log("json" + json);
                 Cookies.set("project_uid", json['uid'], {expires: 1});
                 Cookies.set("project_token", json['token'], {expires: 1});

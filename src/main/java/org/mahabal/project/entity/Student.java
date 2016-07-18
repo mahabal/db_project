@@ -23,7 +23,7 @@ public class Student {
     private Timestamp created;
 
     public Student(final int sid, final int uid, final String username, final String passwordHash, final String salt,
-                    final Timestamp created, final String email) {
+                   final Timestamp created, final String email) {
         this.sid = sid;
         this.uid = uid;
         this.username = username;
@@ -45,6 +45,10 @@ public class Student {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -55,10 +59,6 @@ public class Student {
 
     public Timestamp getCreated() {
         return created;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {

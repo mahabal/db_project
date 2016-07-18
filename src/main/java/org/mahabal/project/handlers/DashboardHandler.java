@@ -7,13 +7,11 @@ import org.mahabal.project.entity.Session;
 import org.mahabal.project.entity.Student;
 import org.mahabal.project.entity.University;
 import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
 public class DashboardHandler extends AbstractProjectHandler {
 

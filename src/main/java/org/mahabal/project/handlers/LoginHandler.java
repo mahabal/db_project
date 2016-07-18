@@ -20,6 +20,10 @@ public class LoginHandler extends AbstractProjectHandler {
         super(dbi);
     }
 
+    public static String generateHashedString(final String s, final int size) {
+        return Hashing.sha512().hashString(s, Charset.forName("UTF-8")).toString().substring(0, size);
+    }
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.addHeader("Access-Control-Allow-Origin", "*");
@@ -142,10 +146,6 @@ public class LoginHandler extends AbstractProjectHandler {
 
         }
 
-    }
-
-    public static String generateHashedString(final String s, final int size) {
-        return Hashing.sha512().hashString(s, Charset.forName("UTF-8")).toString().substring(0, size);
     }
 
 }

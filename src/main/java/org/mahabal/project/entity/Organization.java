@@ -16,9 +16,9 @@ import java.util.List;
 public class Organization {
 
     private final int rid;
+    private final Timestamp created;
     private String name;
     private String desc;
-    private final Timestamp created;
     private int sid;
     private int uid;
     private int approved;
@@ -41,8 +41,16 @@ public class Organization {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDesc() {
         return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public Timestamp getCreated() {
@@ -53,20 +61,12 @@ public class Organization {
         return sid;
     }
 
-    public int getUid() {
-        return uid;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public void setSid(int sid) {
         this.sid = sid;
+    }
+
+    public int getUid() {
+        return uid;
     }
 
     public void setUid(int uid) {

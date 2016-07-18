@@ -1,8 +1,8 @@
 package org.mahabal.project.handlers;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import org.mahabal.project.entity.*;
+import org.mahabal.project.entity.Event;
+import org.mahabal.project.entity.University;
 import org.skife.jdbi.v2.DBI;
 
 import javax.servlet.ServletException;

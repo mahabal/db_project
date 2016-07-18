@@ -153,7 +153,7 @@ public final class Event {
     public interface Queries {
 
         /**
-         * @return      number of events in the database
+         * @return number of events in the database
          */
         @SqlQuery("select count(*) from events")
         long count();
@@ -172,7 +172,6 @@ public final class Event {
 
         @SqlQuery("select * from events")
         List<Event> all();
-
 
 
         @SqlUpdate("insert into events (`eid`, `scope`, `aid`, `name`, `desc`, `date`, `location`, `latitude`, `longitude`, `contactname`, `contactphone`, `contactemail`) values (:e.eid, :e.scope, :e.aid, :e.name, :e.desc, :e.date, :e.location, :e.latitude, :e.longitude, :e.contactname, :e.contactphone, :e.contactemail)")
