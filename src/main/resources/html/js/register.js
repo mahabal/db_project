@@ -1,19 +1,19 @@
 (function (global) {
     'use strict';
     var token;
-    var uid;
+    var sid;
     var validate = function () {
 
         // read the cookies into variables for easy access
         token = Cookies.get("project_token");
-        uid = Cookies.get("project_uid");
+        sid = Cookies.get("project_sid");
 
         // use ajax to connect to the login api and make sure the session is valid
         $.ajax({
             url: API_BASE_URL + "/login",
             type: 'GET',
             data: {
-                'i': uid,
+                'i': sid,
                 's': token
             },
             success: function (data) {
@@ -23,7 +23,7 @@
             },
             error: function (response) {
                 Cookies.remove("project_token");
-                Cookies.remove("project_uid");
+                Cookies.remove("project_sid");
                 // Cookies.remove("project_username");
             }
         });
@@ -58,11 +58,8 @@
                 'm': passwordSha512
             },
             success: function (data) {
-                console.log("SUCCESS!");
                 var json = JSON.parse(data);
-                console.log("data:" + data);
-                console.log("json" + json);
-                Cookies.set("project_uid", json['uid'], {expires: 1});
+                Cookies.set("project_sid", json['sid'], {expires: 1});
                 Cookies.set("project_token", json['token'], {expires: 1});
                 Cookies.set("project_username", json['name'], {expires: 1});
                 window.location = 'index2.html';
