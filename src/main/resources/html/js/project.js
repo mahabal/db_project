@@ -333,7 +333,7 @@
         validateSession();
         initLogoutButton();
         var page = location.pathname.split("/").pop();
-        if (page === 'index2.html') {
+        if (page === 'dashboard.html') {
             initDashboard();
         } else if (page === 'rsos.html') {
             initRSOTables();

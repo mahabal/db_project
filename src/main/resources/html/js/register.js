@@ -19,7 +19,7 @@
             success: function (data) {
                 // session checks out ... do nothing, let the page load like normal
                 console.log("ok" + data);
-                window.location = "index2.html";
+                window.location = "dashboard.html";
             },
             error: function (response) {
                 Cookies.remove("project_token");
@@ -62,7 +62,7 @@
                 Cookies.set("project_sid", json['sid'], {expires: 1});
                 Cookies.set("project_token", json['token'], {expires: 1});
                 Cookies.set("project_username", json['name'], {expires: 1});
-                window.location = 'index2.html';
+                window.location = 'dashboard.html';
             },
             error: function (data) {
                 console.error("SOMETHING BROKE!");
