@@ -68,6 +68,7 @@ public class UniversityHandler extends AbstractProjectHandler {
             o.addProperty("motto", university.getMotto());
             o.addProperty("all_events", events.count(university));
             o.addProperty("image", university.getImage());
+            debug("(" + student.getUsername() + ") is a student of \"" + university.getName() + "\"");
         } else {
             // student is not yet in a university
             final String email = student.getEmail();
@@ -82,12 +83,12 @@ public class UniversityHandler extends AbstractProjectHandler {
                         o.addProperty("domain", parts[parts.length - 2] + "." + parts[parts.length - 1]);
                     }
                 }
+                debug("(" + student.getUsername() + ") is an un-enrolled user");
             }
         }
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
-        System.out.println(o);
 
     }
 }
