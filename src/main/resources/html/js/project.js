@@ -55,6 +55,7 @@
         var create_rso_form = $('#create_university_form');
         var submit = $('#create_university_submit');
         submit.click(function () {
+            console.log("Test: " + create_rso_form.find('#input_university_name').val());
             $.ajax({
                 url: API_BASE_URL + '/university',
                 type: 'GET',
@@ -248,6 +249,9 @@
                 var json = JSON.parse(data);
 
                 if (json.hasOwnProperty('university_name')) {
+
+                    $('#create_university').addClass("hidden");
+                    $('#display_university').removeClass("hidden");
 
                     for (var o in json) {
                         if (json.hasOwnProperty(o)) {

@@ -20,10 +20,36 @@ public class UniversityHandler extends AbstractProjectHandler {
     protected void doValidatedGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        University.Queries universities = h.attach(University.Queries.class);
+
+        final String action = req.getParameter("a");
+        if (action != null) {
+            if (action.equals("create")) {
+
+                System.out.println("Create!@@!!@");
+
+                final String name = req.getParameter("name");
+                final String desc = req.getParameter("desc");
+                final String domain = req.getParameter("domain");
+                final String image = req.getParameter("image");
+                final String motto = req.getParameter("motto");
+                final String latitude = req.getParameter("latitude");
+                final String longitude = req.getParameter("longitude");
+
+                if (name != null && desc != null && domain != null && image != null &&
+                        motto != null && latitude != null && longitude != null) {
+                    final University university = new University(name, domain,
+                            student.getSid(), Double.parseDouble(latitude), Double.parseDouble(longitude),
+                            desc, motto, image);
+                    System.out.println("Inserted: " + universities.create(university, student));
+                }
+
+            }
+        }
+
         final JsonObject o = new JsonObject();
 
         if (student.getUid() > 0) {
-            University.Queries universities = h.attach(University.Queries.class);
             University university = universities.getById(student.getUid());
             Event.Queries events = h.attach(Event.Queries.class);
             o.addProperty("description", university.getDesc());

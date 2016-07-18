@@ -26,6 +26,10 @@ public class University {
     private String motto;
     private String image;
 
+    public University(String name, String domain, int sid, double latitude, double longitude, String desc, String motto, String image) {
+        this(0, name, domain, sid, null, latitude, longitude, desc, motto, image);
+    }
+
     public University(int uid, String name, String domain, int sid, Timestamp created, double latitude, double longitude, String desc, String motto, String image) {
         this.uid = uid;
         this.name = name;
@@ -112,9 +116,13 @@ public class University {
         @SqlQuery("select count(*) from university")
         long count();
 
-        @SqlUpdate("insert into university (name, domain, sid, latitude, longitude, desc) values (:name, :domain, :s.sid, :latitude, :longitude, :desc)")
+        @SqlUpdate("insert into university (`name`, `domain`, `sid`, `latitude`, `longitude`, `desc`, `image`, `motto`) values (:name, :domain, :s.sid, :latitude, :longitude, :desc, :image, :motto)")
         int create(@Bind("name") String n, @Bind("domain") String domain, @Bind("latitude") double latitude,
-                   @Bind("longitude") double longitude, @Bind("desc") String desc, @BindBean("s") Student s);
+                   @Bind("longitude") double longitude, @Bind("desc") String desc, @Bind("image") String image, @Bind("motto") String motto, @BindBean("s") Student s);
+
+
+        @SqlUpdate("insert into university (`name`, `domain`, `sid`, `latitude`, `longitude`, `desc`, `image`, `motto`)  values (:u.name, :u.domain, :s.sid, :u.latitude, :u.longitude, :u.desc, :u.image, :u.motto)")
+        int create(@BindBean("u") University u, @BindBean("s") Student s);
 
         @SqlQuery("select count(distinct(rid)) from rso_data where uid = :uid")
         long organizationCount(@Bind("uid") int uid);
