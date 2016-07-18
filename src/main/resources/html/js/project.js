@@ -2,20 +2,20 @@
     'use strict';
 
     var token;
-    var uid;
+    var sid;
 
     var validateSession = function () {
 
         // read the cookies into variables for easy access
         token = Cookies.get("project_token");
-        uid = Cookies.get("project_uid");
+        sid = Cookies.get("project_sid");
 
         // use ajax to connect to the login api and make sure the session is valid
         $.ajax({
             url: API_BASE_URL + "/login",
             type: 'GET',
             data: {
-                'i': uid,
+                'i': sid,
                 's': token
             },
             success: function () {
@@ -38,7 +38,7 @@
                 url: API_BASE_URL + '/rsos',
                 type: 'GET',
                 data: {
-                    'i': uid,
+                    'i': sid,
                     's': token,
                     'n': create_rso_form.find("#create_rso_name").val(),
                     'd': create_rso_form.find("#create_rso_desc").val(),
@@ -60,7 +60,7 @@
                 url: API_BASE_URL + '/university',
                 type: 'GET',
                 data: {
-                    'i': uid,
+                    'i': sid,
                     's': token,
                     'a': 'create',
                     'name': create_rso_form.find('#input_university_name').val(),
@@ -85,7 +85,7 @@
             url: API_BASE_URL + "/dashboard",
             type: 'GET',
             data: {
-                'i': uid,
+                'i': sid,
                 's': token
             },
             success: function (data) {
@@ -179,7 +179,7 @@
                     url: API_BASE_URL + "/rsos",
                     type: 'GET',
                     data: {
-                        'i': uid,
+                        'i': sid,
                         's': token,
                         'a': 'approve',
                         'n': row.split("_").pop()
@@ -204,7 +204,7 @@
                     url: API_BASE_URL + "/rsos",
                     type: 'GET',
                     data: {
-                        'i': uid,
+                        'i': sid,
                         's': token,
                         'a': 'join',
                         'n': row.split("_").pop()
@@ -224,7 +224,7 @@
             url: API_BASE_URL + "/rsos",
             type: 'GET',
             data: {
-                'i': uid,
+                'i': sid,
                 's': token
             },
             success: rso_success,
@@ -242,7 +242,7 @@
             url: API_BASE_URL + "/university",
             type: 'GET',
             data: {
-                'i': uid,
+                'i': sid,
                 's': token
             },
             success: function (data) {
@@ -303,7 +303,7 @@
 
     var logout = function () {
         Cookies.remove("project_token");
-        Cookies.remove("project_uid");
+        Cookies.remove("project_sid");
         Cookies.remove("project_username");
         window.location = 'login.html';
     };
