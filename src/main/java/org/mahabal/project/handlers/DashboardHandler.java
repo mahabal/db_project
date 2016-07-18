@@ -41,8 +41,10 @@ public class DashboardHandler extends AbstractProjectHandler {
             o.addProperty("total_universities", universities.count());
         }
 
+        o.addProperty("uid", student.getUid());
+
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
-        debug("(" + student.getUsername() + ") dashboard data sent");
+        debug("(" + student.getUsername() + ") dashboard data sent " + o.entrySet());
     }
 }

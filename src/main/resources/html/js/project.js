@@ -94,13 +94,21 @@
 
                 for (var key in json) {
                     if (json.hasOwnProperty(key)) {
-                        // get the block
-                        var block = $('#' + key + "_block");
-                        if (json[key] < 0) block.addClass("hidden");
-                        else block.removeClass("hidden");
-                        // get the text
-                        var text = $('#' + key);
-                        text.text(json[key]);
+                        if (key === 'uid') {
+                            if (json[key] <= 0) {
+                                $('#show_organizations_nav').addClass('hidden')
+                            } else {
+                                $('#show_organizations_nav').removeClass('hidden');
+                            }
+                        } else {
+                            // get the block
+                            var block = $('#' + key + "_block");
+                            if (json[key] < 0) block.addClass("hidden");
+                            else block.removeClass("hidden");
+                            // get the text
+                            var text = $('#' + key);
+                            text.text(json[key]);
+                        }
                     }
                 }
 
