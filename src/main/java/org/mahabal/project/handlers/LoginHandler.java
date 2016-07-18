@@ -48,6 +48,7 @@ public class LoginHandler extends AbstractProjectHandler {
                     final JsonObject obj = new JsonObject();
                     obj.add("error", new JsonPrimitive("Invalid session."));
                     resp.getWriter().println(obj);
+                    debug("Invalid session for: sid=" + i  + ", token=" + s +", ip=" + ip);
                     return;
                 } else {
 
@@ -55,11 +56,11 @@ public class LoginHandler extends AbstractProjectHandler {
 
                     resp.setStatus(HttpServletResponse.SC_OK);
                     final JsonObject obj = new JsonObject();
-                    obj.add("uid", new JsonPrimitive(i));
+                    obj.add("sid", new JsonPrimitive(i));
                     obj.add("name", new JsonPrimitive(name));
                     obj.add("token", new JsonPrimitive(s));
                     resp.getWriter().println(obj);
-                    System.out.println(obj);
+                    debug("Validated session for: " + name + " from " + ip);
                     return;
 
                 }
@@ -74,7 +75,7 @@ public class LoginHandler extends AbstractProjectHandler {
         // check and make sure the username and password are not null
         if (username == null || md5pass == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            System.out.println("Bad Request!");
+            debug("Bad request, username or md5password was null.");
             return;
         }
 
@@ -128,21 +129,18 @@ public class LoginHandler extends AbstractProjectHandler {
             }
 
             final JsonObject o = new JsonObject();
-            o.add("uid", new JsonPrimitive(id));
+            o.add("sid", new JsonPrimitive(id));
             o.add("token", new JsonPrimitive(token));
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().println(o);
-            System.out.println(o);
 
         } else {
-
-            System.err.println("INVALID LOGIN!");
+            debug("Invalid username/password attempt for: " + username + " from " + ip);
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
             final JsonObject o = new JsonObject();
             o.add("status", new JsonPrimitive("error"));
             o.add("desc", new JsonPrimitive("invalid username or password"));
             resp.getWriter().println(o);
-            System.out.println(o);
 
         }
 

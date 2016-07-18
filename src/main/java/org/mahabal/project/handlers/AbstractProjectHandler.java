@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public abstract class AbstractProjectHandler extends HttpServlet {
 
@@ -68,6 +70,14 @@ public abstract class AbstractProjectHandler extends HttpServlet {
 
     protected void doValidatedGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+    }
+
+    private static final SimpleDateFormat timestamp = new SimpleDateFormat("hh:mm:ss");
+
+    protected void debug(String message) {
+        System.out.printf("%-12s %-20s %s%n", "[" + timestamp.format(new Date()) + "]:", getClass().getSimpleName(),
+                message);
+
     }
 
 }
