@@ -86,7 +86,7 @@ public class UserHandler extends AbstractProjectHandler {
                             Student student = query.findById(1);
                             System.out.println("Name is: " + student.getUsername());
                             student.setUsername("Matthew Balwant");
-                            int updated = query.update(student);
+                            int updated = query.updateUsername(student);
                             System.out.println("Updated: " + updated + " rows.");
                         }
                     }

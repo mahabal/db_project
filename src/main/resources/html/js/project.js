@@ -72,7 +72,8 @@
                     'longitude': create_rso_form.find("#input-long").val()
                 },
                 success: function (data) {
-                    console.log("nigga we made it");
+                    console.log(this.url);
+                    console.log(data);
                 }
             })
         });

@@ -84,7 +84,7 @@ public class RSOHandler extends AbstractProjectHandler {
         } else {
 
             // not root, so get only the rsos for the universities that this user administers
-            List<University> unis = universities.getByAdmin(student);
+            List<University> unis = universities.getAllByAdmin(student);
             for (University u : unis) {
                 List<Organization> rsos = universities.organizations(u.getUid());
                 for (final Organization o : rsos) {

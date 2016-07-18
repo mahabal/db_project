@@ -15,6 +15,11 @@ import java.sql.Timestamp;
 public class Student {
 
     private int sid;
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
     private int uid;
     private String username;
     private String password;
@@ -79,7 +84,11 @@ public class Student {
         long count();
 
         @SqlUpdate("update student set username = :username where sid = :sid")
-        int update(@BindBean Student s);
+        int updateUsername(@BindBean Student s);
+
+        @SqlUpdate("update student set uid = :uid where sid = :sid")
+        int updateUid(@BindBean Student s);
+
 
     }
 

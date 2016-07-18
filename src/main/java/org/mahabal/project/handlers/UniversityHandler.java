@@ -2,6 +2,7 @@ package org.mahabal.project.handlers;
 
 import com.google.gson.JsonObject;
 import org.mahabal.project.entity.Event;
+import org.mahabal.project.entity.Student;
 import org.mahabal.project.entity.University;
 import org.skife.jdbi.v2.DBI;
 
@@ -26,8 +27,6 @@ public class UniversityHandler extends AbstractProjectHandler {
         if (action != null) {
             if (action.equals("create")) {
 
-                System.out.println("Create!@@!!@");
-
                 final String name = req.getParameter("name");
                 final String desc = req.getParameter("desc");
                 final String domain = req.getParameter("domain");
@@ -36,12 +35,20 @@ public class UniversityHandler extends AbstractProjectHandler {
                 final String latitude = req.getParameter("latitude");
                 final String longitude = req.getParameter("longitude");
 
+
                 if (name != null && desc != null && domain != null && image != null &&
                         motto != null && latitude != null && longitude != null) {
-                    final University university = new University(name, domain,
-                            student.getSid(), Double.parseDouble(latitude), Double.parseDouble(longitude),
-                            desc, motto, image);
-                    System.out.println("Inserted: " + universities.create(university, student));
+                    try {
+                        final University u = new University(name, domain,
+                                student.getSid(), Double.parseDouble(latitude), Double.parseDouble(longitude),
+                                desc, motto, image);
+                        universities.create(u, student);
+                        int uid = universities.getUidByDomain(domain);
+                        student.setUid(uid);
+                        h.attach(Student.Queries.class).updateUid(student);
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -80,6 +87,7 @@ public class UniversityHandler extends AbstractProjectHandler {
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
+        System.out.println(o);
 
     }
 }

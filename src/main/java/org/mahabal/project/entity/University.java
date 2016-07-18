@@ -136,7 +136,10 @@ public class University {
         List<Organization> organizations(@Bind("uid") int uid);
 
         @SqlQuery("select * from university u where u.sid = :s.sid")
-        List<University> getByAdmin(@BindBean("s") Student s);
+        List<University> getAllByAdmin(@BindBean("s") Student s);
+
+        @SqlQuery("select * from university u where u.sid = :s.sid")
+        University getByAdmin(@BindBean("s") Student s);
 
         @SqlQuery("select * from university where uid = :uid")
         University getById(@Bind("uid") int uid);
