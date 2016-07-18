@@ -51,7 +51,31 @@
         });
     };
 
-
+    var submit_new_university = function () {
+        var create_rso_form = $('#create_university_form');
+        var submit = $('#create_university_submit');
+        submit.click(function () {
+            $.ajax({
+                url: API_BASE_URL + '/university',
+                type: 'GET',
+                data: {
+                    'i': uid,
+                    's': token,
+                    'a': 'create',
+                    'name': create_rso_form.find('#input_university_name').val(),
+                    'desc': create_rso_form.find("#input_university_desc").val(),
+                    'domain': create_rso_form.find("#input_university_domain").val(),
+                    'image': create_rso_form.find("#input_university_image").val(),
+                    'motto': create_rso_form.find("#input_university_motto").val(),
+                    'latitude': create_rso_form.find("#input-lat").val(),
+                    'longitude': create_rso_form.find("#input-long").val()
+                },
+                success: function (data) {
+                    console.log("nigga we made it");
+                }
+            })
+        });
+    };
 
     var initDashboard = function () {
         // use ajax to connect to the login api and make sure the session is valid
@@ -223,39 +247,47 @@
             },
             success: function(data) {
 
-                console.log("success");
-                $('#location-component').locationpicker({
-                    location: {latitude: 28.6005706, longitude: -81.19767969999998},
-                    enableAutocomplete: true,
-                    enableReverseGeocode: true,
-                    radius: 0,
-                    inputBinding: {
-                        latitudeInput: $('#input-lat'),
-                        longitudeInput: $('#input-long'),
-                        locationNameInput: $('#location-input')
-                    }
-                });
-
-
                 var json = JSON.parse(data);
-                for (var o in json) {
-                    if (json.hasOwnProperty(o)) {
-                        if (o !== 'image') {
-                            var element = $('#' + o);
-                            element.text(json[o]);
+
+                if (json.hasOwnProperty('university_name')) {
+
+                    for (var o in json) {
+                        if (json.hasOwnProperty(o)) {
+                            if (o !== 'image') {
+                                var element = $('#' + o);
+                                element.text(json[o]);
+                            }
                         }
                     }
-                }
 
-                $('#image_img').attr('src', json['image']);
+                    $('#image_img').attr('src', json['image']);
 
-                if ($("#google_ptm_map").length > 0) {
-                    var gPTMCords = new google.maps.LatLng(json['latitude'], json['longitude']);
-                    var gPTMOptions = {zoom: 13, center: gPTMCords, mapTypeId: google.maps.MapTypeId.ROADMAP}
-                    var gPTM = new google.maps.Map(document.getElementById("google_ptm_map"), gPTMOptions);
+                    if ($("#google_ptm_map").length > 0) {
+                        var gPTMCords = new google.maps.LatLng(json['latitude'], json['longitude']);
+                        var gPTMOptions = {zoom: 13, center: gPTMCords, mapTypeId: google.maps.MapTypeId.ROADMAP}
+                        var gPTM = new google.maps.Map(document.getElementById("google_ptm_map"), gPTMOptions);
 
-                    var cords = new google.maps.LatLng(json['latitude'], json['longitude']);
-                    var marker = new google.maps.Marker({position: cords, map: gPTM, title: "Marker 1"});
+                        var cords = new google.maps.LatLng(json['latitude'], json['longitude']);
+                        var marker = new google.maps.Marker({position: cords, map: gPTM, title: "Marker 1"});
+                    }
+
+                } else if (json.hasOwnProperty('domain')) {
+
+                    $('#input_university_domain').val(json['domain']);
+
+                    $('#location-component').locationpicker({
+                        location: {latitude: 28.6005706, longitude: -81.19767969999998},
+                        zoom: 15,
+                        enableAutocomplete: true,
+                        enableReverseGeocode: true,
+                        radius: 0,
+                        inputBinding: {
+                            latitudeInput: $('#input-lat'),
+                            longitudeInput: $('#input-long'),
+                            locationNameInput: $('#location-input')
+                        }
+                    });
+
                 }
 
             },
@@ -291,6 +323,7 @@
             create_rso_submit_button();
         } else if (page === 'university.html') {
             initUniversity();
+            submit_new_university();
         }
     };
 

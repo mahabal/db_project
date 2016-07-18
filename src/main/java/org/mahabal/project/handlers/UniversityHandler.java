@@ -37,7 +37,19 @@ public class UniversityHandler extends AbstractProjectHandler {
             o.addProperty("image", university.getImage());
         } else {
             // student is not yet in a university
-
+            final String email = student.getEmail();
+            if (email.contains("@")) {
+                final String[] e_parts = email.split("@");
+                if (e_parts.length == 2) {
+                    final String end = e_parts[1];
+                    final String[] parts = end.split("\\.");
+                    if (parts.length < 2) {
+                        o.addProperty("domain", end);
+                    } else {
+                        o.addProperty("domain", parts[parts.length - 2] + "." + parts[parts.length - 1]);
+                    }
+                }
+            }
         }
 
         resp.setStatus(HttpServletResponse.SC_OK);

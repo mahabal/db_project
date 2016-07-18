@@ -74,7 +74,7 @@
             <div id="create_university" class="panel panel-default">
 
                 <!-- START FORM -->
-                <form class="form-horizontal">
+                <form id='create_university_form' class="form-horizontal">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><strong>Create</strong> a University</h3>
@@ -100,7 +100,7 @@
                                             <div class="input-group">
                                                     <span class="input-group-addon"><span
                                                             class="fa fa-pencil"></span></span>
-                                                <input type="text" class="form-control"/>
+                                                <input id="input_university_name" type="text" class="form-control"/>
                                             </div>
                                             <span class="help-block">The name of the University</span>
                                         </div>
@@ -112,7 +112,7 @@
                                             <div class="input-group">
                                                     <span class="input-group-addon"><span
                                                             class="fa fa-quote-right"></span></span>
-                                                <input type="text" class="form-control"/>
+                                                <input id="input_university_motto" type="text" class="form-control"/>
                                             </div>
                                             <span class="help-block">The University Motto</span>
                                         </div>
@@ -124,7 +124,7 @@
                                             <div class="input-group">
                                                     <span class="input-group-addon"><span
                                                             class="fa fa-image"></span></span>
-                                                <input type="text" class="form-control"/>
+                                                <input id="input_university_image" type="text" class="form-control"/>
                                             </div>
                                             <span class="help-block">URL to an image to use for the logo</span>
                                         </div>
@@ -136,7 +136,7 @@
                                             <div class="input-group">
                                                     <span class="input-group-addon"><span
                                                             class="fa fa-globe"></span></span>
-                                                <input type="text" class="form-control"/>
+                                                <input id="input_university_domain" type="text" class="form-control"/>
                                             </div>
                                             <span class="help-block">All student emails must end with this</span>
                                         </div>
@@ -145,7 +145,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Description</label>
                                         <div class="col-md-9 col-xs-12">
-                                            <textarea class="form-control" rows="5"></textarea>
+                                            <textarea id="input_university_desc" class="form-control" rows="5"></textarea>
                                             <span class="help-block">Description of the University (HTML Enabled)</span>
                                         </div>
                                     </div>
@@ -181,8 +181,8 @@
 
                         </div>
                         <div class="panel-footer">
-                            <button class="btn btn-default">Clear Form</button>
-                            <button class="btn btn-primary pull-right">Submit</button>
+                            <button id="create_university_clear" class="btn btn-default">Clear Form</button>
+                            <button id="create_university_submit" class="btn btn-primary pull-right">Submit</button>
                         </div>
                     </div>
                 </form>
