@@ -63,6 +63,9 @@ INSERT INTO `rso_data` (`name`, `desc`, `sid`, `uid`) VALUES
   ('Team Valor', 'The meh Pokémon Go Team', 2, 1),
   ('Team Mystic', 'The bleh Pokémon Go Team', 6, 2);
 
+INSERT INTO `rso_membership` (`sid`, `rid`) VALUES
+  (5, 1), (3, 1), (3, 1);
+
 DROP TABLE IF EXISTS `university`;
 CREATE TABLE `university` (
   `uid`       INT          NOT NULL AUTO_INCREMENT,
