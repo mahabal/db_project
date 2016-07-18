@@ -48,7 +48,7 @@ public class LoginHandler extends AbstractProjectHandler {
                     final JsonObject obj = new JsonObject();
                     obj.add("error", new JsonPrimitive("Invalid session."));
                     resp.getWriter().println(obj);
-                    debug("Invalid session for: sid=" + i  + ", token=" + s +", ip=" + ip);
+                    debug("invalid session from " + ip + " for user " + i);
                     return;
                 } else {
 
@@ -60,7 +60,7 @@ public class LoginHandler extends AbstractProjectHandler {
                     obj.add("name", new JsonPrimitive(name));
                     obj.add("token", new JsonPrimitive(s));
                     resp.getWriter().println(obj);
-                    debug("Validated session for: " + name + " from " + ip);
+                    debug("(" + name + ") session validated");
                     return;
 
                 }
@@ -135,7 +135,7 @@ public class LoginHandler extends AbstractProjectHandler {
             resp.getWriter().println(o);
 
         } else {
-            debug("Invalid username/password attempt for: " + username + " from " + ip);
+            debug("(" + username + ") invalid username/password from " + ip);
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
             final JsonObject o = new JsonObject();
             o.add("status", new JsonPrimitive("error"));

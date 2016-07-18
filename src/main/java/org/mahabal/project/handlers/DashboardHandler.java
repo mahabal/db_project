@@ -25,7 +25,7 @@ public class DashboardHandler extends AbstractProjectHandler {
 
         final JsonObject o = new JsonObject();
 
-        if (student.getUid() == 1) {
+        if (student.getSid() == 1) {
             Student.Queries students = h.attach(Student.Queries.class);
             o.add("total_students", new JsonPrimitive(students.count()));
 
@@ -43,6 +43,6 @@ public class DashboardHandler extends AbstractProjectHandler {
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
-
+        debug("(" + student.getUsername() + ") dashboard data sent");
     }
 }
