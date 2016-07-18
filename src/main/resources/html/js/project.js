@@ -18,8 +18,20 @@
                 'i': sid,
                 's': token
             },
-            success: function () {
-                // session checks out ... do nothing, let the page load like normal
+            success: function (data) {
+
+                // session is valid, use the output to show the navigation elements
+                var json = JSON.parse(data);
+                if (json.hasOwnProperty("uid") && json['uid'] <= 0) {
+                    // user is not in a university, so hide everything that
+                    // requires a student to be in a university
+                    $('#show_events_nav').addClass("hidden");
+                    $("#show_organizations_nav").addClass("hidden");
+                } else {
+                    $('#show_events_nav').removeClass("hidden");
+                    $("#show_organizations_nav").removeClass("hidden");
+                }
+
             },
             error: function (response) {
                 // session is not valid ... purge everything and then load the login screen.
@@ -94,14 +106,8 @@
 
                 for (var key in json) {
                     if (json.hasOwnProperty(key)) {
-                        if (key === 'uid') {
-                            if (json[key] <= 0) {
-                                $('#show_organizations_nav').addClass('hidden')
-                            } else {
-                                $('#show_organizations_nav').removeClass('hidden');
-                            }
-                        } else {
-                            // get the block
+
+                        // get the block
                             var block = $('#' + key + "_block");
                             if (json[key] < 0) block.addClass("hidden");
                             else block.removeClass("hidden");
@@ -109,7 +115,7 @@
                             var text = $('#' + key);
                             text.text(json[key]);
                         }
-                    }
+
                 }
 
             },
