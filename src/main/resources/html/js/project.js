@@ -109,7 +109,7 @@
 
                         // get the block
                             var block = $('#' + key + "_block");
-                            if (json[key] < 0) block.addClass("hidden");
+                        if (json[key] <= 0) block.addClass("hidden");
                             else block.removeClass("hidden");
                             // get the text
                             var text = $('#' + key);
