@@ -222,6 +222,21 @@
                 's': token
             },
             success: function(data) {
+
+                console.log("success");
+                $('#location-component').locationpicker({
+                    location: {latitude: 28.6005706, longitude: -81.19767969999998},
+                    enableAutocomplete: true,
+                    enableReverseGeocode: true,
+                    radius: 0,
+                    inputBinding: {
+                        latitudeInput: $('#input-lat'),
+                        longitudeInput: $('#input-long'),
+                        locationNameInput: $('#location-input')
+                    }
+                });
+
+
                 var json = JSON.parse(data);
                 for (var o in json) {
                     if (json.hasOwnProperty(o)) {

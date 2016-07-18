@@ -131,17 +131,6 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Description</label>
-                                        <div class="col-md-9 col-xs-12">
-                                            <textarea class="form-control" rows="5"></textarea>
-                                            <span class="help-block">Description of the University (HTML Enabled)</span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
                                         <label class="col-md-3 control-label">Domain</label>
                                         <div class="col-md-9 col-xs-12">
                                             <div class="input-group">
@@ -154,47 +143,37 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label">Datepicker</label>
-                                        <div class="col-md-9">
+                                        <label class="col-md-3 control-label">Description</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <textarea class="form-control" rows="5"></textarea>
+                                            <span class="help-block">Description of the University (HTML Enabled)</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Location</label>
+                                        <div class="col-md-9 col-xs-12">
                                             <div class="input-group">
-                                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                <input type="text" class="form-control datepicker"
-                                                       value="2015-11-01">
+                                                    <span class="input-group-addon"><span
+                                                            class="fa fa-map"></span></span>
+                                                <input id="location-input" type="text" class="form-control"/>
                                             </div>
-                                            <span class="help-block">Click on input field to get datepicker</span>
+                                        </div>
+                                        <label class="col-md-3 control-label">Coordinates</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span>X</span></span>
+                                                <input disabled id="input-lat" type="text" class="form-control"/>
+                                                <span class="input-group-addon"><span class=>Y</span></span>
+                                                <input disabled id="input-long" type="text" class="form-control"/>
+                                            </div>
+                                            <div id="location-component" style="width: 100%; height: 300px;"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Tags</label>
-                                        <div class="col-md-9">
-                                            <input type="text" class="tagsinput" value="First,Second,Third"/>
-                                            <span class="help-block">Default textarea field</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Select</label>
-                                        <div class="col-md-9">
-                                            <select class="form-control select">
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                                <option>Option 3</option>
-                                                <option>Option 4</option>
-                                                <option>Option 5</option>
-                                            </select>
-                                            <span class="help-block">Select box example</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Checkbox</label>
-                                        <div class="col-md-9">
-                                            <label class="check"><input type="checkbox" class="icheckbox"
-                                                                        checked="checked"/> Checkbox title</label>
-                                            <span class="help-block">Checkbox sample, easy to use</span>
-                                        </div>
-                                    </div>
 
                                 </div>
 
@@ -322,18 +301,6 @@
 </div>
 <!-- END MESSAGE BOX-->
 
-<!-- BLUEIMP GALLERY -->
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <div class="slides"></div>
-    <h3 class="title"></h3>
-    <a class="prev">‹</a>
-    <a class="next">›</a>
-    <a class="close">×</a>
-    <a class="play-pause"></a>
-    <ol class="indicator"></ol>
-</div>
-<!-- END BLUEIMP GALLERY -->
-
 <!-- START PRELOADS -->
 <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
 <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
@@ -352,6 +319,7 @@
 <script type="text/javascript" src="js/plugins/cookies/js.cookie.js"></script>
 <script type="text/javascript" src="js/project.js"></script>
 
+<script type="text/javascript" src="js/plugins/locationpicker/locationpicker.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
 <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
