@@ -232,6 +232,51 @@
         });
     };
 
+    var submitEvent = function() {
+
+        var name = $('#input_event_name').val();
+        var about = $('#input_event_desc').val();
+        var scope = $('#input_event_scope').val();
+        var tags = $('#input_event_tags').val();
+        var location = $('#location-input').val();
+        var latitude = $('#input_event_latitude').val();
+        var longitude = $('#input_event_longitude').val();
+        var date = $('#input_event_date').val();
+        var start_time = $('#input_event_start_time').val();
+        console.log("start time: "+ start_time);
+        var end_time = $('#input_event_end_time').val();
+        var contact_name = $("#input_event_contact").val();
+        var contact_phone = $('#input_event_phone').val();
+        var contact_email = $('#input_event_email').val();
+
+        $.ajax({
+            url: API_BASE_URL + "/events",
+            type: 'GET',
+            data: {
+                'i': sid,
+                's': token,
+                'a': 'create',
+                'name': name,
+                'about': about,
+                'scope': scope,
+                'tags': tags,
+                'location': location,
+                'latitude': latitude,
+                'longitude': longitude,
+                'date': date,
+                'starttime': start_time,
+                'endtime': end_time,
+                'cname': contact_name,
+                'cphone': contact_phone,
+                'cemail': contact_email
+            },
+            success: function() {
+                console.out("Yay!")
+            }
+        });
+
+    };
+
     var initRSOTables = function () {
         // use ajax to connect to the login api and make sure the session is valid
         $.ajax({
@@ -262,7 +307,6 @@
                 locationNameInput: $('#location-input')
             }
         });
-
     };
 
 
@@ -365,7 +409,8 @@
     global.Project = {
         init: init,
         approve_row: approve_row,
-        join_row: join_row
+        join_row: join_row,
+        submitEvent: submitEvent
     }
 
 })(this);

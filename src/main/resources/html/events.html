@@ -81,7 +81,7 @@
                     </ul>
                 </div>
                 <div class="panel-body">
-                    <form action="javascript:alert('Submited!');" role="form" class="form-horizontal">
+                    <form id="create_event_form" action="javascript:Project.submitEvent();" role="form" class="form-horizontal">
                         <div class="wizard show-submit">
                             <ul>
                                 <li>
@@ -99,6 +99,12 @@
                                 <li>
                                     <a href="#step-3">
                                         <span class="stepNumber">3</span>
+                                        <span class="stepDesc">Time<br/><small>Information</small></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#step-4">
+                                        <span class="stepNumber">4</span>
                                         <span class="stepDesc">Contact<br/><small>Information</small></span>
                                     </a>
                                 </li>
@@ -115,33 +121,27 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">About</label>
                                     <div class="col-md-8">
-                                        <textarea class="form-control" rows="5"
+                                        <textarea id="input_event_desc" class="form-control" rows="5"
                                                   placeholder="Miscellaneous information about the event (HTML allowed)"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Event Scope</label>
                                     <div class="col-md-8">
-                                        <div class="col-md-2">
-                                            <label class="check"><input type="radio" class="iradio" name="iradio"
-                                                                        id="input_scope_public" checked="checked"/>
-                                                Public</label>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="check"><input type="radio" class="iradio" name="iradio"/>
-                                                Private</label>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="check"><input type="radio" class="iradio" name="iradio"
-                                                                        disabled/> Organization</label>
-                                        </div>
+                                        <select id="input_event_scope" class="form-control select" data-live-search="true"
+                                                style="display: none;">
+                                            <option>Public (All)</option>
+                                            <option>Private (University of Central Florida)</option>
+                                            <option>RSO: Team Instinct</option>
+                                        </select>
+
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Tags</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="tagsinput" value=""/>
+                                        <input id="input_event_tags" type="text" class="tagsinput" value=""/>
                                     </div>
                                 </div>
 
@@ -157,7 +157,7 @@
                                             <input id="location-input" type="text" class="form-control"/>
                                         </div>
                                     </div>
-                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Coordinates</label>
                                     <div class="col-md-8">
@@ -176,6 +176,37 @@
                             <div id="step-3">
 
                                 <div class="form-group">
+                                    <label class="col-md-2 control-label">Date</label>
+                                    <div class="col-md-8">
+                                        <input type="text" id="input_event_date" class="form-control datepicker"
+                                               value="2016-07-20">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Start Time</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group bootstrap-timepicker">
+                                            <input type="text" id="input_event_start_time"
+                                                   class="form-control timepicker" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">End Time</label>
+                                    <div class="col-md-8">
+                                        <input type="text" id="input_event_end_time" class="form-control timepicker"
+                                               autocomplete="off">
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div id="step-4">
+
+                                <div class="form-group">
                                     <label class="col-md-2 control-label">Name</label>
                                     <div class="col-md-8">
                                         <input id="input_event_contact" type="text" class="form-control"
@@ -186,7 +217,8 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Phone</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="mask_phone form-control" value="">
+                                        <input type="text" id="input_event_phone" class="mask_phone form-control"
+                                               value="">
                                         <span class="help-block">Example: (407) 555-5555</span>
                                     </div>
                                 </div>
@@ -194,13 +226,83 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">E-Mail</label>
                                     <div class="col-md-8">
-                                        <input id="input_event_email" type="text" class="form-control" placeholder="Contact E-Mail"/>
+                                        <input id="input_event_email" type="text" class="form-control"
+                                               placeholder="Contact E-Mail"/>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="view_events_panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>View</strong> Events</h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="timeline timeline-right">
+
+                        <!-- START TIMELINE ITEM -->
+                        <div class="timeline-item timeline-main">
+                            <div class="timeline-date">2016</div>
+                        </div>
+                        <!-- END TIMELINE ITEM -->
+
+                        <!-- START TIMELINE ITEM -->
+                        <div class="timeline-item timeline-item-right">
+                            <div class="timeline-item-info">Tomorrow</div>
+                            <div class="timeline-item-icon"><span class="fa fa-building-o"></span></div>
+                            <div class="timeline-item-content">
+                                <div class="timeline-heading">
+
+                                    <img src="assets/images/users/user7.jpg"/>
+                                    <a href="#">Matt</a> created <a href="#">Gym Battle</a> at <a
+                                        href="#">Memory Mall Flagpole</a>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Team Valor and Team Mystic have been going at it for almost two weeks; however neither of them have any idea of what is to come. We have been silently training, and now is our time to rise up and take over the Memory Mall Gym!</p>
+                                    <br/>
+                                    <p>I look forward to seeing you all there,</p>
+                                    <p>&nbsp;&nbsp;- Matt</p>
+                                    <ul class="list-tags">
+                                        <li><a href="#"><span class="fa fa-tag"></span> pokemon</a></li>
+                                        <li><a href="#"><span class="fa fa-tag"></span> Team Instinct</a></li>
+                                        <li><a href="#"><span class="fa fa-tag"></span> Gym Battle</a></li>
+                                    </ul>
+                                </div>
+                                <div class="timeline-body comments">
+                                    <div class="comment-item">
+                                        <img src="assets/images/users/user3.jpg"/>
+                                        <p class="comment-head">
+                                            <a href="#">brett</a>
+                                        </p>
+                                        <p>FINALLY! I'll be there.</p>
+                                        <small class="text-muted">1h ago</small>
+                                    </div>
+                                    <div class="comment-write">
+                                        <textarea class="form-control" placeholder="Write a comment"
+                                                  rows="1"></textarea>
+                                    </div>
+                                </div>
+                                <div class="timeline-footer">
+                                    <div class="pull-right">
+                                        <a href="#"><span class="fa fa-user"></span> 84</a>
+                                        <a href="#"><span class="fa fa-comment"></span> 35</a>
+                                        <a href="#"><span class="fa fa-share"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END TIMELINE ITEM -->
+
+
+                    </div>
+                    <!-- END TIMELINE -->
+
                 </div>
             </div>
         </div>
@@ -244,13 +346,16 @@
 </script>
 
 
-
 <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
 <!-- END PLUGINS -->
 
 <!-- THIS PAGE PLUGINS -->
+
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-timepicker.min.js"></script>
 <script src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB2BcpCrLMpbJ4Crc-Z9yIlrU2qX9F2W7A&libraries=places"></script>
 <script type="text/javascript" src="js/plugins/locationpicker/locationpicker.js"></script>
