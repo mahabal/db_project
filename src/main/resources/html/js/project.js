@@ -249,6 +249,22 @@
         });
     };
 
+    var initEvents = function () {
+        $('#event-location-map').locationpicker({
+            location: {latitude: 28.6005706, longitude: -81.19767969999998},
+            zoom: 15,
+            enableAutocomplete: true,
+            enableReverseGeocode: true,
+            radius: 0,
+            inputBinding: {
+                latitudeInput: $('#input_event_lat'),
+                longitudeInput: $('#input_event_long'),
+                locationNameInput: $('#location-input')
+            }
+        });
+
+    };
+
 
     var initUniversity = function () {
         // use ajax to connect to the login api and make sure the session is valid
@@ -341,6 +357,8 @@
         } else if (page === 'university.html') {
             initUniversity();
             submit_new_university();
+        } else if (page === 'events.html') {
+            initEvents();
         }
     };
 

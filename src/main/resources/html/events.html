@@ -73,111 +73,135 @@
 
         <!-- PAGE CONTENT WRAPPER -->
         <div class="page-content-wrap">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <!--<div class="col-md-3">
-
-                        <div class="widget widget-warning widget-carousel">
-                            <div class="owl-carousel" id="owl-example">
-                                <div>
-                                    <div class="widget-title">Total Organizations</div>
-                                    <div id='total_rsos' class="widget-int"></div>
-                                </div>
-                                <div>
-                                    <div class="widget-title">Returned</div>
-                                    <div class="widget-subtitle">Visitors</div>
-                                    <div class="widget-int">1,695</div>
-                                </div>
-                                <div>
-                                    <div class="widget-title">New</div>
-                                    <div class="widget-subtitle">Visitors</div>
-                                    <div class="widget-int">1,977</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>-->
-                    <div class="row">
-
-
-                        <div class="col-md-3">
-                            <div id="total_universities_block" class="widget widget-default widget-item-icon">
-                                <div class="widget-item-left">
-                                    <span class="fa fa-building"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div id='total_universities' class="widget-int num-count">0</div>
-                                    <div class="widget-title">Universities</div>
-                                    <div class="widget-subtitle">in the database</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div id=total_rsos_block class="widget widget-default widget-item-icon">
-                                <div class="widget-item-left">
-                                    <span class="fa fa-users"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div id='total_rsos' class="widget-int num-count">0</div>
-                                    <div class="widget-title">Total RSOs</div>
-                                    <div class="widget-subtitle">in the database</div>
-                                </div>
-                            </div>
-                            <div id="unapproved_rsos_block" class="widget widget-default widget-item-icon hidden">
-                                <div class="widget-item-left">
-                                    <span class="fa fa-users"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div id='unapproved_rsos' class="widget-int num-count">0</div>
-                                    <div class="widget-title">Unapproved RSOs</div>
-                                    <div class="widget-subtitle">in the database</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="widget widget-default widget-item-icon">
-                                <div class="widget-item-left">
-                                    <span class="fa fa-calendar-check-o"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div id='total_events' class="widget-int num-count">0</div>
-                                    <div class="widget-title">Total Events</div>
-                                    <div class="widget-subtitle">in the database</div>
-                                </div>
-                            </div>
-                            <div id="unapproved_events_block" class="widget widget-default widget-item-icon hidden">
-                                <div class="widget-item-left">
-                                    <span class="fa fa-calendar-check-o"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div id='unapproved_events' class="widget-int num-count">0</div>
-                                    <div class="widget-title">Unapproved Events</div>
-                                    <div class="widget-subtitle">in the database</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-
-                            <div id="total_students_block" class="widget widget-default widget-item-icon">
-                                <div class="widget-item-left">
-                                    <span class="fa fa-user"></span>
-                                </div>
-                                <div class="widget-data">
-                                    <div id='total_students' class="widget-int num-count">0</div>
-                                    <div class="widget-title">Total students</div>
-                                    <div class="widget-subtitle">in the database</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="panel panel-default" id="create_event_panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Create</strong> an Event</h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                    </ul>
                 </div>
+                <div class="panel-body">
+                    <form action="javascript:alert('Submited!');" role="form" class="form-horizontal">
+                        <div class="wizard show-submit">
+                            <ul>
+                                <li>
+                                    <a href="#step-1">
+                                        <span class="stepNumber">1</span>
+                                        <span class="stepDesc">Event<br/><small>Information</small></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#step-2">
+                                        <span class="stepNumber">2</span>
+                                        <span class="stepDesc">Location<br/><small>Information</small></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#step-3">
+                                        <span class="stepNumber">3</span>
+                                        <span class="stepDesc">Contact<br/><small>Information</small></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div id="step-1">
 
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Name</label>
+                                    <div class="col-md-10">
+                                        <input id="input_event_name" type="text" class="form-control"
+                                               placeholder="Event Name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">About</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" rows="5"
+                                                  placeholder="Miscellaneous information about the event (HTML allowed)"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Event Scope</label>
+                                    <div class="col-md-10">
+                                        <div class="col-md-3">
+                                            <label class="check"><input type="radio" class="iradio" name="iradio"
+                                                                        id="input_scope_public" checked="checked"/>
+                                                Public</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="check"><input type="radio" class="iradio" name="iradio"/>
+                                                Private</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="check"><input type="radio" class="iradio" name="iradio"
+                                                                        disabled/> Organization</label>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Tags</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="tagsinput" value=""/>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="step-2">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Location</label>
+                                    <div class="col-md-9 col-xs-12">
+                                        <div class="input-group">
+                                                    <span class="input-group-addon"><span
+                                                            class="fa fa-map"></span></span>
+                                            <input id="location-input" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <label class="col-md-3 control-label">Coordinates</label>
+                                    <div class="col-md-9 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span>X</span></span>
+                                            <input disabled id="input_event_latitude" type="text" class="form-control"/>
+                                            <span class="input-group-addon"><span class=>Y</span></span>
+                                            <input disabled id="input_event_longitude" type="text"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div id="event-location-map" style="width: 100%; height: 300px;"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="step-3">
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Name</label>
+                                    <div class="col-md-10">
+                                        <input id="input_event_contact" type="text" class="form-control"
+                                               placeholder="Event Name"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Name</label>
+                                    <div class="col-md-10">
+                                        <input id="input_event_phone" type="text" class="form-control"
+                                               placeholder="Contact Phone"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">Name</label>
+                                    <div class="col-md-10">
+                                        <input id="input_event_email" type="text" class="form-control"
+                                               placeholder="Contact E-Mail"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-
         </div>
         <!-- END PAGE CONTENT WRAPPER -->
     </div>
@@ -218,8 +242,7 @@
 
 </script>
 
-<script src="js/plugins/cookies/js.cookie.js"></script>
-<script src="js/project.js"></script>
+
 
 <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
@@ -227,10 +250,16 @@
 <!-- END PLUGINS -->
 
 <!-- THIS PAGE PLUGINS -->
+<script src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB2BcpCrLMpbJ4Crc-Z9yIlrU2qX9F2W7A&libraries=places"></script>
+<script type="text/javascript" src="js/plugins/locationpicker/locationpicker.js"></script>
 <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
 <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
 <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>
+<script src="js/plugins/cookies/js.cookie.js"></script>
+<script src="js/project.js"></script>
 <!-- END PAGE PLUGINS -->
 
 <!-- START TEMPLATE -->
