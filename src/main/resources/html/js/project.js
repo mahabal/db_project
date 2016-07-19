@@ -257,8 +257,8 @@
             enableReverseGeocode: true,
             radius: 0,
             inputBinding: {
-                latitudeInput: $('#input_event_lat'),
-                longitudeInput: $('#input_event_long'),
+                latitudeInput: $('#input_event_latitude'),
+                longitudeInput: $('#input_event_longitude'),
                 locationNameInput: $('#location-input')
             }
         });
