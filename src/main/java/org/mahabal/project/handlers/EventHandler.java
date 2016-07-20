@@ -1,6 +1,5 @@
 package org.mahabal.project.handlers;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,11 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 public class EventHandler extends AbstractProjectHandler {
@@ -156,6 +153,7 @@ public class EventHandler extends AbstractProjectHandler {
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
+        System.out.println(o);
 
     }
 

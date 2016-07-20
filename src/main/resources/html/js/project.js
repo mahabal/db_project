@@ -409,7 +409,8 @@
                                 icon_span.addClass("fa-users")
                             }
                         } else if (key === 'date') {
-                            timeline_item_info.text(obj[key]);
+                            var date = obj[key].replace(/(\d)(\d)?:(\d)(\d)?:(\d)(\d)? (A|P)M/g, "");
+                            timeline_item_info.text(date);
                         } else if (key === 'contactname') {
 
                             timeline_heading.append($('<a href="#">' + obj[key] + '</a>'));
@@ -434,6 +435,10 @@
                             if (obj.hasOwnProperty('contactemail')) {
                                 var email = $('<a></a>').attr("href", "mailto:" + obj['contactemail']).text(" " + obj['contactemail']);
                                 timeline_body.append($('<span></span>').addClass("fa").addClass("fa-envelope").append(email));
+                                timeline_body.append($('<br/>'))
+                            }
+                            if (obj.hasOwnProperty("startTime") && obj.hasOwnProperty("endTime")) {
+                                timeline_body.append($('<span></span>').addClass("fa").addClass("fa-clock-o").text(" " + obj['startTime'] + "  - " + obj['endTime']));
                                 timeline_body.append($('<br/>'))
                             }
                         } else if (key === 'tags') {
