@@ -1,6 +1,9 @@
 package org.mahabal.project.entity;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.skife.jdbi.v2.StatementContext;
+import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
@@ -183,6 +186,11 @@ public final class Event {
         this.tags = tags;
     }
 
+    public String toJsonObject() {
+        final Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
     @RegisterMapper(Mapper.class)
     public interface Queries {
 
@@ -201,6 +209,12 @@ public final class Event {
         @SqlQuery("select * from events where scope = 1 and aid = :u.uid")
         List<Event> allPrivate(@BindBean("u") University u);
 
+        @SqlQuery("select * from events where scope = 1 and aid = :u")
+        List<Event> allPrivate(@Bind("u") int u);
+
+        @SqlQuery("select * from events where scope = 2 and aid = :u")
+        List<Event> allRSO(@Bind("u") int u);
+
         @SqlQuery("select count(*) from events where (scope = 1 or scope = 0) and aid = :u.uid")
         long count(@BindBean("u") University u);
 
@@ -208,7 +222,7 @@ public final class Event {
         List<Event> all();
 
 
-        @SqlUpdate("insert into events (`eid`, `scope`, `aid`, `name`, `desc`, `date`, `startTime`, `endTime`, `location`, `latitude`, `longitude`, `contactname`, `contactphone`, `contactemail`) values (:e.eid, :e.scope, :e.aid, :e.name, :e.desc, :e.date, :e.startTime, :e.endTime, :e.location, :e.latitude, :e.longitude, :e.contactname, :e.contactphone, :e.contactemail)")
+        @SqlUpdate("insert into events (`eid`, `scope`, `aid`, `name`, `desc`, `date`, `startTime`, `endTime`, `location`, `latitude`, `longitude`, `contactname`, `contactphone`, `contactemail`, `tags`) values (:e.eid, :e.scope, :e.aid, :e.name, :e.desc, :e.date, :e.startTime, :e.endTime, :e.location, :e.latitude, :e.longitude, :e.contactname, :e.contactphone, :e.contactemail, :e.tags)")
         int insert(@BindBean("e") Event e);
 
     }
@@ -217,7 +231,7 @@ public final class Event {
         @Override
         public Event map(int index, ResultSet r, StatementContext ctx) throws SQLException {
             return new Event(r.getInt("eid"), r.getInt("scope"), r.getInt("aid"), r.getString("name"), r.getString("desc"), r.getString("tags"), r.getTimestamp("created"),
-                    r.getTimestamp("date"), r.getString("location"), r.getString("startTime"), r.getString("endTime"), r.getDouble("latitude"), r.getDouble("longitude"), r.getString("contactname"),
+                    r.getTimestamp("date"), r.getString("startTime"), r.getString("endTime"), r.getString("location"), r.getDouble("latitude"), r.getDouble("longitude"), r.getString("contactname"),
                     r.getString("contactphone"), r.getString("contactemail"));
         }
     }

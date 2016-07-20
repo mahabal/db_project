@@ -56,7 +56,7 @@ public final class Message {
     @RegisterMapper(Mapper.class)
     public interface Queries {
 
-        @SqlUpdate("insert into message (`eid`, `sid`, `message`) values (:eid, :sid, :message")
+        @SqlUpdate("insert into message (`eid`, `sid`, `message`) values (:eid, :sid, :message)")
         int insert(@Bind("eid") int eid, @Bind("sid") int sid, @Bind("message") String message);
 
         @SqlQuery("select * from message where eid = :e.eid")

@@ -11,6 +11,7 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Student {
 
@@ -89,6 +90,9 @@ public class Student {
         @SqlUpdate("update student set uid = :uid where sid = :sid")
         int updateUid(@BindBean Student s);
 
+        @SqlQuery("select * from rso_data o, rso_membership r where o.rid = r.rid and o.uid = :s.uid and r.sid = :s.sid")
+        @RegisterMapper(Organization.Mapper.class)
+        List<Organization> getOrganizations(@BindBean("s") Student s);
 
     }
 

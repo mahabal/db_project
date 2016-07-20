@@ -243,7 +243,6 @@
         var longitude = $('#input_event_longitude').val();
         var date = $('#input_event_date').val();
         var start_time = $('#input_event_start_time').val();
-        console.log("start time: "+ start_time);
         var end_time = $('#input_event_end_time').val();
         var contact_name = $("#input_event_contact").val();
         var contact_phone = $('#input_event_phone').val();
@@ -270,8 +269,34 @@
                 'cphone': contact_phone,
                 'cemail': contact_email
             },
-            success: function() {
-                console.out("Yay!")
+            success: function(data) {
+                // result should be a json object
+                var json = JSON.parse(data);
+
+                if (json.hasOwnProperty("events")) {
+
+                    var eventsArray = json['events'];
+
+                    eventsArray.forEach(function(obj) {
+
+                        console.log(obj);
+
+                        for (var key in obj) {
+                            if (obj.hasOwnProperty(key))
+                                console.log(key + "=" + obj[key]);
+                        }
+
+                    });
+
+                    for (var i = 0; i < eventsArray.length; i++) {
+
+                        var event = eventsArray[i];
+                        console.log("event: " + event);
+
+                    }
+
+                }
+
             }
         });
 
@@ -294,7 +319,270 @@
         });
     };
 
+    // Start Smart Wizard
+    var uiSmartWizard = function () {
+
+        if ($(".wizard").length > 0) {
+
+            //Check count of steps in each wizard
+            $(".wizard > ul").each(function () {
+                $(this).addClass("steps_" + $(this).children("li").length);
+            });//end
+
+            $(".wizard").smartWizard({
+                // This part of code can be removed FROM
+                onLeaveStep: function (obj) {
+                    // things to do when leaving
+                    return true;
+                },// <-- TO
+
+                //This is important part of wizard init
+                onShowStep: function (obj) {
+                    var wizard = obj.parents(".wizard");
+
+                    if (wizard.hasClass("show-submit")) {
+
+                        var step_num = obj.attr('rel');
+                        var step_max = obj.parents(".anchor").find("li").length;
+
+                        if (step_num == step_max) {
+                            obj.parents(".wizard").find(".actionBar .btn-primary").css("display", "block");
+                        }
+                    }
+
+                    $('#event-location-map').locationpicker("refresh");
+
+                    return true;
+                }//End
+            });
+        }
+
+    };// End Smart Wizard
+
+    var initEventSuccess = function(data) {
+        // result should be a json object
+        var json = JSON.parse(data);
+
+        if (json.hasOwnProperty("events")) {
+
+            $('#timeline').empty();
+
+            $('#create_event_panel').addClass("panel-toggled");
+            $('#create_event_arrow').removeClass("fa-angle-down").addClass("fa-angle-up");
+
+            var eventsArray = json['events'];
+
+            eventsArray.forEach(function(obj) {
+
+                var timeline_item_info = $('<div></div>').addClass("timeline-item-info");
+                var icon_span = $('<span></span>').addClass("fa");
+                var timeline_item_icon = $('<div class="timeline-item-icon"></div>').append(icon_span);
+                var timeline_heading = $('<div></div>').addClass("timeline-heading").addClass("panel-heading");
+                var timeline_item_content = $('<div></div>').addClass("timeline-item-content").append(timeline_heading);
+                var timeline_body = $('<div></div>').addClass("panel-body").addClass("timeline-body");
+                var timeline_tags = $('<ul class="list-tags"></ul>');
+                var timeline_comments = $('<div></div>').addClass("timeline-body").addClass("comments");
+                var right = $('<div></div>').addClass("pull-right");
+                var timeline_footer = $("<div></div>").addClass("timeline-footer");
+                timeline_footer.append(right);
+
+
+                right.append($('<a></a>').attr("href", "#").append($('<span></span>').addClass("fa fa-heart").attr("style", "color:red;").text(' ' + 1)));
+
+
+                for (var key in obj) {
+
+                    if (obj.hasOwnProperty(key)) {
+
+                        if (key === 'scope') {
+                            var scope = obj[key];
+                            if (scope === 0) {
+                                icon_span.addClass("fa-globe");
+                            } else if (scope == 1) {
+                                icon_span.addClass("fa-building");
+                            } else if (scope == 2) {
+                                icon_span.addClass("fa-users")
+                            }
+                        } else if (key === 'date') {
+                            timeline_item_info.text(obj[key]);
+                        } else if (key === 'contactname') {
+
+                            timeline_heading.append($('<a href="#">' + obj[key] + '</a>'));
+                            if (obj.hasOwnProperty("name")) {
+                                timeline_heading.append(" created ");
+                                timeline_heading.append($('<a href="#">' + obj['name'] + '</a>'));
+                                if (obj.hasOwnProperty("location")) {
+                                    timeline_heading.append(" at ");
+                                    timeline_heading.append($('<a href="#">' + obj['location'] + '</a>'));
+                                }
+                            }
+                            timeline_item_content.attr("id", "ic_" + obj['eid']);
+                            timeline_heading.append($('<button onclick="Project.toggleHeading(' + obj['eid'] + ');"  class="btn btn-sm btn-default btn-condensed pull-right"><span class="fa fa-angle-down"></span></button>'));
+                        } else if (key === 'desc') {
+                            if (obj.hasOwnProperty('latitude') && obj.hasOwnProperty('longitude'))
+                                timeline_body.append($('<img src="https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=150x150&maptype=roadmap&markers=color:red%7Clabel:%7C' + obj['latitude'] + ',' + obj['longitude'] + '&key=AIzaSyB2BcpCrLMpbJ4Crc-Z9yIlrU2qX9F2W7A" class="img-text" width="150" align="left"/>'));
+                            timeline_body.append($("<p>" + obj['desc'] + "</p>"));
+                            if (obj.hasOwnProperty('contactphone')) {
+                                timeline_body.append($('<span></span>').addClass("fa").addClass("fa-phone").text(" " + obj['contactphone']));
+                                timeline_body.append($('<br/>'))
+                            }
+                            if (obj.hasOwnProperty('contactemail')) {
+                                var email = $('<a></a>').attr("href", "mailto:" + obj['contactemail']).text(" " + obj['contactemail']);
+                                timeline_body.append($('<span></span>').addClass("fa").addClass("fa-envelope").append(email));
+                                timeline_body.append($('<br/>'))
+                            }
+                        } else if (key === 'tags') {
+                            var tags = obj[key].split(",");
+                            for (var i = 0; i < tags.length; i++) {
+                                var t = $('<li><a href="#"><span class="fa fa-tag"></span>' + tags[i] + '</a></li>');
+                                timeline_tags.append(t);
+                            }
+                        } else if (key === 'messages') {
+
+                            var messages = obj[key];
+
+                            right.append($('<a></a>').attr("href", "#").append($('<span></span>').addClass("fa fa-comments").text(' ' + messages.length)));
+
+                            messages.forEach(function (obj) {
+
+                                if (obj.hasOwnProperty("username") && obj.hasOwnProperty("message") && obj.hasOwnProperty("time")) {
+
+                                    var comment_item = $('<div></div>').addClass("comment-item");
+                                    var comment_head = $('<p></p>').addClass("comment-head");
+                                    comment_head.append($('<a></a>').attr("href", "#").text(obj['username']));
+                                    comment_item.append(comment_head);
+                                    comment_item.append($('<p></p>').text(obj['message']));
+                                    comment_item.append($('<small></small>').addClass("text-muted").text(obj['time']));
+                                    timeline_comments.append(comment_item);
+                                }
+
+                            });
+
+                        } else {
+                        }
+
+                    }
+                }
+
+                timeline_comments.append($('<div class="comment-write input-group"><input type="text" id=\"' + obj['eid'] + '_message_input'
+                    + '\" class="form-control" placeholder="What you thinkin\' homie?" rows="1"><div class="input-group-btn"><button onclick="Project.sendMessage(' + obj['eid'] + ');" class="btn btn-default">Send</button></div></div>'));
+
+                var timeline_item = $("<div></div>").addClass('timeline-item timeline-item-right');
+                timeline_item.append(timeline_item_info);
+                timeline_item.append(timeline_item_icon);
+                timeline_body.append("<br/><br/>");
+                timeline_body.append(timeline_tags);
+                timeline_body.append(timeline_comments);
+                timeline_item_content.append(timeline_body);
+                right.append($('<a></a>').attr("href", "#").append($('<span></span>').addClass("fa fa-share")));
+                timeline_item_content.append(timeline_footer);
+                timeline_item.append(timeline_item_content);
+
+
+                // <div class="timeline-footer">
+                //     <div class="pull-right">
+                //     <a href="#"><span class="fa fa-user"></span> 84</a>
+                //     <a href="#"><span class="fa fa-comment"></span> 35</a>
+                //     <a href="#"><span class="fa fa-share"></span></a>
+                //     </div>
+                //     </div>
+
+                console.log(timeline_item);
+
+                $('#timeline').append(timeline_item);
+
+            });
+
+        }
+        var scopeSelect = $('#input_event_scope');
+        scopeSelect.empty();
+
+        scopeSelect.append("<Option>Public</Option>");
+        scopeSelect.append("<Option>Private (University Only)</Option>");
+
+        if (json.hasOwnProperty("organizations")) {
+
+            // get the json array
+            var orgArr = json['organizations'];
+
+            // iterate the json array and add options
+            orgArr.forEach(function(obj) {
+
+                if (obj.hasOwnProperty("rid") && obj.hasOwnProperty("orgName")) {
+                    var rid = obj['rid'];
+                    var rName = obj['orgName'];
+                    scopeSelect.append($('<Option>' + rid + ':' + rName + '</Option>'));
+                }
+
+            });
+
+        }
+
+
+        scopeSelect.selectpicker("refresh");
+
+    };
+
+
+    var sendMessage = function (eid) {
+
+        var message_input = $("#" + eid + "_message_input");
+
+        if (message_input !== 'undefined' && message_input.val() !== 'undefined') {
+            var message = message_input.val();
+            console.log(message);
+            $.ajax({
+                url: API_BASE_URL + "/events",
+                type: 'GET',
+                data: {
+                    'i': sid,
+                    's': token,
+                    'a': 'post',
+                    'e': eid,
+                    'm': message
+                },
+                success: function(data) {
+                    message_input.val("");
+                    initEventSuccess(data);
+                }
+            });
+        }
+
+    };
+
+
+    var toggleHeading = function (eid) {
+
+        console.log(eid);
+
+        var panel = $("#ic_" + eid);
+        if (panel !== 'undefined') {
+
+            if (panel.attr("class").indexOf("panel-toggled") > -1) {
+                panel.removeClass("panel-toggled");
+            } else {
+                panel.addClass("panel-toggled");
+            }
+
+        }
+
+
+    };
+
+
     var initEvents = function () {
+
+        $.ajax({
+            url: API_BASE_URL + "/events",
+            type: 'GET',
+            data: {
+                'i': sid,
+                's': token
+            },
+            success: initEventSuccess
+
+        });
+
         $('#event-location-map').locationpicker({
             location: {latitude: 28.6005706, longitude: -81.19767969999998},
             zoom: 15,
@@ -308,7 +596,6 @@
             }
         });
     };
-
 
     var initUniversity = function () {
         // use ajax to connect to the login api and make sure the session is valid
@@ -392,6 +679,7 @@
     var init = function () {
         validateSession();
         initLogoutButton();
+        uiSmartWizard();
         var page = location.pathname.split("/").pop();
         if (page === 'dashboard.html') {
             initDashboard();
@@ -410,7 +698,9 @@
         init: init,
         approve_row: approve_row,
         join_row: join_row,
-        submitEvent: submitEvent
+        submitEvent: submitEvent,
+        sendMessage: sendMessage,
+        toggleHeading: toggleHeading
     }
 
 })(this);

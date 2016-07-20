@@ -77,12 +77,12 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>Create</strong> an Event</h3>
                     <ul class="panel-controls">
-                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+                        <li><a href="#" class="panel-collapse"><span id="create_event_arrow" class="fa fa-angle-down"></span></a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
                     <form id="create_event_form" action="javascript:Project.submitEvent();" role="form" class="form-horizontal">
-                        <div class="wizard show-submit">
+                        <div class="wizard wizard-validation show-submit">
                             <ul>
                                 <li>
                                     <a href="#step-1">
@@ -130,9 +130,6 @@
                                     <div class="col-md-8">
                                         <select id="input_event_scope" class="form-control select" data-live-search="true"
                                                 style="display: none;">
-                                            <option>Public (All)</option>
-                                            <option>Private (University of Central Florida)</option>
-                                            <option>RSO: Team Instinct</option>
                                         </select>
 
                                     </div>
@@ -243,61 +240,10 @@
                         <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
                     </ul>
                 </div>
-                <div class="panel-body">
-                    <div class="timeline timeline-right">
+                <div id="timeline-panel" class="panel-body">
+                    <div id="timeline" class="timeline timeline-right">
 
-                        <!-- START TIMELINE ITEM -->
-                        <div class="timeline-item timeline-main">
-                            <div class="timeline-date">2016</div>
-                        </div>
-                        <!-- END TIMELINE ITEM -->
 
-                        <!-- START TIMELINE ITEM -->
-                        <div class="timeline-item timeline-item-right">
-                            <div class="timeline-item-info">Tomorrow</div>
-                            <div class="timeline-item-icon"><span class="fa fa-building-o"></span></div>
-                            <div class="timeline-item-content">
-                                <div class="timeline-heading">
-
-                                    <img src="assets/images/users/user7.jpg"/>
-                                    <a href="#">Matt</a> created <a href="#">Gym Battle</a> at <a
-                                        href="#">Memory Mall Flagpole</a>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>Team Valor and Team Mystic have been going at it for almost two weeks; however neither of them have any idea of what is to come. We have been silently training, and now is our time to rise up and take over the Memory Mall Gym!</p>
-                                    <br/>
-                                    <p>I look forward to seeing you all there,</p>
-                                    <p>&nbsp;&nbsp;- Matt</p>
-                                    <ul class="list-tags">
-                                        <li><a href="#"><span class="fa fa-tag"></span> pokemon</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> Team Instinct</a></li>
-                                        <li><a href="#"><span class="fa fa-tag"></span> Gym Battle</a></li>
-                                    </ul>
-                                </div>
-                                <div class="timeline-body comments">
-                                    <div class="comment-item">
-                                        <img src="assets/images/users/user3.jpg"/>
-                                        <p class="comment-head">
-                                            <a href="#">brett</a>
-                                        </p>
-                                        <p>FINALLY! I'll be there.</p>
-                                        <small class="text-muted">1h ago</small>
-                                    </div>
-                                    <div class="comment-write">
-                                        <textarea class="form-control" placeholder="Write a comment"
-                                                  rows="1"></textarea>
-                                    </div>
-                                </div>
-                                <div class="timeline-footer">
-                                    <div class="pull-right">
-                                        <a href="#"><span class="fa fa-user"></span> 84</a>
-                                        <a href="#"><span class="fa fa-comment"></span> 35</a>
-                                        <a href="#"><span class="fa fa-share"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END TIMELINE ITEM -->
 
 
                     </div>
@@ -354,7 +300,6 @@
 <!-- THIS PAGE PLUGINS -->
 
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap/bootstrap-timepicker.min.js"></script>
 <script src="js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB2BcpCrLMpbJ4Crc-Z9yIlrU2qX9F2W7A&libraries=places"></script>
@@ -367,6 +312,8 @@
 <script type='text/javascript' src='js/plugins/maskedinput/jquery.maskedinput.min.js'></script>
 <script src="js/plugins/cookies/js.cookie.js"></script>
 <script src="js/project.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap/bootstrap-select.js"></script>
+
 <!-- END PAGE PLUGINS -->
 
 <!-- START TEMPLATE -->
