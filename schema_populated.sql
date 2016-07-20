@@ -1216,10 +1216,7 @@ Founded in 1963, UCF opened to provide personnel to support the U.S. space progr
 INSERT INTO project.rso_data (name, `desc`, created, sid, uid, approved) VALUES ('Team Instinct', 'The BEST Pokemon Go team', '2016-07-08 12:14:14', 1, 1, 0);
 INSERT INTO project.rso_data (name, `desc`, created, sid, uid, approved) VALUES ('Team Valor', 'The meh Pokemon Go team', '2016-07-10 6:23:23', 30, 1, 0);
 INSERT INTO project.rso_data (name, `desc`, created, sid, uid, approved) VALUES ('Team Mystic', 'The bleh Pokemon go team', '2016-07-10 12:13:35', 52, 1, 0);
-INSERT INTO project.rso_data (name, `desc`, created, sid, uid, approved) VALUES ('#HackMIT', 'Come hax with us.', '2016-07-10 12:13:35', 52, 1, 0);
 
-
-INSERT INTO project.rso_membership (`sid`, `rid`) VALUES (2, 4);
 INSERT INTO project.rso_membership (`sid`, `rid`) VALUES (4, 1);
 INSERT INTO project.rso_membership (`sid`, `rid`) VALUES (6, 2);
 INSERT INTO project.rso_membership (`sid`, `rid`) VALUES (10, 1);
