@@ -27,14 +27,6 @@ public class EventHandler extends AbstractProjectHandler {
         super(dbi);
     }
 
-    public static void main(String[] args) {
-
-        final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd h:mm aaa");
-
-        System.out.println(df.format(System.currentTimeMillis()));
-
-    }
-
     @Override
     protected void doValidatedGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -72,6 +64,8 @@ public class EventHandler extends AbstractProjectHandler {
                         e.printStackTrace();
                     }
                     final Timestamp sqlDate = new Timestamp(time);
+                    System.out.println(df.format(time));
+                    System.out.println(sqlDate);
                     int sc = 0;
                     int aid = 0;
                     if (scope.equalsIgnoreCase("public")) {
@@ -120,7 +114,7 @@ public class EventHandler extends AbstractProjectHandler {
         }
 
 
-        if (student.getUid() == 1) {
+        if (student.getSid() == 1) {
 
             final List<Event> allEvents = events.all();
             if (allEvents.size() > 0) {
@@ -133,6 +127,7 @@ public class EventHandler extends AbstractProjectHandler {
             // add all of the university events
             final JsonArray array = getJsonArrayOfEvents(events.allPrivate(student.getUid()));
 
+
             array.addAll(getJsonArrayOfEvents(events.allPublic()));
 
             // add all of the RSO events
@@ -141,7 +136,7 @@ public class EventHandler extends AbstractProjectHandler {
             }
 
             if (array.size() > 0) {
-                o.add("events", array);
+                System.out.println(array);
             }
 
         }
