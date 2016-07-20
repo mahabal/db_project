@@ -475,22 +475,7 @@
                 }
 
                 timeline_comments.append($('<div class="comment-write input-group"><input type="text" id=\"' + obj['eid'] + '_message_input'
-                    + '\" class="form-control" placeholder="What\'s on your mind?'
-                " rows="
-                1
-                "><div class="
-                input - group - btn
-                "><button onclick="
-                Project.sendMessage(' + obj['
-                eid
-                '] + '
-                )
-                ;
-                " class="
-                btn
-                btn -
-                default
-                ">Send</button></div></div>'));
+                    + '\" class="form-control" placeholder="What\'s on your mind?"><div class="input-group-btn"><button onclick="Project.sendMessage(' + obj['eid'] + ');" class="btn btn-default">Send</button></div></div>'));
 
                 var timeline_item = $("<div></div>").addClass('timeline-item timeline-item-right');
                 timeline_item.append(timeline_item_info);
