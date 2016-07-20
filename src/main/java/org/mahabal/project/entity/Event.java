@@ -212,6 +212,9 @@ public final class Event {
         @SqlQuery("select * from events where scope = 1 and aid = :u")
         List<Event> allPrivate(@Bind("u") int u);
 
+        @SqlQuery("select * from events where scope = 0")
+        List<Event> allPublic();
+
         @SqlQuery("select * from events where scope = 2 and aid = :u")
         List<Event> allRSO(@Bind("u") int u);
 

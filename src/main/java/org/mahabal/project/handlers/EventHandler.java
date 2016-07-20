@@ -129,8 +129,11 @@ public class EventHandler extends AbstractProjectHandler {
 
         } else {
 
+
             // add all of the university events
             final JsonArray array = getJsonArrayOfEvents(events.allPrivate(student.getUid()));
+
+            array.addAll(getJsonArrayOfEvents(events.allPublic()));
 
             // add all of the RSO events
             for (final Organization org : students.getOrganizations(student)) {

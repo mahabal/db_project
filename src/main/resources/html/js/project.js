@@ -213,7 +213,7 @@
     var join_row = function (row) {
         var box = $("#mb-approve-row");
         box.addClass("open");
-        box.find(".mb-control-yes").on("click", function () {
+        box.find(".mb-control-ayy").on("click", function () {
             box.removeClass("open");
             $('#' + row).hide("medium", function () {
                 $(this).remove();
