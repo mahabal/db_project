@@ -133,6 +133,7 @@ public class EventHandler extends AbstractProjectHandler {
             }
 
             if (array.size() > 0) {
+                o.add("events", array);
                 System.out.println(array);
             }
 
@@ -153,7 +154,6 @@ public class EventHandler extends AbstractProjectHandler {
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
-        System.out.println(o);
 
     }
 
