@@ -46,10 +46,10 @@ public final class Like {
     @RegisterMapper(Mapper.class)
     public interface Queries {
 
-        @SqlQuery("select * from likes where eid = :e.eid")
+        @SqlQuery("select count(*) from likes where eid = :e.eid")
         long count(@BindBean("e") Event e);
 
-        @SqlQuery("select * from likes where eid = :eid")
+        @SqlQuery("select count(*) from likes where eid = :eid")
         long count(@Bind("eid") int eid);
 
         @SqlQuery("select * from likes where sid = :sid and eid = :eid")

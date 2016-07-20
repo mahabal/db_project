@@ -111,7 +111,7 @@ public class EventHandler extends AbstractProjectHandler {
                         likes.insert(student.getSid(), eid);
                         System.out.println(student.getUsername() + " has liked an event");
                     } else {
-                        likes.insert(student.getSid(), eid);
+                        likes.delete(student.getSid(), eid);
                         System.out.println(student.getUsername() + " has unliked an event");
                     }
 

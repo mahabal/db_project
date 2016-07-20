@@ -388,7 +388,7 @@
 
 
                 if (obj.hasOwnProperty("likes") && obj.hasOwnProperty("eid")) {
-                    right.append($('<a></a>').attr("href", "javascript:void(0);").attr("onclick", "Project.like(" + obj['eid'] + ");").append($('<span></span>').addClass("fa fa-heart").text(' ' + obj['eid'])));
+                    right.append($('<a></a>').attr("href", "javascript:void(0);").attr("onclick", "Project.like(" + obj['eid'] + ");").append($('<span></span>').addClass("fa fa-heart").text(' ' + obj['likes'])));
                 }
 
 
