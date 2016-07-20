@@ -158,7 +158,6 @@ public class EventHandler extends AbstractProjectHandler {
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().println(o);
-        System.out.println(o);
 
     }
 
