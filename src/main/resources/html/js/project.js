@@ -166,6 +166,9 @@
                         if (o['members'] >= 5) row.addClass("success");
                     }
                     if (type === 'can_join') {
+
+                        $("#membership_rsos_panel").removeClass("hidden");
+
                         // create the button
 
                         row.append('<td><button class="btn btn-success btn-rounded btn-condensed btn-sm " onclick="Project.join_row(\'' + type + '_row_' + o["rid"] + '\');"><span class="fa fa-thumbs-up"></span></button></td>');
