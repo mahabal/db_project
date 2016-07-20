@@ -211,7 +211,7 @@
     };
 
     var join_row = function (row) {
-        var box = $("#mb-approve-row");
+        var box = $("#mb-join-row");
         box.addClass("open");
         box.find(".mb-control-ayy").on("click", function () {
             box.removeClass("open");
