@@ -55,6 +55,13 @@ public final class Like {
         @SqlQuery("select * from likes where sid = :sid and eid = :eid")
         Like get(@Bind("sid") int sid, @Bind("eid") int eid);
 
+        @SqlUpdate("insert into likes (`sid`, `eid`) values (:sid, :eid)")
+        int insert(@Bind("sid") int sid, @Bind("eid") int eid);
+
+
+        @SqlUpdate("delete from likes where sid = :sid and eid = :eid")
+        int delete(@Bind("sid") int sid, @Bind("eid") int eid);
+
     }
 
     public static class Mapper implements ResultSetMapper<Like> {

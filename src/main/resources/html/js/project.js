@@ -387,7 +387,9 @@
                 timeline_footer.append(right);
 
 
-                right.append($('<a></a>').attr("href", "#").append($('<span></span>').addClass("fa fa-heart").attr("style", "color:red;").text(' ' + 1)));
+                if (obj.hasOwnProperty("likes") && obj.hasOwnProperty("eid")) {
+                    right.append($('<a></a>').attr("href", "javascript:void(0);").attr("onclick", "Project.like(" + obj['eid'] + ");").append($('<span></span>').addClass("fa fa-heart").text(' ' + obj['eid'])));
+                }
 
 
                 for (var key in obj) {
@@ -551,6 +553,27 @@
     };
 
 
+    var like = function (eid) {
+
+        console.log("like: " + eid);
+        $.ajax({
+            url: API_BASE_URL + "/events",
+            type: 'GET',
+            data: {
+                'i': sid,
+                's': token,
+                'a': 'like',
+                'e': eid,
+            },
+            success: function(data) {
+                initEventSuccess(data);
+            }
+        });
+
+    };
+
+
+
     var toggleHeading = function (eid) {
 
         console.log(eid);
@@ -700,7 +723,8 @@
         join_row: join_row,
         submitEvent: submitEvent,
         sendMessage: sendMessage,
-        toggleHeading: toggleHeading
+        toggleHeading: toggleHeading,
+        like: like
     }
 
 })(this);
