@@ -1,5 +1,6 @@
 package org.mahabal.project.handlers;
 
+import com.google.common.hash.Hashing;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -12,8 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.nio.charset.Charset;
+import java.util.*;
 
 public class UserHandler extends AbstractProjectHandler {
 
@@ -34,72 +35,43 @@ public class UserHandler extends AbstractProjectHandler {
         if (ip == null) ip = req.getRemoteAddr();
 
         // first check and see if this is an ID and token, if it is, just validate it
-        String i = req.getParameter("i");
-        String s = req.getParameter("s");
-
-        if (i != null && s != null) {
-
-            try (Handle h = dbi.open()) {
-
-                Session.Queries q = h.attach(Session.Queries.class);
-                Session _session = q.get(Integer.parseInt(i), ip, s);
-
-                if (_session == null) {
-
-                    // no session found, so do nothing
-                    resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    final JsonObject obj = new JsonObject();
-                    obj.add("error", new JsonPrimitive("Invalid session."));
-                    resp.getWriter().println(obj);
-
-                } else {
-
-                    final JsonObject o = new JsonObject();
-                    final JsonArray userArr = new JsonArray();
-
-                    String rso = req.getParameter("r");
-
-                    if (rso == null) {
-                        // rso is null, so we want to query ALL of the users ... this should be super-admin only
-                        // so check if id == 1.
-                        if (Integer.parseInt(i) == 1) {
-
-                            // see if it a generate command
-                            String action = req.getParameter("a");
-                            if (action != null) {
-                                if (action.equalsIgnoreCase("generate")) {
-                                    final LinkedList<String> NAME_COLLECTION = new LinkedList<>();
-                                    for (final String n : BOY_NAMES) {
-                                        NAME_COLLECTION.add(n.toLowerCase());
-                                    }
-                                    for (final String n : GIRL_NAMES) {
-                                        NAME_COLLECTION.add(n.toLowerCase());
-                                    }
-                                    Collections.shuffle(NAME_COLLECTION);
-                                    StringBuilder sb = new StringBuilder();
-                                    return;
-                                }
-                            }
 
 
-                            Student.Queries query = h.attach(Student.Queries.class);
-                            Student student = query.findById(1);
-                            System.out.println("Name is: " + student.getUsername());
-                            student.setUsername("Matthew Balwant");
-                            int updated = query.updateUsername(student);
-                            System.out.println("Updated: " + updated + " rows.");
-                        }
-                    }
+        try (Handle h = dbi.open()) {
 
-                    o.add("users", userArr);
-                    resp.setStatus(HttpServletResponse.SC_OK);
-                    resp.getWriter().println(o);
-                    System.out.println(o);
-                }
+            final HashSet<String> set = new HashSet<>();
+            List<String> boyName = Arrays.asList(BOY_NAMES);
+            boyName.forEach(String::toLowerCase);
+            List<String> girlName = Arrays.asList(GIRL_NAMES);
+            girlName.forEach(String::toLowerCase);
+            set.addAll(girlName);
+            set.addAll(boyName);
+
+            final LinkedList<String> NAME_COLLECTION = new LinkedList<>();
+            for (final String n : set) {
+                if (!NAME_COLLECTION.contains(n.toLowerCase()))
+                    NAME_COLLECTION.add(n.toLowerCase());
             }
+            Collections.shuffle(NAME_COLLECTION);
+
+            final int create = new Random().nextInt(100) + 100;
+            for (int i = 0; i < create; i++) {
+
+                System.out.println(NAME_COLLECTION.size());
+
+                String name = NAME_COLLECTION.poll().toLowerCase();
+                final String salt = Hashing.sha512().hashString(String.valueOf(new Random().nextDouble()),
+                        Charset.forName("UTF-8")).toString().substring(0, 12);
+                // generate a newly salted hash from the md5 password, them trim it to 36 characters
+                final String pwHash = Hashing.sha512().hashString(salt + "password", Charset.forName("UTF-8"))
+                        .toString().substring(0, 36);
+                h.insert("insert into student (uid, username, password, salt, email) values(?,?,?,?,?)",
+                        1, name, pwHash, salt, name + "@knights.ucf.edu");
+                System.out.println("Student created: " + name);
+
+            }
+
         }
-
-
     }
 
 }

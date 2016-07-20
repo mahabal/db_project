@@ -638,9 +638,14 @@
                     $('#create_university').addClass("hidden");
                     $('#display_university').removeClass("hidden");
 
+                    if (json.hasOwnProperty('description')) {
+                        $('#description').empty();
+                        $('#description').append(json['description']);
+                    }
+
                     for (var o in json) {
                         if (json.hasOwnProperty(o)) {
-                            if (o !== 'image') {
+                            if (o !== 'image' && o !== 'description') {
                                 var element = $('#' + o);
                                 element.text(json[o]);
                             }
