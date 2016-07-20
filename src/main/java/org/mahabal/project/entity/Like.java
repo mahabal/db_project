@@ -15,20 +15,14 @@ import java.util.List;
 
 public final class Like {
 
-    private final int lid;
     private final int eid;
     private final int sid;
     private final Timestamp time;
 
-    public Like(int lid,int sid, int eid, Timestamp time) {
-        this.lid = lid;
+    public Like(int sid, int eid, Timestamp time) {
         this.sid = sid;
         this.eid = eid;
         this.time = time;
-    }
-
-    public int getLid() {
-        return lid;
     }
 
     public int getEid() {
@@ -67,7 +61,7 @@ public final class Like {
     public static class Mapper implements ResultSetMapper<Like> {
         @Override
         public Like map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-            return new Like(r.getInt("lid"), r.getInt("sid"), r.getInt("eid"), r.getTimestamp("created"));
+            return new Like(r.getInt("sid"), r.getInt("eid"), r.getTimestamp("created"));
         }
     }
 
