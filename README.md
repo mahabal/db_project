@@ -19,11 +19,11 @@ This project was meant to be run on Linux. (Arch Linux setup and installation wi
     * Import the blank schema into mysql    
             
         * For a completely blank schema:
-    
+     
               mysql -u root -p < schema.sql
         
         * For a schema that has a university and an admin account
-            
+                  
               mysql -u root -p < schema_wiped_admin.sql
               Admin information: matt:password
 
