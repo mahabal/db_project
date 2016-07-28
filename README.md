@@ -36,19 +36,19 @@ This project was meant to be run on Linux. (Arch Linux setup and installation wi
     
 - Execute the following command:
 
-      gradle compileJava
+        gradle compileJava
 
 **Running**
 
    - Start the backend with: 
     
-    java -jar backend.jar
+        java -jar backend.jar
     
    - Navigate to the directory:
 
-    src/main/resources/html/
+        src/main/resources/html/
 
   - Launch the file: 
   
-      index.html
+         index.html
 
