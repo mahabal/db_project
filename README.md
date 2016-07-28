@@ -1,5 +1,9 @@
 This project was meant to be run on Linux. (Arch Linux setup and installation will be provided here).
 
+Every .sql file will first drop the table, and then re-create it.
+
+The generated passwords for every user is: "password"
+
 **Prerequisites**
 
    - MariaDB (Installation and Setup)
