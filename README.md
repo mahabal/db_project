@@ -6,7 +6,7 @@ This project was meant to be run on Linux. (Arch Linux setup and installation wi
     
     * Download the MariaDB package:
  
-          pacman -S mariadb --noconfirm
+     pacman -S mariadb --noconfirm
         
     * Setup MariaDB using: 
             
@@ -30,25 +30,25 @@ This project was meant to be run on Linux. (Arch Linux setup and installation wi
 - Gradle (optional: if you want to compile it yourself)
 
 
-Compiling (optional)
+*Compiling (optional)*
 
-    - Use terminal to enter the directory
+- Use terminal to enter the directory
     
-    - Execute the following command:
+- Execute the following command:
 
-        * gradle compileJava
+      gradle compileJava
 
-Running
+**Running**
 
-    - Start the backend with: 
-
-        * java -jar backend.jar
+   - Start the backend with: 
     
-    - Navigate to the directory:
+    java -jar backend.jar
+    
+   - Navigate to the directory:
 
-        * src/main/resources/html/
+    src/main/resources/html/
 
-    - Launch the file: 
-
-        * index.html
+  - Launch the file: 
+  
+      index.html
 
