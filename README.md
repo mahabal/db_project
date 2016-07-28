@@ -1,10 +1,10 @@
 This project was meant to be run on Linux. (Arch Linux setup and installation will be provided here).
 
-Prerequisites
+**Prerequisites**
 
 - MariaDB (Installation and Setup)
     
--- Download the MariaDB package:
+    * Download the MariaDB package:
  
     pacman -S mariadb --noconfirm
         
