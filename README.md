@@ -2,25 +2,24 @@ This project was meant to be run on Linux. (Arch Linux setup and installation wi
 
 Prerequisites
 
-    - MariaDB (Installation and Setup)
+- MariaDB (Installation and Setup)
     
-        * Download the MariaDB package:
+** Download the MariaDB package:
+ 
+    pacman -S mariadb --noconfirm
         
-            pacman -S mariadb --noconfirm
-        
-        * Setup MariaDB using: 
+** Setup MariaDB using: 
             
-            mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-        
-        * Set the root password to be "b&" using:
+    mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+    
+** Set the root password to be "b&" using:
             
-            mysql -u root password "b&"
+        mysql -u root password "b&"
      
-        * Import the blank schema into mysql    
+** Import the blank schema into mysql    
             
-            For a completely blank schema:
-
-                mysql -u root -p < schema.sql
+*** For a completely blank schema:
+             mysql -u root -p < schema.sql
             For a schema that has a university and an admin account
             
                 mysql -u root -p < schema_wiped_admin.sql
