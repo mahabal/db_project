@@ -44,11 +44,7 @@ This project was meant to be run on Linux. (Arch Linux setup and installation wi
     
         java -jar backend.jar
     
-   - Navigate to the directory:
+   - Navigate your browser to:
 
-        src/main/resources/html/
-
-  - Launch the file: 
-  
-         index.html
+        src/main/resources/html/index.html
 
